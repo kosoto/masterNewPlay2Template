@@ -66,11 +66,12 @@ public class BoardCtrl {
 		return brdMap.read(brd);
 	}
 	
-	@GetMapping("/cast/reply/{seq}")
-	public @ResponseBody Map<String,Object> replyRead(@PathVariable int seq){
+	@GetMapping("/cast/reply/{board_id}/{seq}")
+	public @ResponseBody Map<String,Object> replyRead(@PathVariable String board_id, @PathVariable int seq){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
 		brd = new Board();
 		brd.setBoard_depth(seq);
+		brd.setBoard_id(board_id);
 		List<Board> ls = brdMap.reply(brd);
 		map.clear();
 		map.put("list", ls);
