@@ -42,6 +42,7 @@ taehyeong.category={
 		taehyeong.list_map.list_map();
 	}
 }
+
 taehyeong.list_map={
 	list_map : x=>{
 		$('<div/>').addClass('list_map').attr({id:'list_map'}).appendTo($('#content'));
@@ -56,6 +57,7 @@ taehyeong.list_map={
 		$('<input/>').addClass('checkbox').attr({type:'checkbox'}).appendTo($('#list_ul'));
 		$('<p/>').addClass('list_font').html('예약가능').appendTo($('#list_ul'));
 		$('<p/>').addClass('list_font').attr({id:'font_'}).html('필터 초기화').appendTo($('#list_ul'));
+		$('<div/>').addClass('font_1').html('이 지역 추천').appendTo($('#list'));
 		$('<div/>').addClass('map').attr({id:'map'}).appendTo($('#list_map'));
 	}
 }

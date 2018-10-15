@@ -60,3 +60,8 @@
 #font_{
 	margin-left: 150px;
 }
+.font_1{
+	padding-left: 15px;
+	font-family: 'Hi Melody', cursive;
+	font-size: 20px;
+}
