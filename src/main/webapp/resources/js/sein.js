@@ -257,7 +257,7 @@ sein.service ={
 			$('<div/>').addClass('re_box').appendTo($('.re_inner'));
 			
 			/*댓글 리스트*/
-			$.getJSON($.ctx()+'/cast/reply/'+x.msg_seq,d=>{
+			$.getJSON($.ctx()+'/cast/reply/'+x.board_id+'/'+x.msg_seq,d=>{
 				$.each(d.list,(i,j)=>{
 					sein.service.re_read(j);	
 				})
