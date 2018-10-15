@@ -74,40 +74,57 @@ sanghoon.service = {
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 					
 				$('<div/>').addClass('col-lg-3').attr({id:'graph_1', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/pie_graph_1.PNG', style:'width:100%'}).appendTo('#graph_1');
+					$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_1.PNG', style:'width:100%'}).appendTo('#graph_1');
 						
 					
 				$('<div/>').addClass('col-lg-3').attr({id:'graph_2', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/pie_graph_2.PNG', style:'width:100%'}).appendTo('#graph_2');
+					$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_2.PNG', style:'width:100%'}).appendTo('#graph_2');
 					
 					
 				$('<div/>').addClass('col-lg-6').attr({id:'graph_3', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/accom_type_graph.PNG', style:'width:80%; height:100%'}).appendTo('#graph_3');
+					$('<img/>').attr({src:$.img()+'/admin_test/accom_type_graph.PNG', style:'width:80%; height:100%'}).appendTo('#graph_3');
 				
 				
 				$('<div/>').addClass('col-lg-7').attr({style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/customer_graph.PNG', style:'width:100%; height:100%'}).appendTo('.col-lg-7');
+					$('<img/>').attr({src:$.img()+'/admin_test/customer_graph.PNG', style:'width:100%; height:100%'}).appendTo('.col-lg-7');
 				$('<div/>').addClass('col-lg-5').attr({style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/customer_gen_graph.PNG', style:'width:75%'}).appendTo('.col-lg-5');
+					$('<img/>').attr({src:$.img()+'/admin_test/customer_gen_graph.PNG', style:'width:75%'}).appendTo('.col-lg-5');
 				
 					
 				$('<div/>').addClass('col-lg-4').attr({id:'col_3', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/TOP_local.PNG', style:'width:70%'}).appendTo('#col_3');
+					$('<img/>').attr({src:$.img()+'/admin_test/TOP_local.PNG', style:'width:70%'}).appendTo('#col_3');
 				$('<div/>').addClass('col-lg-4').attr({id:'col_4', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/TOP_views.PNG', style:'width:70%'}).appendTo('#col_4');
+					$('<img/>').attr({src:$.img()+'/admin_test/TOP_views.PNG', style:'width:70%'}).appendTo('#col_4');
 				$('<div/>').addClass('col-lg-4').attr({id:'col_5', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/TOP_average.PNG', style:'width:70%'}).appendTo('#col_5');
+					$('<img/>').attr({src:$.img()+'/admin_test/TOP_average.PNG', style:'width:70%'}).appendTo('#col_5');
 				
 		},
 		sales : x=>{
 			console.log('sales 버튼 클릭');
 			$('#content').empty();
-			$
+			$('<div/>').attr({id:'page-wrapper'}).appendTo('#content');
+			$('<div/>').addClass('sales_graph').appendTo('#page-wrapper');
+			$('<img/>').attr({src:$.img()+'/admin_test/sales_graph.PNG'}).appendTo('.sales_graph');
 		},
 		accom : x=>{
 			console.log('accom 버튼 클릭');
 			$('#content').empty();
-			$('<div/>').attr({id:'page-wrapper', style:"padding:30px"}).appendTo('#content');
+			$('<div/>').attr({id:'page-wrapper'}).appendTo('#content');
+				$('<div/>').addClass('left_wrapper').appendTo('#page-wrapper');
+							
+					$('<div/>').attr({id:'local_box'}).appendTo('.left_wrapper')
+					$('<select/>').attr({id:'local_sel'}).appendTo('#local_box');
+					$.each(['서울','경기','인천','강원','제주','대전','충북','충남','세종','부산','울산','경남','대구','경북','광주','전남','전주','전북'],(i,j)=>{
+						$('<option/>').attr({value:j}).html(j).appendTo('#local_sel');
+					});
+					
+					$('<div/>').attr({id:'price_reservation'}).appendTo('.left_wrapper');
+						$('<img/>').attr({src:$.img()+'/admin_test/price_reservation.PNG', style:'width:500px'}).appendTo('#price_reservation');
+					$('<div/>').attr({id:'accom_reservation'}).appendTo('.left_wrapper');
+							$('<img/>').attr({src:$.img()+'/admin_test/accom_reservation.PNG', style:'width:500px'}).appendTo('#accom_reservation');
+				$('<div/>').addClass('right_wrapper').appendTo('#page-wrapper');
+					$('<div/>').attr({id:'location'}).appendTo('.right_wrapper');
+							$('<img/>').attr({src:$.img()+'/admin_test/location.PNG', style:'width:500px'}).appendTo('#location');
 			
 		},
 		custo : x=>{
@@ -116,12 +133,12 @@ sanghoon.service = {
 			$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-5').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/age_reservation.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-5');
+					$('<img/>').attr({src:$.img()+'/admin_test/age_reservation.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-5');
 				$('<div/>').addClass('col-lg-7').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/accom_compare.PNG', style:'padding:30px; width:80%; height:100%'}).appendTo('.col-lg-7');
+					$('<img/>').attr({src:$.img()+'/admin_test/accom_compare.PNG', style:'padding:30px; width:80%; height:100%'}).appendTo('.col-lg-7');
 				
 				$('<div/>').addClass('col-lg-12').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/reservation_count.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-12');
+					$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-12');
 			
 		},
 		top_accom : x=>{
@@ -130,7 +147,7 @@ sanghoon.service = {
 			$('<div/>').attr({id:'page-wrapper', style:"padding:30px"}).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-12').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/accom_list.PNG'}).appendTo('.col-lg-12');
+					$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG'}).appendTo('.col-lg-12');
 		}
 		
 }
