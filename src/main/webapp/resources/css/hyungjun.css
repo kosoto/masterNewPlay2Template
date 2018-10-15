@@ -3,9 +3,11 @@
 #mainContent{
 	left:25%;
 	min-height: calc(100vh - 20px);
+	
 }
 
 #mainheader{
+	
 	min-height: calc(70vh - 10px);
 }
 
