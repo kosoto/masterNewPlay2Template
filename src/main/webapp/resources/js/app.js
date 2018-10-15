@@ -240,7 +240,7 @@ app.router = {
 		$('#board').addClass('ya_cusor').click(e=>{
 				e.preventDefault();
 				$.getScript($.ctx()+'/resources/js/sein.js',()=>{
-				sein.main.init();
+				sein.board.cast();
 				});
 			});
 		$('#add_btn').addClass('ya_cusor').click(e=>{
