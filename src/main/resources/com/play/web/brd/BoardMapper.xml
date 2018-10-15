@@ -17,8 +17,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        WHERE B.NUM BETWEEN #{beginRow} AND #{endRow}
        ORDER BY B.NUM
   </select>
+  <select id="reply" resultType="com.play.web.brd.Board">
+	SELECT *
+       FROM (
+           SELECT
+               ROW_NUMBER() OVER(ORDER BY msg_seq DESC) AS NUM,
+               A.*
+           FROM
+               BOARD A
+           WHERE board_depth like #{board_depth}
+           AND board_id like #{board_id}
+       )B
+  </select>
   <select id="count" resultType="int">
   	SELECT COUNT(*) FROM board
   	WHERE board_depth like 0
   </select>
+  <select id="read" resultType="com.play.web.brd.Board">
+  	SELECT * FROM board
+  	WHERE MSG_SEQ like #{msg_seq}
+  </select>
+  
+  <update id="readInc">
+  	UPDATE BOARD SET MSG_COUNT=MSG_COUNT+1
+  	WHERE MSG_SEQ LIKE #{msg_seq}
+  </update>
+  
 </mapper>
