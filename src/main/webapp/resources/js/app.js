@@ -36,30 +36,28 @@ app.permision = (()=>{
 							url:$.ctx()+'/member/login',
 							method:'post',
 							contentType:'application/json',
-							data:JSON.stringify({userid:$('#userid').val(),password:$('#password').val()}),
+							data:JSON.stringify({member_id:$('#member_id').val(),password:$('#password').val()}),
 							success:d=>{
 								let validate ="";
-								if(d.ID==='WRONG'){
+								if(d.member_id==='WRONG'){
 									validate ="아이디가 없습니다.";
-								}else if(d.PW==='WRONG'){
+								}else if(d.password==='WRONG'){
 									validate ="비밀번호가 틀렸습니다.";	
 								}else{
-									$.cookie("loginID",d.MBR.userid);
-									$.getScript($.script()+'/header.js',()=>{
-									});
-									$.getScript($.script()+'/content.js',()=>{
-									});
-									$('#logo_btn').click(e=>{
+									$.cookie("loginID",d.member_id);
 										e.preventDefault();
-										app.router.home();
-									})
-									$('#board').remove();
+										$('#nav_right').empty();
+										$('#content').empty();
+										$('<a/>').attr({href:'#', id:'mypage'}).html('마이페이지').appendTo('#nav_right');
+										$('<a/>').attr({href:'#', id:'reservasion'}).html('예약내역').appendTo('#nav_right');
+										
+/*									$('#board').remove();
 									$('<a/>')
 									.text('게시판')
 									.addClass('ya_cus')
 									.appendTo($('#nav_right'))
 									.click(e=>{
-										app.service.my_board({id:d.MBR.userid,pageNo:1});
+										app.service.my_board({id:d.MBR.MEMBER_ID,pageNo:1});
 									});
 									$('#board').addClass('btn btn-info');
 									$('#login_btn').remove();
@@ -74,9 +72,9 @@ app.permision = (()=>{
 									.addClass('btn btn-danger btn-lg')
 									.appendTo($('#nav_right')).click(e=>{
 										$.getScript($.script()+'/retrieve.js',()=>{
-											/*$('#content').html(retrieveUI(d));*/
+											$('#content').html(retrieveUI(d));
 										});
-									});
+									});*/
 								}
 								$('#validate').html(validate);
 							},
@@ -143,20 +141,25 @@ app.router = {
 		);
 	},
 	home :()=>{
+		$('#wrapper').empty();
+		$('#nav').empty();
+		$('#header').empty();
+		$('#content').empty();
+		$('#footer').empty();
 		$.getScript($.script()+'/footer.js',()=>{
 		/*nav 시작*/
 		$('<div/>').attr({id:'mainNav'}).appendTo($('#wrapper'));
-		$('<nav/>').attr({id:'nav'}).appendTo($('#mainNav'));
-		$('<a/>').addClass('yanoljaMainLogo').attr({id:'logo_btn'}).appendTo('#nav');
-		$('<img/>').attr({src:$.img()+"/icon/yanoljaMainLogo.JPG", id:'#logoImage'}).appendTo('#logo_btn')
-		$('<div/>').attr({id:'nav_left'}).appendTo('#nav');
-		$('<a/>').attr({href:'#', id:'mylocation'}).html('내주변(김태형)').appendTo('#nav_left');
-		$('<a/>').attr({href:'#', id:'hotelSearch'}).html('숙소검색(한희태)').appendTo('#nav_left');
-		$('<a/>').attr({href:'#', id:'board'}).html('캐스트(최세인)').appendTo('#nav_left');
-		$('<div/>').attr({id:'nav_right'}).appendTo('#nav');
-		$('<a/>').attr({href:'#', id:'amdin'}).html('관리자(김상훈)').appendTo('#nav_right');
-		$('<a/>').attr({href:'#', id:'add_btn'}).html('회원가입').appendTo('#nav_right');
-		$('<a/>').attr({href:'#', id:'login_btn'}).html('로그인').appendTo('#nav_right');
+			$('<nav/>').attr({id:'nav'}).appendTo($('#mainNav'));
+				$('<a/>').addClass('yanoljaMainLogo').attr({id:'logo_btn'}).appendTo('#nav');
+					$('<img/>').attr({src:$.img()+"/icon/yanoljaMainLogo.JPG", id:'#logoImage'}).appendTo('#logo_btn')
+				$('<div/>').attr({id:'nav_left'}).appendTo('#nav');
+					$('<a/>').attr({href:'#', id:'mylocation'}).html('내주변(김태형)').appendTo('#nav_left');
+					$('<a/>').attr({href:'#', id:'hotelSearch'}).html('숙소검색(한희태)').appendTo('#nav_left');
+					$('<a/>').attr({href:'#', id:'board'}).html('캐스트(최세인)').appendTo('#nav_left');
+				$('<div/>').attr({id:'nav_right'}).appendTo('#nav');
+					$('<a/>').attr({href:'#', id:'amdin'}).html('관리자(김상훈)').appendTo('#nav_right');
+					$('<a/>').attr({href:'#', id:'add_btn'}).html('회원가입').appendTo('#nav_right');
+					$('<a/>').attr({href:'#', id:'login_btn'}).html('로그인').appendTo('#nav_right');
 		/*nav 끝*/
 		
 		/*header 시작*/
@@ -226,11 +229,6 @@ app.router = {
 		});
 		$('#logo_btn').click(e=>{ 
 				e.preventDefault();
-				$('#wrapper').empty();
-				$('#nav').empty();
-				$('#header').empty();
-				$('#content').empty();
-				$('#footer').empty();
 				app.router.home();
 			})
 		$('#login_btn').addClass('ya_cusor').click(e=>{

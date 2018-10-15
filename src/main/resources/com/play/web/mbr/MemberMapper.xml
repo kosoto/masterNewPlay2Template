@@ -7,8 +7,8 @@
     SELECT *
     FROM member
     <where>
-    	<if test=" userid != null and userid != '' ">
-    		USERID LIKE #{userid}
+    	<if test=" member_id != null and member_id != '' ">
+    		MEMBER_ID LIKE #{member_id}
     	</if>
     	<if test=" password != null and password != '' ">
     		AND PASSWORD LIKE #{password}
@@ -18,8 +18,8 @@
   
   <insert id="post" >
     INSERT INTO member
-    (MEMBER_ID, NAME, PASSWORD, BIRTHDATE, JOINDATE, GENDER, AGE, PHONE, CUSTOMER_GRADE, POINT, NICKNAME, ADDRESS, ZIPCODE)
-    VALUES (#{member_id}, #{name}, #{password}, #{birthdate}, #{joindate}, #{gender}, #{age}, #{phone}, #{customer_grade}, #{point}, #{nickname}, #{address}, #{zipcode})
+    (MEMBER_ID, NAME, PASSWORD, BIRTHDATE, JOINDATE, GENDER, AGE, PHONE, CUSTOMER_GRADE, NICKNAME, ADDRESS, ZIPCODE)
+    VALUES (#{member_id}, #{name}, #{password}, #{birthdate}, #{joindate}, #{gender}, #{age}, #{phone}, #{customer_grade}, #{nickname}, #{address}, #{zipcode})
   </insert>
   
   <select id="list" resultType="com.play.web.mbr.Member">
@@ -29,7 +29,7 @@
   <select id="count" resultType="int">
   	SELECT COUNT(*) FROM MEMBER
   	<where>
-	  	<if test=" userid != null and userid != '' ">
+	  	<if test=" member_id != null and member_id != '' ">
 	  		MEMBER_ID LIKE #{member_id}
 	  	</if>
   	</where>

@@ -1,5 +1,7 @@
 package com.play.web.mbr;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,6 +33,7 @@ public class MemberCtrl {
 		logger.info("\n--------- MemberController {} !!-----","join()");
 		param.setAge(util2.ageAndGender(param).getAge());
 		param.setGender(util2.ageAndGender(param).getGender());
+		param.setJoindate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		mbrMap.post(param);
 	}
 	@RequestMapping("/search")
@@ -74,9 +77,9 @@ public class MemberCtrl {
 			pwValid = (mbr != null) ?"CORRECT":"WRONG";
 			mbr = (mbr != null)?mbr:new Member();
 		}
-		rm.put("ID",idValid);
-		rm.put("PW", pwValid);
-		rm.put("MBR", mbr);
+		rm.put("member_id",idValid);
+		rm.put("password", pwValid);
+		rm.put("mbr", mbr);
 		return rm;
 	}
 }
