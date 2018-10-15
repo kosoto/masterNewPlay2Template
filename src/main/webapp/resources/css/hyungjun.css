@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+#mainContent{
+	left:25%;
+	min-height: calc(100vh - 20px);
+}
+
+#mainheader{
+	min-height: calc(70vh - 10px);
+}
+
+.loginBox{
+    padding-top: 100px;
+    min-height: 500px;
+}
+
+.joinBox{
+    padding-bottom: 50px;
+}
+
+.loginHead{
+    margin-bottom: 40px;
+    color: #444;
+    font-size: 34px;
+    text-align: center;
+}
+
+.inputData{
+   display : block;
+   margin:auto;
+   width: 450px;
+   height: 26px;
+   border: 1px solid #ccc;
+   padding: 20px;
+}
+.hjButton{
+   --webkit--background: linear-gradient(top,#ff4143,#ff1764);
+   background: linear-gradient(top,#ff4143,#ff1764);
+   background: #ff4143;
+   background: -webkit-gradient(linear,left top,right bottom,color-stop(0,#ff4143),color-stop(100%,#ff1764));
+   bottom: 0;
+   left: 0;
+   margin:auto;
+   width: 450px;
+   height: 60px;
+   margin-top: 30px;
+   padding: 20px;
+   text-align: center;
+   font-size: 18px;
+   color: #fff;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.footer_container{
+    background-color: #252425;
+    font-size: 13px;
+    position: relative;
+    width: 100%;
+    height:20%;
+    float: left;
+   	padding-top: 30px;
+   	padding-left: 450px;
+    color: #fff;
+    text-align: left;
+    font-family: 'NanumSquare';
+}
+
+
+
+#mainNav{
+	padding-left: 20px;
+}
+
+#myLocationAddress{
+	font-size: 18px;
+	margin-bottom: 15%;
+} 
+#myLocationAddressImage{
+	margin-left: 35%;
+	float: left;
+}
+
+#mainBanner{
+position: absolute; top:20; left: 0;
+width: 100%;
+}
+
+#logo_btn{
+	float: left;
+}
+
+#mainInput {
+	padding-top: 10px;
+	background-color: white;
+	text-align: center;
+	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "NanumBarunGothic", sans-serif !important;
+}
+
+#accom_type {
+	width: 300px;
+	height: 120px;
+	float: left;
+    color: #484848;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+}
+
+#accom_addr {
+	width: 300px;
+	height: 120px;
+	float: left;
+    color: #484848;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#checkinDate {
+	width: 180px;
+	height: 120px;
+	float: left;
+	color: #484848;
+    display: inline-block;
+    text-align: center;
+	font-size: 16px;
+}
+
+#checkoutDate {
+	width: 180px;
+	height: 120px;
+	float: left;
+	color: #484848;
+    display: inline-block;
+    text-align: center;
+	font-size: 16px;
+}
+
+#accomSelect {
+	height: 85px;
+    color: #222;
+    font-size: 26px;
+    text-align: center;
+}
+
+#accomAddr {
+	height: 85px;
+    color: #222;
+    font-size: 26px;
+}
+
+#checkin_date {
+	height: 85px;
+    color: #222;
+    font-size: 15px;
+}
+
+#checkout_date {
+	height: 85px;
+    color: #222;
+    font-size: 15px;
+}
+
+.ya_cusor {
+	font-size: 16px;
+	color: #666;
+	margin-left: 17px;
+}
+
+.ya_cusor:hover {
+	text-decoration: none;
+	color: #ED006D;
+}
+
+.ya_logo:hover {
+	font-size: 25px;
+	color: #ED006D;
+	text-decoration: none;
+}
+
+#nav_left {
+    color: #666666;
+    font-size: 16px;
+	margin-left: 17px;
+	margin-top: 10px;
+	float: left;
+}
+
+#nav_right {
+	color: #666666;
+    font-size: 16px;
+	margin-right:55px;
+	margin-top: 10px;
+	float: right;
+}
+
+.centered-left1 {
+	position: absolute;
+	top: 20%;
+	font-size: 60px;
+	color: #ffffff;
+	margin-left: 12%;
+}
+
+.centered-left2 {
+	position: absolute;
+	top: 30%;
+	font-size: 60px;
+	color: #ffffff;
+	margin-left: 12%;
+}
+
+.centered-left3 {
+	position: absolute;
+	top: 45%;
+	color: #000000;
+	margin-left: 12%;
+}
+
+.btn-search-stay {
+    color: #fff;
+	font-size: 24px;
+	position: absolute;
+	top: 0;
+	width: 215px;
+	height: 131px;
+	text-rendering: auto;
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #ff493d),
+		color-stop(100%, #ff1069));
+	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "NanumBarunGothic", sans-serif !important;
+}

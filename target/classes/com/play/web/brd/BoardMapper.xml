@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.play.web.brd.BoardMapper">
+  <select id="list" resultType="com.play.web.brd.Board">
+	SELECT *
+       FROM (
+           SELECT
+               ROW_NUMBER() OVER(ORDER BY msg_seq DESC) AS NUM,
+               A.*
+           FROM
+               BOARD A
+           WHERE board_depth like 0
+           AND board_id like #{board_id}
+       )B
+       WHERE B.NUM BETWEEN #{beginRow} AND #{endRow}
+       ORDER BY B.NUM
+  </select>
+  <select id="count" resultType="int">
+  	SELECT COUNT(*) FROM board
+  	WHERE board_depth like 0
+  </select>
+</mapper>

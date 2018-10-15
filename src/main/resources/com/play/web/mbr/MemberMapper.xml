@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.play.web.mbr.MemberMapper">
+  <select id="get" resultType="com.play.web.mbr.Member">
+    SELECT *
+    FROM member
+    <where>
+    	<if test=" userid != null and userid != '' ">
+    		USERID LIKE #{userid}
+    	</if>
+    	<if test=" password != null and password != '' ">
+    		AND PASSWORD LIKE #{password}
+    	</if>
+    </where>
+  </select>
+  
+  <insert id="post" >
+    INSERT INTO member
+    (MEMBER_ID, NAME, PASSWORD, BIRTHDATE, JOINDATE, GENDER, AGE, PHONE, CUSTOMER_GRADE, POINT, NICKNAME, ADDRESS, ZIPCODE)
+    VALUES (#{member_id}, #{name}, #{password}, #{birthdate}, #{joindate}, #{gender}, #{age}, #{phone}, #{customer_grade}, #{point}, #{nickname}, #{address}, #{zipcode})
+  </insert>
+  
+  <select id="list" resultType="com.play.web.mbr.Member">
+    SELECT * 
+    FROM member
+  </select>
+  <select id="count" resultType="int">
+  	SELECT COUNT(*) FROM MEMBER
+  	<where>
+	  	<if test=" userid != null and userid != '' ">
+	  		MEMBER_ID LIKE #{member_id}
+	  	</if>
+  	</where>
+  </select>
+  <update id="update" parameterType="com.play.web.mbr.Member">
+	  UPDATE member SET
+	    PASSWORD = #{password},
+	    TEAMID = #{teamid},
+	    ROLL = #{roll},
+	    PHONE = #{phone},
+	    EMAIL = #{email}
+	  WHERE MEMBER_ID = #{member_id}
+  </update>
+  <delete id="delete" parameterType="com.play.web.mbr.Member">
+	  DELETE FROM member
+	  WHERE MEMBER_ID = #{member_id}
+	  AND PASSWORD = #{password}
+  </delete>
+</mapper>
