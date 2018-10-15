@@ -81,7 +81,7 @@ public class BoardCtrl {
 		b.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		map.clear();
 		map.put("brd", b);
-		map.put("userid", b.getMember_id());
+		/*map.put("userid", b.getMember_id());*/
 		tx.write(map);
 		return b;
 	}
@@ -95,7 +95,7 @@ public class BoardCtrl {
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","delete()");
 		map.clear();
 		map.put("bno", bno);
-		map.put("userid", id);
+		/*map.put("userid", id);*/
 		tx.delete(map);
 	}
 	@PostMapping("/boards/update/")
