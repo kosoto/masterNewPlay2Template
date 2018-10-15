@@ -12,7 +12,7 @@ public interface BoardService {
 
   public void regist(Board board) throws Exception;
 
-  public Board read(Integer bno) throws Exception;
+  public Board read(Integer s) throws Exception;
 
   public void modify(Board board) throws Exception;
 

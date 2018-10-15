@@ -12,45 +12,47 @@ sein.board ={
 		$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#content'));
 		$('<div/>').attr({id:'isotopeGallery'}).addClass('card_type clear isotope').appendTo($('#cardlist_rap'));
 		var page=0;
+		var existNext = true;
 		$.ajax({
 			url:$.ctx()+'/cast/',
 			method:'post',
 			contentType:'application/json',
 			data:JSON.stringify({board_id:'cast',pageNumber:'1'}),
 			success:d=>{
-				if(d.list!=null){
-					$.each(d.list,(i,j)=>{
-						sein.service.list(j);
-					})
-					page = Number(d.page.pageNumber);
-					$(window).scroll(function(){
-						if($(document).height() <= $(window).scrollTop()+$(window).height()+1){  /*푸터컨테이너 margintop 값보고 바꿔*/
-							page++;
-							$.ajax({
-								url:$.ctx()+'/cast/',
-								method:'post',
-								contentType:'application/json',
-								data:JSON.stringify({board_id:d.board_id,pageNumber:String(page)}),
-								success:d=>{
-									$.each(d.list,(i,j)=>{
-										sein.service.list(j);
-									})
-								},
-								error:(m1,m2,m3)=>{
-									alert(m3);
-								}
-							});
-						}
-					})
-				}else{
-					alert('페이지의 끝입니다.');
-				}
+				$.each(d.list,(i,j)=>{
+					sein.service.list(j);
+				})
+				page = Number(d.page.pageNumber);
 			},
 			error:(m1,m2,m3)=>{
 				alert(m3);
 			}
 		})
-		/*무한스크롤11*/
+		/*무한스크롤*/
+		$(window).scroll(function(){
+			if($(document).height() <= $(window).scrollTop()+$(window).height()+1){
+				page++;
+				$.ajax({
+					url:$.ctx()+'/cast/',
+					method:'post',
+					contentType:'application/json',
+					data:JSON.stringify({board_id:'cast',pageNumber:String(page)}),
+					success:d=>{
+						if(existNext){
+							$.each(d.list,(i,j)=>{
+								sein.service.list(j);
+							})
+							existNext = d.page.existNext;
+						}else{
+							alert('페이지의 끝입니다.');
+						}
+					},
+					error:(m1,m2,m3)=>{
+						alert(m3);
+					}
+				});
+			}
+		})
 		
 	}
 }
@@ -82,7 +84,9 @@ sein.service ={
 				$('<div/>').attr({id:'card_top'+x.msg_seq}).addClass('card_top').appendTo($('#card_inner'+x.msg_seq));
 				$('<a/>').attr({href:'#'}).append($('<img/>').attr({src:$.img()+'/cast/'+x.msg_photo,style:'position: static; width: 100%; height: 100%;'})).appendTo($('#card_top'+x.msg_seq))
 				.click(e=>{
-					sein.service.detail(x);
+					$.getJSON($.ctx()+'/cast/read/'+x.msg_seq,d=>{
+						sein.service.detail(d);	
+					})
 				});
 				$('<div/>').addClass('card_bottom').attr({id:'card_bottom'+x.msg_seq}).appendTo($('#card_inner'+x.msg_seq));
 				$('<div/>').addClass('user_pic').attr({id:'user_pic'+x.msg_seq}).appendTo($('#card_bottom'+x.msg_seq));
@@ -252,7 +256,39 @@ sein.service ={
 			
 			$('<div/>').addClass('re_box').appendTo($('.re_inner'));
 			
-			$('<div/>').attr({id:'re_comment'}).addClass('re_comment').appendTo($('.re_box'));
+			/*댓글 리스트*/
+			$.getJSON($.ctx()+'/cast/reply/'+x.msg_seq,d=>{
+				$.each(d.list,(i,j)=>{
+					sein.service.re_read(j);	
+				})
+			})
+			
+			
+		},
+		re_write : x=>{
+			$('#reply_empty').empty();
+			$('<div/>').addClass('re_write add').attr({id:'re_write_add',style:'height:98px'}).append(
+				$('<textarea/>').attr({name:'recommentText',placeholder:'대댓글을 입력해주세요.'}),
+				$('<div/>').addClass('bt_rap')
+				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('대댓글쓰기')))
+				.click(e=>{
+					sein.service.re_read(x);
+				})
+			).appendTo($('#reply_empty'));
+		},
+		re_modify : x=>{
+			$('#reply_empty').empty();
+			$('<div/>').addClass('re_write modify').attr({id:'re_write_add',style:'height:98px'}).append(
+				$('<textarea/>').attr({name:'recommentText',placeholder:'수정할 기존 댓글보여주기'}),
+				$('<div/>').addClass('bt_rap')
+				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('수정하기')))
+				.click(e=>{
+					alert('댓글 수정하기 액션');
+				})
+			).appendTo($('#reply_empty'));
+		},
+		re_read : x=>{
+			$('<div/>').attr({id:'re_comment'+x.msg_seq}).addClass('re_comment').appendTo($('.re_box'));
 			$('<div/>').addClass('inner').append(
 				$('<div/>').addClass('user_pic').append(
 					$('<a/>').append(
@@ -286,69 +322,9 @@ sein.service ={
 						)
 					)
 				),
-				$('<div/>').attr({id:'reply_empty'}).appendTo($('#re_comment'))
+				$('<div/>').attr({id:'reply_empty'}).appendTo($('#re_comment'+x.msg_seq))
 			)
-			.appendTo($('.re_comment'));
-			
-		},
-		re_write : x=>{
-			$('#reply_empty').empty();
-			$('<div/>').addClass('re_write add').attr({id:'re_write_add',style:'height:98px'}).append(
-				$('<textarea/>').attr({name:'recommentText',placeholder:'대댓글을 입력해주세요.'}),
-				$('<div/>').addClass('bt_rap')
-				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('대댓글쓰기')))
-				.click(e=>{
-					sein.service.re_read(x);
-				})
-			).appendTo($('#reply_empty'));
-		},
-		re_modify : x=>{
-			$('#reply_empty').empty();
-			$('<div/>').addClass('re_write modify').attr({id:'re_write_add',style:'height:98px'}).append(
-				$('<textarea/>').attr({name:'recommentText',placeholder:'수정할 기존 댓글보여주기'}),
-				$('<div/>').addClass('bt_rap')
-				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('수정하기')))
-				.click(e=>{
-					alert('댓글 수정하기 액션');
-				})
-			).appendTo($('#reply_empty'));
-		},
-		re_read : x=>{
-			alert('대댓글 쓰기 액션');
-			$('#reply_empty').empty();
-			$('<div/>').attr({id:'rere_comment',style:'margin-left:50px'}).addClass('re_comment').appendTo($('#reply_empty'));
-			$('<div/>').addClass('inner').append(
-				$('<div/>').addClass('user_pic').append(
-					$('<a/>').append(
-						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position: static; width: 100%; height: 100%;'})
-					)
-				),
-				$('<div/>').addClass('user_text').append(
-					$('<strong/>').html(x.member_id), /*추후 멤버테이블 조인걸어 이름으로 수정*/
-					$('<span/>').addClass('date').html('   '+x.msg_date)
-				),
-				$('<div/>').addClass('re_cont').append(
-					$('<p/>').html(x.msg_content)
-				),
-				$('<div/>').addClass('re_links').append(
-					$('<div/>').append(
-						$('<div/>').attr({id:'re_inner_write'}).addClass('inner').append(	
-							$('<span/>').addClass('bar').html('|'),
-							$('<a/>').addClass('link2 modify').attr({style:'color:red;'}).html('수정')
-							.click(e=>{
-								sein.service.re_modify(x);
-							}),
-							$('<span/>').addClass('bar').html('|'),
-							$('<a/>').attr({href:'#'}).addClass('link2').html('삭제')	
-							.click(e=>{
-								alert('댓글삭제 액션');
-							})
-						)
-					)
-				),
-				$('<div/>').attr({id:'reply_empty1'}).appendTo($('#re_comment1'))
-			)
-			.appendTo($('#reply_empty'));
+			.appendTo($('#re_comment'+x.msg_seq));
 		},
 		sendFacebook : x=>{
 			alert('sendFacebook 액션');

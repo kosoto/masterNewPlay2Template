@@ -58,6 +58,25 @@ public class BoardCtrl {
 		map.put("page", page);
 		return map;
 	}
+	@GetMapping("/cast/read/{seq}")
+	public @ResponseBody Board read(@PathVariable int seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
+		brd.setMsg_seq(seq);
+		brdMap.readInc(brd);
+		return brdMap.read(brd);
+	}
+	
+	@GetMapping("/cast/reply/{seq}")
+	public @ResponseBody Map<String,Object> replyRead(@PathVariable int seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
+		brd = new Board();
+		brd.setBoard_depth(seq);
+		List<Board> ls = brdMap.reply(brd);
+		map.clear();
+		map.put("list", ls);
+		return map;
+	}
+	
 	@GetMapping("/boards/{id}/{pageNo}")
 	public @ResponseBody Map<String,Object> myList(@PathVariable String id, @PathVariable int pageNo){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","Mylist");
@@ -85,11 +104,7 @@ public class BoardCtrl {
 		tx.write(map);
 		return b;
 	}
-	@GetMapping("/boards/read/{bno}")
-	public @ResponseBody Board write(@PathVariable int bno){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
-		return brdMap.read(bno);
-	}
+
 	@GetMapping("/boards/delete/{id}/{bno}")
 	public void delete(@PathVariable String id, @PathVariable int bno){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","delete()");
