@@ -262,8 +262,7 @@ sein.service ={
 					sein.service.re_read(j);	
 				})
 			})
-			
-			
+						
 		},
 		re_write : x=>{
 			$('#reply_empty').empty();
