@@ -26,27 +26,36 @@ taehyeong.content1 = {
 		let date = new Date();
 		$('#header').empty();
 		$('#content').empty();
-		$('<div/>').attr({id:'input_date'}).appendTo($('#content'));
-		$('<div/>').attr({id:'input_date_div'}).appendTo($('#input_date'));
-		$('<i/>').attr({id:'icono-calendar'}).addClass('icono-calendar').appendTo($('#input_date_div'));
-		$('<input/>').attr({type:'text',value:'2018-10-12'}).appendTo($('#input_date_div'));
+		$('<div/>').addClass('date_selecter').attr({id:'date_selecter'}).appendTo($('#content'));
+		$('<i/>').addClass('icono-calendar').attr({id:'calendar'}).appendTo($('#date_selecter'));
+		$('<input/>').appendTo($('#date_selecter'));
 		taehyeong.category.category();
 		}
 }
 taehyeong.category={
 	category : x=>{
-		$('<div/>').addClass('category_area').attr({id:'category_area'}).appendTo($('#content'));
-		$('<ul/>').addClass('category_ul').attr({id:'category_ul'}).appendTo($('#category_area'))
-		let category_list = ["모텔","#마이룸","#야놀자호텔","#신축/리모델링","#인기숙소","#파티룸","#무료영화"]
-		$.each(category_list,(i,j)=>{
-		$('<li>').addClass('category_li').attr({id:'category_li'+i}).appendTo($('#category_ul'))
-		$('<p/>').addClass('a_tag_font').html(j).appendTo($('#category_li'+i))
+		$('<div/>').addClass('category').attr({id:'category'}).appendTo($('#content'));
+		let category = ["모텔","#마이룸","#야놀자호텔","#신축/리모델링","#인기숙소","#파티룸","#무료영화"]; 
+		$.each(category,(i,j)=>{
+			$('<p/>').addClass('category_font').html(j).appendTo($('#category'));
 		})
-		taehyeong.list.list();
+		taehyeong.list_map.list_map();
 	}
 }
-taehyeong.list={
-	list : x=>{
-		
+taehyeong.list_map={
+	list_map : x=>{
+		$('<div/>').addClass('list_map').attr({id:'list_map'}).appendTo($('#content'));
+		$('<div/>').addClass('list').attr({id:'list'}).appendTo($('#list_map'));
+		$('<ul/>').addClass('list_ul').attr({id:'list_ul'}).appendTo($('#list'))
+		let list_menu = ["기본순","테마","숙소 특징","가격대선택"];
+		$.each(list_menu,(i,j)=>{
+			$('<li/>').addClass('list_li').attr({id:'list_li'+i}).appendTo($('#list_ul'))
+			$('<p/>').addClass('list_font').html(j).appendTo($('#list_li'+i));
+			$('<i/>').addClass('icono-caretDown').appendTo($('#list_li'+i));
+		})
+		$('<input/>').addClass('checkbox').attr({type:'checkbox'}).appendTo($('#list_ul'));
+		$('<p/>').addClass('list_font').html('예약가능').appendTo($('#list_ul'));
+		$('<p/>').addClass('list_font').attr({id:'font_'}).html('필터 초기화').appendTo($('#list_ul'));
+		$('<div/>').addClass('map').attr({id:'map'}).appendTo($('#list_map'));
 	}
 }
