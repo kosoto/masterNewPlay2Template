@@ -69,7 +69,7 @@ sanghoon.service = {
 			console.log($.img());
 			console.log($.img()+'/pie_graph_1.PNG');
 			$('#content').empty();
-			
+			$('#footer').empty();
 			$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 					
@@ -105,6 +105,31 @@ sanghoon.service = {
 			$('<div/>').attr({id:'page-wrapper'}).appendTo('#content');
 			$('<div/>').addClass('sales_graph').appendTo('#page-wrapper');
 			$('<img/>').attr({src:$.img()+'/admin_test/sales_graph.PNG'}).appendTo('.sales_graph');
+			$('<div/>').addClass('sales_table').appendTo('#page-wrapper');
+			table.appendTo('.sales_table');
+			let revenue = ['날짜','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+			let hotel = ['호텔','1000','2000','3000','4000','5000','6000','7000','8000','9000','10000','11000','12000'];
+			let motel = ['모텔','100','200','300','400','500','600','700','800','900','1000','1100','1200'];
+			let table = $('<table/>').attr({id:'table'});
+			let thead = $('<thead/>').attr({id:'thead'});
+			let tr = $('<tr/>');
+			$.each(revenue.list,(i,j)=>{
+				$('<th/>').html(j).appendTo(tr);
+			})
+			tr.appendTo(thead);
+			thead.appendTo(table);
+			$('<tbody/>').appendTo(table);
+			for(let i; i<hotel.length();i++){
+				$('<tr/>').append(
+				$('<td/>').attr('width', '5%').html(i)
+				).appendTo($('tbody'));
+			}
+			for(let j; j<motel.length();j++){
+				$('<tr/>').append(
+				$('<td/>').attr('width', '5%').html(j)		
+				).appendTo($('tbody'));
+			}
+			
 		},
 		accom : x=>{
 			console.log('accom 버튼 클릭');
