@@ -1,104 +1,113 @@
 "user strict"
 var sein = sein || {};
-sein.main=(()=>{
-	var init=()=>{
-		onCreate();
-	}
-	var onCreate =()=>{
-		setContentView();
-	}
-	var setContentView =()=>{
-		sein.board.boards();
-	}
-	return {init:init};
-})();
+
 sein.board ={
-	boards : x=>{
+	cast : x=>{
 		$('#header').empty();
 		$('#content').empty();
 		/*배너 슬라이드*/
 		sein.service.banner();
-		
+	
 		/*컨텐츠 리스트 전체*/
-		sein.service.list({board_id:'cast',pageNo:'1'});
+		$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#content'));
+		$('<div/>').attr({id:'isotopeGallery'}).addClass('card_type clear isotope').appendTo($('#cardlist_rap'));
+		var page=0;
+		$.ajax({
+			url:$.ctx()+'/cast/',
+			method:'post',
+			contentType:'application/json',
+			data:JSON.stringify({board_id:'cast',pageNumber:'1'}),
+			success:d=>{
+				if(d.list!=null){
+					$.each(d.list,(i,j)=>{
+						sein.service.list(j);
+					})
+					page = Number(d.page.pageNumber);
+					$(window).scroll(function(){
+						if($(document).height() <= $(window).scrollTop()+$(window).height()+1){  /*푸터컨테이너 margintop 값보고 바꿔*/
+							page++;
+							$.ajax({
+								url:$.ctx()+'/cast/',
+								method:'post',
+								contentType:'application/json',
+								data:JSON.stringify({board_id:d.board_id,pageNumber:String(page)}),
+								success:d=>{
+									$.each(d.list,(i,j)=>{
+										sein.service.list(j);
+									})
+								},
+								error:(m1,m2,m3)=>{
+									alert(m3);
+								}
+							});
+						}
+					})
+				}else{
+					alert('페이지의 끝입니다.');
+				}
+			},
+			error:(m1,m2,m3)=>{
+				alert(m3);
+			}
+		})
+		/*무한스크롤*/
+		
 	}
 }
 sein.service ={
 		banner : x=>{
 			$('<div/>').attr({id:'div_banner',style:'margin-top:30px'}).appendTo($('#header'));
-			$('<div/>').attr({id:'carouseltest','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner'));
-			$('<ol/>').addClass('carousel-indicators').appendTo($('#carouseltest'));
-			$('<div/>').addClass('carousel-inner').appendTo($('#carouseltest'));
+			$('<div/>').attr({id:'carousel','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner'));
+			$('<ol/>').addClass('carousel-indicators').appendTo($('#carousel'));
+			$('<div/>').addClass('carousel-inner').appendTo($('#carousel'));
 			let k;
 			let clazz=['active'];
 			for(k=1;k<=3;k++){
-				$('<li/>').attr({'data-target':'#carouseltest', 'data-slide-to':k}).appendTo($('.carousel-indicators'));	
+				$('<li/>').attr({'data-target':'#carousel', 'data-slide-to':k}).appendTo($('.carousel-indicators'));	
 				$('<div/>').addClass('carousel-item '+clazz[k-1]).attr({id:'item'+k}).append($("<img/>").attr({src:$.img()+'/banner/banner_img'+k+'.jpg'}),
 				$('<h3/>').addClass('carousel-caption center').text('테스트'+k).append($('<p>테스트 캡션 글자입니다.'+k+'</p>'))).appendTo($('.carousel-inner'));
 			}
 			
-			$('<a/>').addClass('carousel-control-prev').attr({href:'#carouseltest',role:'button','data-slide':'prev'}).appendTo($('#carouseltest'));
+			$('<a/>').addClass('carousel-control-prev').attr({href:'#carousel',role:'button','data-slide':'prev'}).appendTo($('#carousel'));
 			$('<span/>').addClass('carousel-control-prev-icon').attr({'aria-hidden':'true'}).appendTo($('.carousel-control-prev'));
 			$('<span/>').addClass('sr-only').html('이전').appendTo($('.carousel-control-prev')).appendTo($('.carousel-control-prev'));
 
-			$('<a/>').addClass('carousel-control-next').attr({href:'#carouseltest',role:'button','data-slide':'next'}).appendTo($('#carouseltest'));
+			$('<a/>').addClass('carousel-control-next').attr({href:'#carousel',role:'button','data-slide':'next'}).appendTo($('#carousel'));
 			$('<span/>').addClass('carousel-control-next-icon').attr({'aria-hidden':'true'}).appendTo($('.carousel-control-next'));
 			$('<span/>').addClass('sr-only').html('다음').appendTo($('.carousel-control-next')).appendTo($('.carousel-control-next'));
 			$('.carousel').carousel();
 		},
 		list : x=>{
-			$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#content'));
-			$('<div/>').attr({id:'isotopeGallery',style:'position: relative; overflow: hidden; height: 1404px;'}).addClass('card_type clear isotope').appendTo($('#cardlist_rap'));
-			$.ajax({
-				url:$.ctx()+'/boards/',
-				method:'post',
-				contentType:'application/json',
-				data:JSON.stringify({board_id:x.board_id,pageNo:x.pageNo}),
-				success:d=>{
-					$.each(d.list,(i,j)=>{
-						$('<div/>').attr({id:'card_inner'+j.msg_seq}).addClass('card_inner isotope-item bord_all').appendTo($('#isotopeGallery'));
-						$('<div/>').attr({id:'card_top'+j.msg_seq}).addClass('card_top').appendTo($('#card_inner'+j.msg_seq));
-						$('<a/>').attr({href:'#'}).append($('<img/>').attr({src:$.img()+'/cast/cast_'+j.msg_seq+'.jpg',style:'position: static; width: 100%; height: 100%;'})).appendTo($('#card_top'+j.msg_seq))
-						.click(e=>{
-							sein.service.detail(j);
-						});
-						$('<div/>').addClass('card_bottom').attr({id:'card_bottom'+j.msg_seq}).appendTo($('#card_inner'+j.msg_seq));
-						$('<div/>').addClass('user_pic').attr({id:'user_pic'+j.msg_seq}).appendTo($('#card_bottom'+j.msg_seq));
-						$('<img/>').attr({src:$.img()+'/profile/profile.png'}).appendTo($('#user_pic'+j.msg_seq));
-						$('<div/>').addClass('user_info').attr({id:'user_info'+j.msg_seq}).appendTo('#card_bottom'+j.msg_seq);
-						$('<a/>').attr({href:'#'}).append($('<strong>'+j.msg_title+'</strong>')).appendTo($('#user_info'+j.msg_seq));
-						$('<a/>').attr({href:'#'}).append($('<span>'+j.member_id+'</span>')).appendTo($('#user_info'+j.msg_seq));
-						$('<div/>').addClass('user_cont').attr({id:'user_cont'+j.msg_seq}).appendTo($('#card_bottom'+j.msg_seq));
-						$('<a/>').attr({href:'#'}).append($('<span>'+j.tag+'</span>')).appendTo($('#user_cont'+j.msg_seq));
-						$('<div/>').addClass('count').append(
-								$('<span/>').addClass('ico_like'),
-								$('<b/>').html(j.like_count),
-								$('<span/>').addClass('ico_read'),
-								$('<b/>').html(j.msg_count)
-								).appendTo($('#card_bottom'+j.msg_seq));
-					
-						$('.isotope_item').scroll();
-						
-					})
-					
-					$('<div>').addClass('bt_rap').appendTo($('#content'));
-					$('<span/>').addClass('bt_more').append($('<button/>').attr({type:'submit'}).addClass('b_all').html('더보기')).appendTo($('.bt_rap'));
-
-
-					$(".b_all").click(e=>{
-						sein.service.list({board_id:'cast',pageNo:'2'});
-					});
-
-				},
-				error:(m1,m2,m3)=>{
-					alert(m3);
-				}
+				$('<div/>').attr({id:'card_inner'+x.msg_seq}).addClass('card_inner isotope-item bord_all').appendTo($('#isotopeGallery'));
+				$('<div/>').attr({id:'card_top'+x.msg_seq}).addClass('card_top').appendTo($('#card_inner'+x.msg_seq));
+				$('<a/>').attr({href:'#'}).append($('<img/>').attr({src:$.img()+'/cast/'+x.msg_photo,style:'position: static; width: 100%; height: 100%;'})).appendTo($('#card_top'+x.msg_seq))
+				.click(e=>{
+					sein.service.detail(x);
+				});
+				$('<div/>').addClass('card_bottom').attr({id:'card_bottom'+x.msg_seq}).appendTo($('#card_inner'+x.msg_seq));
+				$('<div/>').addClass('user_pic').attr({id:'user_pic'+x.msg_seq}).appendTo($('#card_bottom'+x.msg_seq));
+				$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png'}).appendTo($('#user_pic'+x.msg_seq));
+				$('<div/>').addClass('user_info').attr({id:'user_info'+x.msg_seq}).appendTo('#card_bottom'+x.msg_seq);
+				$('<a/>').attr({href:'#'}).append($('<strong>'+x.msg_title+'</strong>')).appendTo($('#user_info'+x.msg_seq));
+				$('<a/>').attr({href:'#'}).append($('<span>'+x.member_id+'</span>')).appendTo($('#user_info'+x.msg_seq));
+				$('<div/>').addClass('user_cont').attr({id:'user_cont'+x.msg_seq}).appendTo($('#card_bottom'+x.msg_seq));
+				$('<a/>').attr({href:'#'}).append($('<span>'+x.tag+'</span>')).appendTo($('#user_cont'+x.msg_seq));
+				$('<div/>').addClass('count').append(
+						$('<span/>').addClass('ico_like'),
+						$('<b/>').html(x.like_count),
+						$('<span/>').addClass('ico_read'),
+						$('<b/>').html(x.msg_count)
+						).appendTo($('#card_bottom'+x.msg_seq));
+			
+				$('.isotope_item').isotope({
+					itemSelector:'.isotope_item',
+					layoutMode: 'fitRows'
+				});
 				
-			})
 		},
 		side_menu : x=>{
 			$('<div/>').attr({id:'side_menu'}).addClass('side_menu').appendTo($('.con_detail'));
-			$('<ul/>').append(
+			$('<ul/>').addClass('sein_ul').append(
 					$('<li/>').attr({name:'btnlike'}).append(
 							$('<a/>').attr({href:"#none"}).append(
 									$('<span/>').addClass('bl_like'))),
@@ -133,7 +142,7 @@ sein.service ={
 			$('<div/>').addClass('detail_user').appendTo($('.inner_bg'));
 			$('<div/>').addClass('user_pic').appendTo($('.inner_bg'));
 			$('<a/>').attr({href:'#',name:'jsonProfileImg'})
-			.append($('<img src="'+$.img()+'/profile/profile.png" alt="" style="position: static; width: 100%; height: 100%;">'))
+			.append($('<img src="'+$.img()+'/profile/'+x.member_id+'.png"'+' alt="" style="position: static; width: 100%; height: 100%;">'))
 			.appendTo($('.user_pic'));
 			$('<a href="/caster/30008731" class="user_name" name="jsonCasterLink"><span name="jsonNickName">펜셔니스타</span></a>')
 			.appendTo($('.detail_user'));
@@ -149,7 +158,10 @@ sein.service ={
 			$('<b/>').attr({name:'readCount'}).html(x.msg_count).appendTo($('.count'));
 			$('<a/>').attr({href:'#'}).addClass('reply').append(
 					$('<span/>').html('댓글'),$('<b/>').attr({name:'jsonCommnetCount'}))
-					.appendTo($('.detail_title'));
+					.appendTo($('.detail_title')).click(e=>{
+						var offset = $('.bt_rap').offset();
+						$('html').animate({scrollTop : offset.top},400)							
+					});
 			
 			
 			$('<div/>').addClass('detail_area').appendTo($('.inner_bg'));
@@ -199,7 +211,7 @@ sein.service ={
 			$('<div/>').addClass('user_cast').appendTo($('.inner_box'));
 			$('<div/>').addClass('user_pic').appendTo($('.user_cast'));
 			$('<a/>').attr({href:'#',name:'jsonProfileImg'}).append(
-					$('<img/>').attr({src:'https://img100.yanolja.com//20160318/20160318155331f6608c70-b980-4fc5-85d1-46431089e798.png',style:'position:static;width:100%;height:100%'})
+					$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position:static;width:100%;height:100%'})
 			).appendTo($('.user_pic'));
 			$('<div/>').addClass('user_txt').appendTo($('.user_cast'));
 			$('<a/>').attr({href:'#',name:'jsonCasterLink'}).addClass('user_name')
@@ -244,7 +256,7 @@ sein.service ={
 			$('<div/>').addClass('inner').append(
 				$('<div/>').addClass('user_pic').append(
 					$('<a/>').append(
-						$('<img/>').attr({src:$.img()+'/profile/profile.png',style:'position: static; width: 100%; height: 100%;'})
+						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position: static; width: 100%; height: 100%;'})
 					)
 				),
 				$('<div/>').addClass('user_text').append(
@@ -308,7 +320,7 @@ sein.service ={
 			$('<div/>').addClass('inner').append(
 				$('<div/>').addClass('user_pic').append(
 					$('<a/>').append(
-						$('<img/>').attr({src:$.img()+'/profile/profile.png',style:'position: static; width: 100%; height: 100%;'})
+						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position: static; width: 100%; height: 100%;'})
 					)
 				),
 				$('<div/>').addClass('user_text').append(

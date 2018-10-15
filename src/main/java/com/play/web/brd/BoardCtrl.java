@@ -40,21 +40,22 @@ public class BoardCtrl {
 	@Autowired Map<String,Object> map;
 	@Resource(name="uploadPath")
 	private String uploadPath;
-	@PostMapping("/boards/")
+	@PostMapping("/cast/")
 	public @ResponseBody Map<String,Object> list(@RequestBody Map<String,Object>cast){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","list");
 		map.clear();
-		Util.log.accept(cast.get("pageNo")+"");
-		map.put("pageNumber",Integer.parseInt((String) cast.get("pageNo")));
+		Util.log.accept(cast.get("pageNumber")+"");
+		map.put("pageNumber",Integer.parseInt((String) cast.get("pageNumber")));
 		map.put("countRow",brdMap.count());
 		page.carryOut(map);
+		Util.log.accept(page+"");
 		map.clear();
-		map.put("board_id",cast.get("board_id"));
-		map.put("beginRow",page.getBeginRow());
-		map.put("endRow",page.getEndRow());
+		map.put("beginRow", page.getBeginRow());
+		map.put("endRow", page.getEndRow());
+		map.put("board_id", cast.get("board_id"));
 		List<Board> ls = brdMap.list(map);
-		/*map.put("page", page);*/
 		map.put("list", ls);
+		map.put("page", page);
 		return map;
 	}
 	@GetMapping("/boards/{id}/{pageNo}")
