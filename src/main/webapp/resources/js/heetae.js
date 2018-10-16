@@ -26,7 +26,7 @@ heetae.main =(()=>{
 		header.empty()
 		footer.empty()
 		content.empty()
-		
+		 
 		
 		
 		$('<div/>')
