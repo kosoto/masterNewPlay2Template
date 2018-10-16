@@ -279,7 +279,7 @@ heetae.main =(()=>{
 			$('<div/>')
 	    .attr({'id':'heetae_tab_carousel'
 	      ,'data-ride':'carousel'})
-	    .addClass('carousel slide')
+	    .addClass(['carousel slide','heetae_tab_slider'])
 	    .carousel('pause')
 	    .appendTo('.heetae_tab_content_room')
 	    
@@ -346,7 +346,48 @@ heetae.main =(()=>{
 	    .appendTo('#heetae_tab_next')
 		//이미지 슬라이드
 	    
+	    $('<div/>')
+	    .addClass('heetae_tab_room_info')
+	    .appendTo('.heetae_tab_content_room')
 	    
+	    $('<div/>')
+	    .addClass('heetae_tab_info_title')
+	    .appendTo('.heetae_tab_room_info')
+	    
+	    $('<em/>')
+	    .text(acom.room_name)
+	    .appendTo('.heetae_tab_info_title')
+	    
+	    $('<div/>')
+	    .addClass('heetae_tab_info_price')
+	    .appendTo('.heetae_tab_room_info')
+	    
+	    $('<span/>')
+	    .addClass('heetae_info_price_right')
+	    .appendTo('.heetae_tab_info_price')
+	    
+	    $('<em/>')
+	    .text(acom.room_price)
+	    .appendTo('.heetae_info_price_right')
+	    $('<i/>')
+	    .text('원')
+	    .appendTo('.heetae_info_price_right')
+	    
+	    $('<span/>')
+	    .addClass('heetae_info_price_left')
+	    .appendTo('.heetae_tab_info_price')
+	    
+	    $('<i/>')
+	    .text('숙박')
+	    .appendTo('.heetae_info_price_left')
+	    $('<small/>')
+	    .text('18:00입실')
+	    .appendTo('.heetae_info_price_left')
+	    
+	    $('<a/>')
+	    .text('예약 하기')
+	    .addClass('heetae_tab_info_reserve_btn')
+	    .appendTo('.heetae_tab_room_info')
 	    
 		})
 		.appendTo('.heetae_tab_head')

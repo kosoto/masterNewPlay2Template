@@ -403,13 +403,92 @@ li {
 }
 
 .heetae_tab_room_item{
+	display: inline-block;
 	width: 460px;
 	height: 306px;
+}
+
+
+.heetae_tab_slider{
+	width: 460px;
+	float: left;
 }
 
 #heetae_tab_inner img{
 	width: 460px;
 	height: 306px;
+}
+
+.heetae_tab_room_info{
+	width: 320px;
+	height: 306px;
+	padding-left: 30px;
+	display: inline-block;
+}
+
+.heetae_tab_info_title{
+	width: 100%;
+}
+
+.heetae_tab_info_title em{
+	font-style: normal;
+	font-size: 28px;
+    color: #333;
+}
+
+.heetae_tab_info_price{
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 150px;
+    padding: 20px 10px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.heetae_tab_info_price span i{
+	vertical-align: middle;
+	color: #333;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom:5px;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.heetae_tab_info_price span small{
+	font-size: 16px;
+	display: inline-block;
+	color: #666666;
+}
+
+.heetae_tab_info_price span em{
+	color: #ff2d60;
+	font-size: 28px;
+    display: inline-block;
+    font-weight: 600;
+    letter-spacing: -1px;
+    vertical-align: middle;
+    font-style: normal;
+}
+
+.heetae_info_price_right{
+	float: right;
+}
+
+.heetae_info_price_left{
+	float: left;
+}
+
+.heetae_tab_info_reserve_btn{
+	background: -webkit-gradient(linear,left top,right bottom,color-stop(0,#ff4143),color-stop(100%,#ff1764));
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 26px;
+    padding: 16px 0 6px;
+    text-align: center;
+    color: #fff;  
 }
 
 .heetae_footer{
