@@ -242,7 +242,7 @@ heetae.main =(()=>{
 		.addClass('heetae_info_tip') //할인 팁
 		.appendTo('.heetae_content_info')
 		$('<li/>')
-		.text('바로예약 1% 적립')
+		.text('팁(구현x)')
 		.appendTo('.heetae_info_tip')
 		
 		$('<div>')
@@ -253,7 +253,7 @@ heetae.main =(()=>{
 		.addClass('heetae_content_theme')
 		.appendTo('.heetae_content_theme_controller')
 		
-		/*var theme = ['주차가능','vod','커플PC']
+		var theme = ['주차가능','vod','커플PC']
 		$.each(theme,(i,j)=>{
 			$('<li/>')
 			.addClass('heetae_theme_item')
@@ -272,11 +272,14 @@ heetae.main =(()=>{
 			$('<img/>')
 			.attr('src',img)
 			.appendTo('.heetae_theme_item')
+			
+			
 			$('<span/>')
-			.text(theme)
+			.text(j)
 			.appendTo('heetae_theme_item')
 			
-		})*/
+			
+		})
 		
 		
 		
