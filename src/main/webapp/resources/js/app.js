@@ -5,6 +5,7 @@ app =(()=>{
 		console.log('Step 1'+x);
 		app.router.init(x);
 	};
+	
 	return {init : init};
 })();
 
