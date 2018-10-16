@@ -70,12 +70,40 @@ sanghoon.service = {
 			console.log($.img()+'/pie_graph_1.PNG');
 			$('#content').empty();
 			$('#footer').empty();
-			$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
+			$('<div/>').attr({id:'page-wrapper'}).appendTo($('#content'));
+			$('<div/>').addClass('basic_first').appendTo('#page-wrapper');
+			
+			$('<div/>').attr({id:'available'}).appendTo('.basic_first');
+			$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_1.PNG'}).appendTo('#available');
+			$('<div/>').attr({id:'booked'}).appendTo('.basic_first');
+			$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_2.PNG'}).appendTo('#booked');
+			$('<div/>').attr({id:'have_accom_type'}).appendTo('.basic_first');
+			$('<img/>').attr({src:$.img()+'/admin_test/accom_type_graph.PNG'}).appendTo('#have_accom_type');
+			
+			$('<div/>').addClass('basic_middle').appendTo('#page-wrapper');
+			$('<div/>').attr({id:'age_member'}).appendTo('.basic_middle');
+			$('<img/>').attr({src:$.img()+'/admin_test/customer_graph.PNG', style:'width:600px; height:210px'}).appendTo('#age_member');
+			$('<div/>').attr({id:'member_gender'}).appendTo('.basic_middle');
+			$('<img/>').attr({src:$.img()+'/admin_test/customer_gen_graph.PNG', style:'width:300px; height:210px'}).appendTo('#member_gender');
+			
+			$('<div/>').addClass('basic_last').appendTo('#page-wrapper');
+			
+			
+			$('<div/>').attr({id:'top_local'}).appendTo('.basic_last');
+			$('<img/>').attr({src:$.img()+'/admin_test/TOP_local.PNG'}).appendTo('#top_local');
+			$('<div/>').attr({id:'top_views'}).appendTo('.basic_last');
+			$('<img/>').attr({src:$.img()+'/admin_test/TOP_views.PNG'}).appendTo('#top_views');
+			$('<div/>').attr({id:'top_average'}).appendTo('.basic_last');
+			$('<img/>').attr({src:$.img()+'/admin_test/TOP_average.PNG'}).appendTo('#top_average');
+			
+			
+			
+			/*$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 					
 				$('<div/>').addClass('col-lg-3').attr({id:'graph_1', style:'padding:30px'}).appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_1.PNG', style:'width:100%'}).appendTo('#graph_1');
-						
+					
 					
 				$('<div/>').addClass('col-lg-3').attr({id:'graph_2', style:'padding:30px'}).appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/pie_graph_2.PNG', style:'width:100%'}).appendTo('#graph_2');
@@ -90,13 +118,13 @@ sanghoon.service = {
 				$('<div/>').addClass('col-lg-5').attr({style:'padding:30px'}).appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/customer_gen_graph.PNG', style:'width:75%'}).appendTo('.col-lg-5');
 				
-					
+				
 				$('<div/>').addClass('col-lg-4').attr({id:'col_3', style:'padding:30px'}).appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/TOP_local.PNG', style:'width:70%'}).appendTo('#col_3');
 				$('<div/>').addClass('col-lg-4').attr({id:'col_4', style:'padding:30px'}).appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/TOP_views.PNG', style:'width:70%'}).appendTo('#col_4');
 				$('<div/>').addClass('col-lg-4').attr({id:'col_5', style:'padding:30px'}).appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/admin_test/TOP_average.PNG', style:'width:70%'}).appendTo('#col_5');
+					$('<img/>').attr({src:$.img()+'/admin_test/TOP_average.PNG', style:'width:70%'}).appendTo('#col_5');*/
 				
 		},
 		sales : x=>{
@@ -106,29 +134,31 @@ sanghoon.service = {
 			$('<div/>').addClass('sales_graph').appendTo('#page-wrapper');
 			$('<img/>').attr({src:$.img()+'/admin_test/sales_graph.PNG'}).appendTo('.sales_graph');
 			$('<div/>').addClass('sales_table').appendTo('#page-wrapper');
-			table.appendTo('.sales_table');
-			let revenue = ['날짜','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+			let revenue = ['수익','1100','2200','3300','4400','5500','6600','7700','8800','9900','11000','12100','13200'];
 			let hotel = ['호텔','1000','2000','3000','4000','5000','6000','7000','8000','9000','10000','11000','12000'];
 			let motel = ['모텔','100','200','300','400','500','600','700','800','900','1000','1100','1200'];
-			let table = $('<table/>').attr({id:'table'});
-			let thead = $('<thead/>').attr({id:'thead'});
-			let tr = $('<tr/>');
-			$.each(revenue.list,(i,j)=>{
-				$('<th/>').html(j).appendTo(tr);
-			})
-			tr.appendTo(thead);
-			thead.appendTo(table);
-			$('<tbody/>').appendTo(table);
-			for(let i; i<hotel.length();i++){
-				$('<tr/>').append(
-				$('<td/>').attr('width', '5%').html(i)
-				).appendTo($('tbody'));
-			}
-			for(let j; j<motel.length();j++){
-				$('<tr/>').append(
-				$('<td/>').attr('width', '5%').html(j)		
-				).appendTo($('tbody'));
-			}
+			let thead = ['','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+			$('<table/>').addClass('table').appendTo('.sales_table');
+			$('<thead/>').addClass('thead').appendTo('.table');
+			$('<tr/>').attr({id:'thead_tr'}).appendTo('.thead');
+			$.each(thead,(i,j)=>{
+				$('<th/>').addClass('sales_th').html(j).appendTo('#thead_tr');
+			});
+			$('<tbody/>').addClass('tbody').appendTo('.table');
+			$('<tr/>').attr({id:'tbody_tr_1'}).appendTo('.tbody');
+			$.each(hotel,(i,j)=>{
+				$('<td/>').html(j).appendTo('#tbody_tr_1');
+			});
+			$('<tr/>').attr({id:'tbody_tr_2'}).appendTo('.tbody');
+			$.each(motel,(i,j)=>{
+				$('<td/>').html(j).appendTo('#tbody_tr_2');
+			});
+			$('<tr/>').attr({id:'tbody_tr_3'}).appendTo('.tbody');
+			$.each(revenue,(i,j)=>{
+				$('<td/>').html(j).appendTo('#tbody_tr_3');
+			});
+			
+			
 			
 		},
 		accom : x=>{
@@ -155,7 +185,17 @@ sanghoon.service = {
 		custo : x=>{
 			console.log('custo 버튼 클릭');
 			$('#content').empty();
-			$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
+			$('<div/>').attr({id:'page-wrapper'}).appendTo($('#content'));
+			$('<div/>').addClass('custo_div_1').appendTo('#page-wrapper');
+			
+			$('<div/>').attr({id:'age_reservation'}).appendTo('.custo_div_1');
+			$('<img/>').attr({src:$.img()+'/admin_test/age_reservation.PNG', style:'width:400px; height:303px'}).appendTo('#age_reservation');
+			$('<div/>').attr({id:'age_accom'}).appendTo('.custo_div_1');
+			$('<img/>').attr({src:$.img()+'/admin_test/accom_compare.PNG'}).appendTo('#age_accom');
+			$('<div/>').addClass('custo_div_2').appendTo('#page-wrapper');
+			$('<div/>').attr({id:'reser_count'}).appendTo('.custo_div_2');
+			$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'width:1050px'}).appendTo('#reser_count');
+			/*$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-5').appendTo('.row');
 					$('<img/>').attr({src:$.img()+'/admin_test/age_reservation.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-5');
@@ -163,16 +203,19 @@ sanghoon.service = {
 					$('<img/>').attr({src:$.img()+'/admin_test/accom_compare.PNG', style:'padding:30px; width:80%; height:100%'}).appendTo('.col-lg-7');
 				
 				$('<div/>').addClass('col-lg-12').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-12');
+					$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'padding:30px; width:90%'}).appendTo('.col-lg-12');*/
 			
 		},
 		top_accom : x=>{
 			console.log('top_accom 버튼 클릭');
 			$('#content').empty();
-			$('<div/>').attr({id:'page-wrapper', style:"padding:30px"}).appendTo($('#content'));
+			$('<div/>').attr({id:'page-wrapper'}).appendTo($('#content'));
+			$('<div/>').addClass('accom_list').appendTo('#page-wrapper');
+			$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG', style:'width:60%'}).appendTo('.accom_list');
+			/*$('<div/>').attr({id:'page-wrapper', style:"padding:30px"}).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-12').appendTo('.row');
-					$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG'}).appendTo('.col-lg-12');
+					$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG'}).appendTo('.col-lg-12');*/
 		}
 		
 }
