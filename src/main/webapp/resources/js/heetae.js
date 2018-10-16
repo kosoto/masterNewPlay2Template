@@ -118,55 +118,6 @@ heetae.main =(()=>{
 		.appendTo('.carousel-control-next')
 		
 		
-		$('<div/>') //체크박스
-		.addClass('heetae_check_box')
-		.appendTo('.heetae_current')
-		
-		
-		$('<div/>')
-		.addClass('heetae_check_top')
-		.appendTo('.heetae_check_box')
-		$('<p/>')
-		.text('체크인')
-		.addClass('heetae_check_top_con1')
-		.appendTo('.heetae_check_top')
-		$('<p/>')
-		.text('체크아웃')
-		.addClass('heetae_check_top_con2')
-		.appendTo('.heetae_check_top')
-		
-		$('<div/>')
-		.addClass('heetae_check_middle')
-		.appendTo('.heetae_check_box')
-		$('<input/>')
-		.attr({'type':'text','value':'2018-10-11'}) //체크인 날짜 번경
-		.appendTo($('<div>')
-				.addClass('heetae_check_middle_con1')
-				.appendTo('.heetae_check_middle'))
-		$('<div>')
-		.addClass('heetae_check_middle_con2')
-		.appendTo('.heetae_check_middle')
-		$('<input/>')
-		.attr({'type':'text','value':'2018-10-12'}) //체크아웃 날짜 번경
-		.appendTo($('<div>')
-				.addClass('heetae_check_middle_con3')
-				.appendTo('.heetae_check_middle'))
-		
-		$('<div/>')
-		.addClass('heetae_check_bottom')
-		.appendTo('.heetae_check_box')
-		$('<span/>')
-		.text('연박(2박 이상)을 제공하지 않는 숙소 입니다.')
-		.addClass('heetae_check_bottom_con1')
-		.appendTo('.heetae_check_bottom')
-		$('<span/>')
-		.text('1박')
-		.addClass('heetae_check_bottom_con2')
-		.appendTo('.heetae_check_bottom')
-		
-		$('<div/>')
-		.addClass('heetae_check_map')
-		.appendTo('.heetae_check_bottom')
 		
 		
 		$('<div>')
@@ -283,30 +234,202 @@ heetae.main =(()=>{
 		})
 		
 		
-		$('<section>')
+		$('<section/>')
 		.addClass('heetae_section2')
 		.appendTo('.heetae_content_form')
 		
-		$('<div>')
-		.html('<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">'
-				+'  <li class="nav-item">'
-				+'    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>'
-				+'  </li>'
-				+'  <li class="nav-item">'
-				+'    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>'
-				+'  </li>'
-				+'  <li class="nav-item">'
-				+'    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>'
-				+'  </li>'
-				+'</ul>'
-				+'<div class="tab-content" id="pills-tabContent">'
-				+'  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>'
-				+'  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>'
-				+'  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>'
-				+'</div>')
+		$('<div/>')
 		.addClass('heetae_tab_head')
 		.appendTo('.heetae_section2')
 		
+		$('<div/>')
+		.addClass('heetae_tab_content')
+		.appendTo('.heetae_section2')
+		
+		
+		$('<button/>')
+		.attr({'type':'button',
+			'id' : 'tab_button1'})
+		.text('객실정보')
+		.addClass('heetae_tab_button_active')
+		.click(e=>{
+			e.preventDefault()
+			$('#tab_button1')
+			.removeClass()
+			.addClass('heetae_tab_button_active')
+			$('#tab_button2')
+			.removeClass()
+			.addClass('heetae_tab_button')
+			
+			$('.heetae_tab_content')
+			.empty()
+			
+			var acom = {'room_name':'야놀자'
+				,'room_price':'50,000'
+				,'room_image1':img+'/bg-showcase-1.jpg'
+				,'room_image2':img+'/bg-showcase-2.jpg'
+				,'room_image3':img+'/bg-showcase-3.jpg'}
+			
+			var acom_image = [acom.room_image1,acom.room_image2,acom.room_image3]
+			
+			$('<div/>')
+			.addClass('heetae_tab_content_room')
+			.appendTo('.heetae_tab_content')
+			
+			$('<div/>')
+	    .attr({'id':'heetae_tab_carousel'
+	      ,'data-ride':'carousel'})
+	    .addClass('carousel slide')
+	    .carousel('pause')
+	    .appendTo('.heetae_tab_content_room')
+	    
+	    
+	    $('<div/>')
+	    .addClass('heetae_tab_room_item')
+	    .appendTo('#heetae_tab_carousel')
+	    $('<div/>')
+	    .attr('id','heetae_tab_inner')
+	    .addClass('carousel-inner')
+	    .appendTo('.heetae_tab_room_item')
+	    
+	    
+	    $.each(acom_image,(i,j)=>{
+	      let clazz = 'carousel-item'
+	      if(i===0){
+	        clazz = 'carousel-item active'
+	      }
+	      $('<img>')
+	      .attr('src',j)
+	      .addClass('heetae_header')
+	      .appendTo($('<div/>')
+	          .attr('id','tab_select_'+(i+1))
+	          .addClass(clazz)
+	          .appendTo('#heetae_tab_inner'))
+	    })
+	    $('<a>')
+	    .attr({
+	    	'id':'heetae_tab_prev'
+	      ,'href':'#heetae_tab_carousel'
+	      ,'role':'button'
+	      ,'data-slide':'prev'})
+	    .addClass('carousel-control-prev')
+	    .appendTo('#heetae_tab_inner')
+	    
+	    $('<span>')
+	    .attr({'href':'#heetae_tab_carousel'
+	      ,'aria-hidden':'true'})
+	    .addClass('heetae_previco')
+	    .appendTo('#heetae_tab_prev')
+	    $('<span>')
+	    .addClass('sr-only')
+	    .text('Next')
+	    .appendTo('#heetae_tab_prev')
+	    
+	    
+	    $('<a>')
+	    .attr({
+	    	'id':'heetae_tab_next'
+	      ,'href':'#heetae_tab_carousel'
+	      ,'role':'button'
+	      ,'data-slide':'next'})
+	    .addClass('carousel-control-next')
+	    .appendTo('#heetae_tab_inner')
+	    
+	    $('<span>')
+	    .attr({'href':'#heetae_tab_carousel'
+	      ,'aria-hidden':'true'})
+	    .addClass('heetae_nextico')
+	    .appendTo('#heetae_tab_next')
+	    $('<span>')
+	    .addClass('sr-only')
+	    .text('Next')
+	    .appendTo('#heetae_tab_next')
+		//이미지 슬라이드
+	    
+	    
+		})
+		.appendTo('.heetae_tab_head')
+			
+		
+		
+			
+		$('<button/>')
+		.attr({'type':'button',
+				'id' : 'tab_button2'})
+		.text('후기')
+		.addClass('heetae_tab_button')
+		.click(e=>{
+			e.preventDefault()
+			$('#tab_button1')
+			.removeClass()
+			.addClass('heetae_tab_button')
+			$('#tab_button2')
+			.removeClass()
+			.addClass('heetae_tab_button_active')
+		})
+		.appendTo('.heetae_tab_head')
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$('<section/>')
+		.addClass('heetae_section3')
+		.appendTo('.heetae_content_form')
+		
+		$('<div/>') //체크박스
+		.addClass('heetae_check_box')
+		.appendTo('.heetae_section3')
+		
+		
+		$('<div/>')
+		.addClass('heetae_check_top')
+		.appendTo('.heetae_check_box')
+		$('<p/>')
+		.text('체크인')
+		.addClass('heetae_check_top_con1')
+		.appendTo('.heetae_check_top')
+		$('<p/>')
+		.text('체크아웃')
+		.addClass('heetae_check_top_con2')
+		.appendTo('.heetae_check_top')
+		
+		$('<div/>')
+		.addClass('heetae_check_middle')
+		.appendTo('.heetae_check_box')
+		$('<input/>')
+		.attr({'type':'text','value':'2018-10-11'}) //체크인 날짜 번경
+		.appendTo($('<div>')
+				.addClass('heetae_check_middle_con1')
+				.appendTo('.heetae_check_middle'))
+		$('<div>')
+		.addClass('heetae_check_middle_con2')
+		.appendTo('.heetae_check_middle')
+		$('<input/>')
+		.attr({'type':'text','value':'2018-10-12'}) //체크아웃 날짜 번경
+		.appendTo($('<div>')
+				.addClass('heetae_check_middle_con3')
+				.appendTo('.heetae_check_middle'))
+		
+		$('<div/>')
+		.addClass('heetae_check_bottom')
+		.appendTo('.heetae_check_box')
+		$('<span/>')
+		.text('연박(2박 이상)을 제공하지 않는 숙소 입니다.')
+		.addClass('heetae_check_bottom_con1')
+		.appendTo('.heetae_check_bottom')
+		$('<span/>')
+		.text('1박')
+		.addClass('heetae_check_bottom_con2')
+		.appendTo('.heetae_check_bottom')
+		
+		$('<div/>')
+		.addClass('heetae_check_map')
+		.appendTo('.heetae_check_bottom')
 		
 		
 		
