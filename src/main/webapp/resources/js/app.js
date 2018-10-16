@@ -7,6 +7,7 @@ app =(()=>{
 	};
 	return {init : init};
 })();
+
 app.main =(()=>{
 	var init =()=>{
 		onCreate();
@@ -39,42 +40,18 @@ app.permision = (()=>{
 							data:JSON.stringify({member_id:$('#member_id').val(),password:$('#password').val()}),
 							success:d=>{
 								let validate ="";
-								if(d.member_id==='WRONG'){
+								if(d.id_valid==='WRONG'){
 									validate ="아이디가 없습니다.";
-								}else if(d.password==='WRONG'){
+								}else if(d.pw_valid==='WRONG'){
 									validate ="비밀번호가 틀렸습니다.";	
 								}else{
-									$.cookie("loginID",d.member_id);
+									$.cookie("loginID", d.mbr.member_id);
 										e.preventDefault();
-										$('#nav_right').empty();
+										app.service.header();
+										$('.nav_right').empty();
 										$('#content').empty();
-										$('<a/>').attr({href:'#', id:'mypage'}).html('마이페이지').appendTo('#nav_right');
-										$('<a/>').attr({href:'#', id:'reservasion'}).html('예약내역').appendTo('#nav_right');
-										
-/*									$('#board').remove();
-									$('<a/>')
-									.text('게시판')
-									.addClass('ya_cus')
-									.appendTo($('#nav_right'))
-									.click(e=>{
-										app.service.my_board({id:d.MBR.MEMBER_ID,pageNo:1});
-									});
-									$('#board').addClass('btn btn-info');
-									$('#login_btn').remove();
-									ui.anchor({id:'logout_btn',txt:'로그아웃'})
-									.addClass('btn btn-danger btn-lg')
-									.appendTo($('#nav_right')).click(e=>{
-										$.removeCookie('loginID');
-										app.router.home();
-									});
-									$('#add_btn').remove();
-									ui.anchor({id:'retireve_btn',txt:'마이페이지'})
-									.addClass('btn btn-danger btn-lg')
-									.appendTo($('#nav_right')).click(e=>{
-										$.getScript($.script()+'/retrieve.js',()=>{
-											$('#content').html(retrieveUI(d));
-										});
-									});*/
+										$('<a/>').attr({href:'#', id:'reservasio21n'}).html('예약내역').addClass('ya_cusor').appendTo('.nav_right');
+										$('<a/>').attr({href:'#', id:'mypage'}).html(d.mbr.member_id + '님의 마이페이지').addClass('ya_cusor').appendTo('.nav_right');
 								}
 								$('#validate').html(validate);
 							},
@@ -128,6 +105,91 @@ app.permision = (()=>{
 	return {login : login, join : join}
 })();
 
+
+app.service = {
+		header :x=>{
+			/*header 시작*/
+			$('<header/>').attr({id:'header'}).appendTo('#wrapper');
+			$('<div/>').attr({id:'mainheader'}).appendTo('#header');		
+			/*banner 시작*/
+			$('<div/>').attr({id:'div_banner0',style:'margin-bottom:5%'}).appendTo($('#mainheader'));
+			$('<div/>').attr({id:'carousel0','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner0'));
+			$('<ol/>').addClass('carousel-indicators').attr({id:'carousel-indicators0'}).appendTo($('#carousel0'));
+			$('<div/>').addClass('carousel-inner').attr({id:'carousel-inner0'}).appendTo($('#carousel0'));
+			let k;
+			let clazz=['active'];
+			for(k=1;k<=3;k++){
+				$('<li/>').attr({'data-target':'#carousel', 'data-slide-to':k}).appendTo($('#carousel-indicators0'));	
+				$('<div/>').addClass('carousel-item '+clazz[k-1]).attr({id:'item'+k}).append($("<img/>").attr({src:$.img()+'/banner/banner_main'+k+'.jpg'}),
+				$('<h3/>').addClass('carousel-caption center').append($('<p></p>'))).appendTo($('#carousel-inner0'));
+			}
+			
+			$('<a/>').addClass('carousel-control-prev').attr({href:'#carousel0',role:'button','data-slide':'prev', id:'carousel-control-prev0'}).appendTo($('#carousel0'));
+			$('<span/>').addClass('carousel-control-prev-icon').attr({'aria-hidden':'true'}).appendTo($('#carousel-control-prev0'));
+			$('<span/>').addClass('sr-only').html('이전').appendTo($('#carousel-control-prev0')).appendTo($('#carousel-control-prev0'));
+
+			$('<a/>').addClass('carousel-control-next').attr({href:'#carousel0',role:'button','data-slide':'next', id:'carousel-control-next0'}).appendTo($('#carousel0'));
+			$('<span/>').addClass('carousel-control-next-icon').attr({'aria-hidden':'true'}).appendTo($('#carousel-control-next0'));
+			$('<span/>').addClass('sr-only').html('다음').appendTo($('#carousel-control-next0')).appendTo($('#carousel-control-next0'));
+			$('.carousel').carousel();
+			/*banner 시작*/	
+			
+			$('<div/>').addClass('centered-left1').html('야놀자와 함께').appendTo('#mainheader');
+			$('<div/>').addClass('centered-left2').html('여행을 떠나볼까요?').appendTo('#mainheader');
+			$('<div/>').addClass('centered-left3').attr({id:'mainInput'}).appendTo('#mainheader');
+				$('<div/>').attr({id:'accom_type'}).html('숙박유형').appendTo('#mainInput');
+					$('<div/>').attr({id:'mainInput1'}).appendTo('#accom_type');
+						$('<select/>').attr({id:'accomSelect'}).appendTo('#mainInput1');
+						$.each(["모텔","호텔"],(i,j)=>{
+							$('<option/>').attr({value:j}).html(j).appendTo('#accomSelect');
+						});
+				$('<div/>').attr({id:'accom_addr'}).html('지역').appendTo('#mainInput');
+					$('<div/>').attr({id:'mainInput2'}).appendTo('#accom_addr');
+						$('<select/>').attr({id:'accomAddr'}).appendTo('#mainInput2');
+						$.each(["서울","경기","인천","강원","제주","대전","충북","충남","세종","부산","울산","경남","대구","경북","광주","전남","전주","전북"],(i,j)=>{
+							$('<option/>').attr({value:j}).html(j).appendTo('#accomAddr');
+						})
+				$('<div/>').attr({id:'checkinDate'}).html('체크인').appendTo('#mainInput');
+					$('<div/>').attr({id:'mainInput3'}).appendTo('#checkinDate');	
+					$('<input/>').attr({type:'date', name:'checkin_date', id:'checkin_date'}).appendTo('#mainInput3')
+				$('<div/>').attr({id:'checkoutDate'}).html('체크아웃').appendTo('#mainInput');
+					$('<div/>').attr({id:'mainInput4'}).appendTo('#checkoutDate');
+					$('<input/>').attr({type:'date', name:'checkout_date', id:'checkout_date'}).appendTo('#mainInput4')
+				$('<div/>').attr({id:'mainButton'}).appendTo('#mainInput');
+					$('<button/>').attr({type:'button'}).addClass('btn-search-stay color-gradation').html('숙소검색').appendTo('#mainButton');
+			/*header 끝*/
+		},
+		content :x=>{
+			/*content 시작*/
+			$('<content/>').attr({id:'content'}).appendTo('#wrapper');
+				$('<div/>').attr({id:'mainContent'}).appendTo('#content');
+				/*banner 시작*/
+				$('<div/>').attr({id:'div_banner1',style:'margin-top:5%;margin-bottom:5%'}).appendTo($('#mainContent'));
+				$('<div/>').attr({id:'carousel1','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner1'));
+				$('<ol/>').addClass('carousel-indicators').attr({id:'carousel-indicators1'}).appendTo($('#carousel1'));
+				$('<div/>').addClass('carousel-inner').attr({id:'carousel-inner1'}).appendTo($('#carousel1'));
+				let k;
+				let clazz=['active'];
+				for(k=1;k<=2;k++){
+					$('<li/>').attr({'data-target':'#carousel', 'data-slide-to':k}).appendTo($('#carousel-indicators1'));	
+					$('<div/>').addClass('carousel-item '+clazz[k-1]).attr({id:'item'+k}).append($("<img/>").attr({src:$.img()+'/banner/mainBanner'+k+'.JPG'}),
+					$('<h3/>').addClass('carousel-caption center').append($('<p></p>'))).appendTo($('#carousel-inner1'));
+				}
+				
+				$('<a/>').addClass('carousel-control-prev').attr({href:'#carousel1',role:'button','data-slide':'prev', id:'carousel-control-prev1'}).appendTo($('#carousel1'));
+				$('<span/>').addClass('carousel-control-prev-icon').attr({'aria-hidden':'true'}).appendTo($('#carousel-control-prev1'));
+				$('<span/>').addClass('sr-only').html('이전').appendTo($('#carousel-control-prev1')).appendTo($('#carousel-control-prev1'));
+
+				$('<a/>').addClass('carousel-control-next').attr({href:'#carousel1',role:'button','data-slide':'next', id:'carousel-control-next1'}).appendTo($('#carousel1'));
+				$('<span/>').addClass('carousel-control-next-icon').attr({'aria-hidden':'true'}).appendTo($('#carousel-control-next1'));
+				$('<span/>').addClass('sr-only').html('다음').appendTo($('#carousel-control-next1')).appendTo($('#carousel-control-next1'));
+				$('.carousel').carousel();
+				/*banner 시작*/		
+			/*content 끝*/	
+		}
+}
+
+
 app.router = {
 	init :x=>{
 		$.getScript(x+'/resources/js/router.js',
@@ -152,56 +214,24 @@ app.router = {
 			$('<nav/>').attr({id:'nav'}).appendTo($('#mainNav'));
 				$('<a/>').addClass('yanoljaMainLogo').attr({id:'logo_btn'}).appendTo('#nav');
 					$('<img/>').attr({src:$.img()+"/icon/yanoljaMainLogo.JPG", id:'#logoImage'}).appendTo('#logo_btn')
-				$('<div/>').attr({id:'nav_left'}).appendTo('#nav');
-					$('<a/>').attr({href:'#', id:'mylocation'}).html('내주변(김태형)').appendTo('#nav_left');
-					$('<a/>').attr({href:'#', id:'hotelSearch'}).html('숙소검색(한희태)').appendTo('#nav_left');
-					$('<a/>').attr({href:'#', id:'board'}).html('캐스트(최세인)').appendTo('#nav_left');
-				$('<div/>').attr({id:'nav_right'}).appendTo('#nav');
-					$('<a/>').attr({href:'#', id:'amdin'}).html('관리자(김상훈)').appendTo('#nav_right');
-					$('<a/>').attr({href:'#', id:'add_btn'}).html('회원가입').appendTo('#nav_right');
-					$('<a/>').attr({href:'#', id:'login_btn'}).html('로그인').appendTo('#nav_right');
+				$('<div/>').addClass('nav_left').appendTo('#nav');
+					$('<a/>').attr({href:'#', id:'mylocation'}).html('내주변(김태형)').appendTo('.nav_left');
+					$('<a/>').attr({href:'#', id:'hotelSearch'}).html('숙소검색(한희태)').appendTo('.nav_left');
+					$('<a/>').attr({href:'#', id:'board'}).html('캐스트(최세인)').appendTo('.nav_left');
+				$('<div/>').addClass('nav_right').appendTo('#nav');
+					$('<a/>').attr({href:'#', id:'amdin'}).html('관리자(김상훈)').appendTo('.nav_right');
+					$('<a/>').attr({href:'#', id:'add_btn'}).html('회원가입').appendTo('.nav_right');
+					$('<a/>').attr({href:'#', id:'login_btn'}).html('로그인').appendTo('.nav_right');
 		/*nav 끝*/
 		
 		/*header 시작*/
-		$('<header/>').attr({id:'header'}).appendTo('#wrapper');
-		$('<div/>').attr({id:'mainheader'}).appendTo('#header');		
-		$('<img/>').attr({src:$.img()+"/banner/banner_main2.jpg", id:'mainBanner'}).appendTo('#mainheader');
-		$('<div/>').addClass('centered-left1').html('야놀자와 함께').appendTo('#mainheader');
-		$('<div/>').addClass('centered-left2').html('여행을 떠나볼까요?').appendTo('#mainheader');
-		$('<div/>').addClass('centered-left3').attr({id:'mainInput'}).appendTo('#mainheader');
-			$('<div/>').attr({id:'accom_type'}).html('숙박유형').appendTo('#mainInput');
-				$('<div/>').attr({id:'mainInput1'}).appendTo('#accom_type');
-					$('<select/>').attr({id:'accomSelect'}).appendTo('#mainInput1');
-					$.each(["모텔","호텔"],(i,j)=>{
-						$('<option/>').attr({value:j}).html(j).appendTo('#accomSelect');
-					});
-			$('<div/>').attr({id:'accom_addr'}).html('지역').appendTo('#mainInput');
-				$('<div/>').attr({id:'mainInput2'}).appendTo('#accom_addr');
-					$('<select/>').attr({id:'accomAddr'}).appendTo('#mainInput2');
-					$.each(["서울","경기","인천","강원","제주","대전","충북","충남","세종","부산","울산","경남","대구","경북","광주","전남","전주","전북"],(i,j)=>{
-						$('<option/>').attr({value:j}).html(j).appendTo('#accomAddr');
-					})
-			$('<div/>').attr({id:'checkinDate'}).html('체크인').appendTo('#mainInput');
-				$('<div/>').attr({id:'mainInput3'}).appendTo('#checkinDate');	
-				$('<input/>').attr({type:'date', name:'checkin_date', id:'checkin_date'}).appendTo('#mainInput3')
-			$('<div/>').attr({id:'checkoutDate'}).html('체크아웃').appendTo('#mainInput');
-				$('<div/>').attr({id:'mainInput4'}).appendTo('#checkoutDate');
-				$('<input/>').attr({type:'date', name:'checkout_date', id:'checkout_date'}).appendTo('#mainInput4')
-			$('<div/>').attr({id:'mainButton'}).appendTo('#mainInput');
-				$('<button/>').attr({type:'button'}).addClass('btn-search-stay color-gradation').html('숙소검색').appendTo('#mainButton');
+		app.service.header();			
 		/*header 끝*/
 		
 		/*content 시작*/
-		$('<content/>').attr({id:'content'}).appendTo('#wrapper');
-			$('<div/>').attr({id:'mainContent'}).appendTo('#content');
-				$('<div/>').attr({id:'myLocationAddressImage'}).appendTo('#mainContent');
-				$('<img/>').attr({src:$.img()+"/icon/myLocationIcon.JPG"}).appendTo('#myLocationAddressImage');
-				$('<div/>').html('서울시 마포구 대흥동 63-13').attr({id:'myLocationAddress'}).appendTo('#mainContent');
-				$('<div/>').attr({id:'mainContentBanner'}).appendTo('#mainContent')
-					$('<img/>').attr({src:$.img()+"/banner/mainContentBanner1.png", id:'mainContentBanner1'}).appendTo('#mainContentBanner');
-					$('<img/>').attr({src:$.img()+"/banner/mainContentBanner2.png", id:'mainContentBanner2'}).appendTo('#mainContentBanner');
+		app.service.content();
 		/*content 끝*/
-					
+		
 		/*footer 시작*/
 		$('<footer/>').attr({id:'footer'}).appendTo('#wrapper');
 		$('<div/>').attr({id:'mainFooter'}).appendTo('#footer');
