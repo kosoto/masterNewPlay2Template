@@ -99,7 +99,7 @@ public class BoardCtrl {
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","write()");
 		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		cast.setMember_id("A1");
-		cast.setMember_id("cast_1.jpg");
+		cast.setMsg_photo("cast_1.jpg");
 		brdMap.write(cast);;
 	}
 	
@@ -110,84 +110,4 @@ public class BoardCtrl {
 		brd.setMsg_seq(msg_seq);
 		brdMap.delete(brd);;
 	}
-	/*
-	@GetMapping("/boards/{id}/{pageNo}")
-	public @ResponseBody Map<String,Object> myList(@PathVariable String id, @PathVariable int pageNo){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","Mylist");
-		map.clear();
-		brd.setMember_id(id);
-		map.put("pageNumber",pageNo);
-		map.put("countRow",brdMap.countRetrieve(brd));
-		page.carryOut(map);
-		map.clear();
-		map.put("writer", id);
-		map.put("beginRow", page.getBeginRow());
-		map.put("endRow", page.getEndRow());
-		List<Board> ls = brdMap.listRetrieve(map);
-		map.put("page", page);
-		map.put("list", ls);
-		return map;
-	}
-	@PostMapping("/boards/create")
-	public @ResponseBody Board create(@RequestBody Board b){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","write");
-		b.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		map.clear();
-		map.put("brd", b);
-		map.put("userid", b.getMember_id());
-		tx.write(map);
-		return b;
-	}
-
-	@GetMapping("/boards/delete/{id}/{bno}")
-	public void delete(@PathVariable String id, @PathVariable int bno){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","delete()");
-		map.clear();
-		map.put("bno", bno);
-		map.put("userid", id);
-		tx.delete(map);
-	}
-	@PostMapping("/boards/update/")
-	public @ResponseBody void update(@RequestBody Board b){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","update()");
-		brdMap.update(b);
-	}
-	@PostMapping("/boards/fileupload")
-	public Object fileupload(@ModelAttribute("uploadForm") FileForm uploadForm) throws IOException{
-		Util.log.accept(":: BoardCtrl :: fileupload() ");
-		 List<MultipartFile> files = uploadForm.getFiles();
-
-		  List<String> fileNames = new ArrayList<String>();
-		  if (null != files && files.size() > 0) {
-		   for (MultipartFile multipartFile : files) {
-		    String fileName = multipartFile.getOriginalFilename();
-		    String path = uploadPath + fileName;
-
-		File f = new File(path);
-
-		multipartFile.transferTo(f);
-
-		fileNames.add(fileName);
-		Util.log.accept("fileupload SUCCESS !! ");
-		   }
-		  }
-		  //map.addAttribute("files", fileNames);
-		  return "success";
-	}
-    class FileForm {
-        private List<MultipartFile> files;
-        public List<MultipartFile> getFiles() {
-         return files;
-        }
-        public void setFiles(List<MultipartFile> files) {
-         this.files = files;
-        }
-    }
-    @PostMapping("/uploadAjax")
-    public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception{
-    	Util.log.accept("originaName: " + file.getOriginalFilename());
-    	Util.log.accept("size: " + file.getSize());
-    	Util.log.accept("contentType: " + file.getContentType());
-		return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.CREATED);
-    }*/
 }
