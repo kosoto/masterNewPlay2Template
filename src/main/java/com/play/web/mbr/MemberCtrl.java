@@ -28,6 +28,7 @@ public class MemberCtrl {
 	@Autowired MemberMapper mbrMap;
 	@Autowired Util2 util2;
 	@Autowired HashMap<String,Object>map;
+	
 	@PostMapping("/join")
 	public @ResponseBody void join(@RequestBody Member param) {
 		logger.info("\n--------- MemberController {} !!-----","join()");
@@ -54,10 +55,14 @@ public class MemberCtrl {
 		mbrMap.delete(param);
 		return "redirect:/";
 	}
-	@GetMapping("/auth")
-	public @ResponseBody Map<String,Object> auth(){
-		System.out.println("auth 컨트롤러");
-		map.put("", "");
+	
+	@PostMapping("/auth")
+	public @ResponseBody Map<String,Object> auth(
+			@RequestBody Member pm){
+		logger.info("\n--------- MemberController {} !!-----","auth()");
+		map.clear();
+		map.put("mbr", mbrMap.get(pm));
+		logger.info("mbrMap.get(pm)" + mbrMap.get(pm));
 		return map;
 	}
 	@PostMapping("/login")
@@ -77,8 +82,8 @@ public class MemberCtrl {
 			pwValid = (mbr != null) ?"CORRECT":"WRONG";
 			mbr = (mbr != null)?mbr:new Member();
 		}
-		rm.put("member_id",idValid);
-		rm.put("password", pwValid);
+		rm.put("id_valid",idValid);
+		rm.put("pw_valid", pwValid);
 		rm.put("mbr", mbr);
 		return rm;
 	}

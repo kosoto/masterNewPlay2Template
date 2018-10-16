@@ -1,4 +1,4 @@
-package com.play.web.interceptors;
+/*package com.play.web.interceptors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,17 +26,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     try {
     	String id = (String) request.getSession().getAttribute("userid");
     	if (id == null) {
-    	  /*  if(isAjaxRequest(request)) {
+    	    if(isAjaxRequest(request)) {
     	    	logger.info("인터셉터1 !!");
     	    	response.sendError(400);
     	    	return false;
-	    	    }  else {*/
+	    	    }  else {
 	    	    	logger.info("인터셉터2 !!");
 	    	    	HttpSession session = request.getSession();
 	    	    	session.setAttribute("userid","A1");
 	    	    	response.sendRedirect(webRoot+"/member/auth");
 	    	    	result = false;
-	    	   /* }*/
+	    	    }
     	    }else {
     	    	result = true;
     	    }
@@ -47,4 +47,4 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     }
     return result;
   }
-}
+}*/

@@ -49,8 +49,6 @@ input[type="search"] { -webkit-appearance:textfield; -moz-box-sizing:content-box
 
 /* Layout Style
 ****************************************************************************************/
-/* body { text-align:center } */
-
 #yanolja_wrap { position:relative; width:100%; height:100%; min-width:980px }
 #wrap { width:100%; height:100% }
 /* Header */
@@ -226,7 +224,7 @@ input[type="search"] { -webkit-appearance:textfield; -moz-box-sizing:content-box
 .bt_report:active .report_msg { display:inline-block; position:absolute; bottom:70px; right:0; width:118px; height:51px }
 .bt_report .report_msg b { display:inline-block; width:100%; height:42px; font-size:12px; color:#fff; line-height:42px }
 
-.contents { width:100%; height:100% }
+.contents { width:100%; height:100%; background-color: #F2F2F2;}
 .contents.bg_type,
 .contents.bg_type2 { width:100%; height:100%; padding-bottom:0; background:#fff }
 .con_inner { width:960px; min-height:552px; padding-bottom:60px; margin:0 auto }
@@ -234,7 +232,7 @@ input[type="search"] { -webkit-appearance:textfield; -moz-box-sizing:content-box
 
 /*메인페이지*/
 /*메인슬라이드*/
-.banner_rap { position:relative; width:960px; margin:0 auto }
+.banner_rap { position:relative; width:960px; margin:0 auto; padding-top:20px}
 .flexslider li a div { position:relative; width:960px; height:380px; margin:0 auto; text-align:center }
 .flexslider li a div b { display:inline-block; margin-top:126px; padding:3px 5px; font-size:15px; color:#fff; border-top:solid 1px #fff; border-bottom:solid 1px #fff }
 .flexslider li a div span { position:absolute; display:block; top:165px; left:50%; width:940px; margin:0 0 0 -470px; font-size:42px; color:#fff }
@@ -251,7 +249,7 @@ input[type="search"] { -webkit-appearance:textfield; -moz-box-sizing:content-box
 
 /*메인카드리스트*/
 /*카드리스트*/
-#cardlist_rap { width:960px; margin:0 auto; padding-top:30px; padding-bottom:60px }
+#cardlist_rap { width:960px; margin:0 auto; padding-top:0px; padding-bottom:60px }
 #cardlist_rap .card_type { position:relative; overflow:hidden; margin:0 0 0 -16px }
 #cardlist_rap .card_type .card_inner { overflow:hidden; width:308px; margin: 0 0 16px 16px; float: left; background:#fff; -ms-box-shadow:0 2px 2px #e9e9e9; -moz-box-shadow:0 2px 2px #e9e9e9; -webkit-box-shadow:0 2px 2px #e9e9e9; box-shadow:0 2px 2px #e9e9e9 }
 #cardlist_rap .card_type .card_inner .card_top { width:100% }
@@ -641,22 +639,6 @@ li.place_list .place_over li b { display:inline-block; height:28px; line-height:
 .mycast_list2 .list_inner .count2 .ico_new { position:relative; top:-2px; margin-left:4px }
 .mycast_list2 .list_inner .list_del { right:10px; top:20px }
 
-/* 06 콘텐츠제보 */
-.report_area { width:100% }
-.report_area .repo_user { width:100%; margin-top:38px }
-.report_area .repo_user label { display:block; height:18px; line-height:18px }
-.report_area .repo_mail { display:block; width:250px; height:40px; margin-top:10px }
-.report_area .repo_mail input { display:inline-block; width:226px; height:15px; margin:10px 12px; line-height:15px; font-size:14px; color:#666; text-align:left; vertical-align:middle }
-.repo_user b { display:inline-block; height:18px; margin-right:10px; line-height:18px; font-size:14px; color:#444; vertical-align:middle }
-.repo_user span { display:inline-block; height:18px; line-height:18px; font-size:12px; color:#ff5f81; vertical-align:middle }
-/*콘텐츠제보 정보제공동의*/
-.info_agree { width:100%; height:20px; margin:20px 0 0 0 }
-.info_agree input { width:0; height:0; opacity:0 }
-.info_agree label { display:inline-block; height:20px; padding-left:30px }
-.info_agree label.on { background-position:0 0px }
-.info_agree label b,
-.info_agree label span { font-size:12px; color:#666 }
-
 /* 07 Layer Popup */
 .popup_wrap { display:none; position:fixed; top:0; left:0; z-index:9999; width:100%; height:100%; background: url('http://image2.yanolja.com/100/pc/member/mypage/bg_popup.png') repeat }
 .popup_wrap.on { display:block }
@@ -718,6 +700,10 @@ li.place_list .place_over li b { display:inline-block; height:28px; line-height:
 .bt_rap { width:100%; height:100% }
 .bt_rap .bt_more { display:block; margin:60px 0 }
 .bt_rap .bt_more button { width:100%; height:44px; margin:0 auto; font-size:14px; color:#444; background:#eee; font-weight:600 }
+.bt_rap .bt_write { display:block; margin: 0 }
+.bt_rap .bt_write button { width:100%; height:44px; margin:0 auto; font-size:14px; color:#444; background:#eee; font-weight:600; margin-top:10px;margin-bottom:10px }
+
+
 
 .bt_rap .bt_detail { display:block; width:410px; margin:74px auto 0 auto; text-align:center }
 .bt_rap .bt_detail ul { width:100% }

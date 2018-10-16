@@ -1,10 +1,21 @@
 @charset "UTF-8";
-<!Doctype html>
+
+.mypageTableDiv{
+	padding:2%;
+}
+
+.mypageTable{
+	background:#ff5f81;
+	vertical-align:middle;
+	color: white;
+	margin:auto;
+	text-align: center;
+}
+
 
 #mainContent{
 	left:25%;
-	min-height: calc(100vh - 20px);
-	
+	padding-bottom: 5%;
 }
 
 #mainheader{
@@ -85,8 +96,8 @@
 }
 
 #mainBanner{
-position: absolute; top:20; left: 0;
-width: 100%;
+	position: absolute; top:20; left: 0;
+	width: 100%;
 }
 
 #logo_btn{
@@ -142,28 +153,32 @@ width: 100%;
 }
 
 #accomSelect {
-	height: 85px;
+    height: 85px;
     color: #222;
     font-size: 26px;
     text-align: center;
+    border: 0;
 }
 
 #accomAddr {
 	height: 85px;
     color: #222;
     font-size: 26px;
+    border: 0;
 }
 
 #checkin_date {
 	height: 85px;
     color: #222;
     font-size: 15px;
+    border: 0;
 }
 
 #checkout_date {
 	height: 85px;
     color: #222;
     font-size: 15px;
+    border: 0;
 }
 
 .ya_cusor {
@@ -183,7 +198,7 @@ width: 100%;
 	text-decoration: none;
 }
 
-#nav_left {
+.nav_left {
     color: #666666;
     font-size: 16px;
 	margin-left: 17px;
@@ -191,7 +206,7 @@ width: 100%;
 	float: left;
 }
 
-#nav_right {
+.nav_right {
 	color: #666666;
     font-size: 16px;
 	margin-right:55px;

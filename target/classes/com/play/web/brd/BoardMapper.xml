@@ -43,4 +43,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	WHERE MSG_SEQ LIKE #{msg_seq}
   </update>
   
+  <insert id="reWrite">
+  	INSERT INTO BOARD (MSG_CONTENT, BOARD_DEPTH, BOARD_ID, MEMBER_ID, MSG_DATE)
+  	VALUES (#{msg_content}, #{msg_seq}, #{board_id}, #{member_id}, #{msg_date})
+  </insert>
+  
+  <delete id="reDelete">
+  	DELETE FROM BOARD 
+  	WHERE BOARD_DEPTH LIKE #{board_depth}
+  	AND BOARD_ID LIKE #{board_id}
+  	AND MSG_SEQ LIKE #{msg_seq}
+  </delete>
+  
+  <insert id="write">
+   INSERT INTO BOARD (MSG_TITLE, MSG_CONTENT, BOARD_ID, MEMBER_ID, MSG_DATE, TAG)
+   VALUES (#{msg_title}, #{msg_content}, #{board_id}, #{member_id}, #{msg_date}, #{tag}) 
+  </insert>
+   
+  <delete id="delete">
+  	DELETE FROM BOARD 
+  	WHERE BOARD_ID LIKE #{board_id}
+  	AND MSG_SEQ LIKE #{msg_seq}
+  </delete>
+  
 </mapper>
