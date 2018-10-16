@@ -347,6 +347,7 @@ heetae.main =(()=>{
 		//이미지 슬라이드
 	    
 	    
+	    
 		})
 		.appendTo('.heetae_tab_head')
 			
