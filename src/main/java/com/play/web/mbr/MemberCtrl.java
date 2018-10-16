@@ -77,8 +77,8 @@ public class MemberCtrl {
 			pwValid = (mbr != null) ?"CORRECT":"WRONG";
 			mbr = (mbr != null)?mbr:new Member();
 		}
-		rm.put("member_id",idValid);
-		rm.put("password", pwValid);
+		rm.put("id_valid",idValid);
+		rm.put("pw_valid", pwValid);
 		rm.put("mbr", mbr);
 		return rm;
 	}
