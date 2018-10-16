@@ -31,7 +31,7 @@ public class TxService {
 	public Map<?,?> delete(Map<?,?> p){
 		map.clear();
 		Util.log.accept(p.get("bno")+"/"+p.get("userid"));
-		brdMapper.delete(Integer.parseInt(p.get("bno").toString()));
+		/*brdMapper.delete(Integer.parseInt(p.get("bno").toString()));*/
 		poMapper.delete(p);
 		map.clear();
 		return map;

@@ -4,15 +4,24 @@ var sein = sein || {};
 sein.board ={
 	cast : x=>{
 		$('#header').empty();
-		$('#content').empty();
+		$('#content').empty().attr({style:'background-color: #BDBDBD;'});
 		/*배너 슬라이드*/
 		sein.service.banner();
-	
+		
 		/*컨텐츠 리스트 전체*/
 		$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#content'));
+		
+		/*글쓰기 버튼*/
+		$('<div/>').addClass('bt_rap').append(
+				$('<span/>').addClass('bt_write').append(
+						$('<button>').addClass('b_all').html('글쓰기'))
+		).appendTo($('#cardlist_rap')).click(e=>{
+			sein.service.write();
+		});
+		
+		var page;
+		var pageMax;
 		$('<div/>').attr({id:'isotopeGallery'}).addClass('card_type clear isotope').appendTo($('#cardlist_rap'));
-		var page=0;
-		var existNext = true;
 		$.ajax({
 			url:$.ctx()+'/cast/',
 			method:'post',
@@ -22,43 +31,50 @@ sein.board ={
 				$.each(d.list,(i,j)=>{
 					sein.service.list(j);
 				})
-				page = Number(d.page.pageNumber);
+				page=d.page.pageNumber;
+				pageMax=d.page.pageCount;
 			},
 			error:(m1,m2,m3)=>{
 				alert(m3);
 			}
 		})
-		/*무한스크롤*/
-		$(window).scroll(function(){
-			if($(document).height() <= $(window).scrollTop()+$(window).height()+1){
-				page++;
-				$.ajax({
-					url:$.ctx()+'/cast/',
-					method:'post',
-					contentType:'application/json',
-					data:JSON.stringify({board_id:'cast',pageNumber:String(page)}),
-					success:d=>{
-						if(existNext){
-							$.each(d.list,(i,j)=>{
-								sein.service.list(j);
-							})
-							existNext = d.page.existNext;
-						}else{
-							alert('페이지의 끝입니다.');
-						}
-					},
-					error:(m1,m2,m3)=>{
-						alert(m3);
-					}
-				});
-			}
-		})
 		
+		$('<div/>').attr({id:'bt_more'}).addClass('bt_rap').append(
+			$('<span/>').addClass('bt_more').append(
+					$('<button>').addClass('b_all').html('더보기')
+			)
+		).appendTo($('#cardlist_rap')).click(e=>{
+			$('#bt_more').remove();
+			/*무한스크롤*/
+			$(window).scroll(()=>{
+				if($(document).height() <= $(window).scrollTop()+$(window).height()){
+					$.ajax({
+						url:$.ctx()+'/cast/',
+						method:'post',
+						contentType:'application/json',
+						data:JSON.stringify({board_id:'cast',pageNumber:String(++page)}),
+						success:d=>{
+							setTimeout(()=>{
+								$.each(d.list,(i,j)=>{
+									 sein.service.list(j);
+								})
+							},100)
+							if(d.page.pageCount===page){
+								$(window).off("scroll");
+							}
+						},
+						error:(m1,m2,m3)=>{
+							alert(m3);
+						}
+					});
+				}
+			})
+		})
 	}
 }
 sein.service ={
 		banner : x=>{
-			$('<div/>').attr({id:'div_banner',style:'margin-top:30px'}).appendTo($('#header'));
+			$('<div/>').addClass('banner_rap').attr({id:'div_banner'}).appendTo($('#content'));
 			$('<div/>').attr({id:'carousel','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner'));
 			$('<ol/>').addClass('carousel-indicators').appendTo($('#carousel'));
 			$('<div/>').addClass('carousel-inner').appendTo($('#carousel'));
@@ -133,10 +149,11 @@ sein.service ={
 			).appendTo($('#side_menu'));
 		},
 		detail : x=>{
-			$('#header').empty();
+			$(window).off("scroll"); /*무한스크롤 비활성화*/
+			$('#wrapper').scroll(()=>{e.preventDefault()});
 			$('#content').empty();
 			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#content'));
-			$('<div/>').addClass('con_inner').appendTo($('#topContent'));
+			$('<div/>').addClass('con_inner').attr({style:'padding-top:30px'}).appendTo($('#topContent'));
 			$('<div/>').addClass('con_detail bord_b').appendTo($('.con_inner'));
 			
 			/*----사이드메뉴----*/
@@ -150,6 +167,20 @@ sein.service ={
 			.appendTo($('.user_pic'));
 			$('<a href="/caster/30008731" class="user_name" name="jsonCasterLink"><span name="jsonNickName">펜셔니스타</span></a>')
 			.appendTo($('.detail_user'));
+			$('<div/>').attr({style:'float:right'}).append(
+				$('<a/>').addClass('btn btn-danger').attr({style:'margin-right:10px'}).html('수정')
+				.click(e=>{
+					
+					
+				}),
+				$('<a/>').addClass('btn btn-danger').html('삭제').click(e=>{
+					if(confirm('삭제하시겠습니까?')==true){
+						$.getJSON($.ctx()+'/cast/delete/'+x.board_id+'/'+x.msg_seq);
+						sein.board.cast();
+					}
+				})
+			).appendTo($('.detail_user'))
+			
 			
 			$('<div/>').addClass('detail_title').appendTo($('.inner_bg'));
 			$('<h3/>').addClass('sc_out').appendTo($('.detail_title'));
@@ -178,7 +209,6 @@ sein.service ={
 			.appendTo($('.detail_area'));
 			
 			/*----- bottom 시작 -----*/
-			
 			$('<div/>').addClass('bt_rap').appendTo($('.inner_bg'));
 			$('<div/>').addClass('bt_detail').appendTo($('.bt_rap'));
 			$('<ul/>').append(
@@ -232,6 +262,7 @@ sein.service ={
 			$('<div/>').addClass('bt_read').append(
 					$('<button/>').addClass('jsonSubscribedStatus').append($('<span/>').addClass('bt_reading')))
 			.appendTo($('.user_cast'));
+			
 			sein.service.reply(x);
 			
 		},
@@ -246,23 +277,34 @@ sein.service ={
 			$('<div/>').addClass('edit_rap').appendTo($('.re_inner'));
 			
 			$('<div/>').addClass('re_write').attr({style:'height:98px'}).appendTo($('.edit_rap'));
-			$('<textarea/>').attr({name:'commentText',rows:'4',cols:'50',placeholder:'댓글을 입력해주세요.'}).appendTo($('.re_write'));
+			$('<textarea/>').attr({id:'commentText',rows:'4',cols:'50',placeholder:'댓글을 입력해주세요.'}).appendTo($('.re_write'));
 			$('<div/>').addClass('bt_rap')
 			.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').attr({title:'commentWrite'}).html('댓글쓰기')))
-			.appendTo($('.re_write'));
-			$('<div/>').addClass('bt_box').appendTo($('.re_write'));
-			
-			$('<p/>').attr({id:'jsonPaging'}).appendTo($('.re_inner'));
-			
-			$('<div/>').addClass('re_box').appendTo($('.re_inner'));
-			
+			.appendTo($('.re_write'))
+			.click(e=>{
+				$.ajax({
+					url:$.ctx()+'/cast/reWrite/',
+					method:'post',
+					contentType:'application/json',
+					data:JSON.stringify({msg_content:$('#commentText').val(),board_id:x.board_id,msg_seq:x.msg_seq,member_id:x.member_id}),   /*member_id:x.member_id 로그인 아이디로 수정요*/
+					success:d=>{
+						$('#inner_bg_reply').remove();						
+						sein.service.reply(x);
+					},
+					error:(m1,m2,m3)=>{alert(m3)}
+				})
+			});
 			/*댓글 리스트*/
+			$('<div/>').addClass('re_box').appendTo($('.re_inner'));
+			sein.service.re_list(x);
+			
+		},
+		re_list : x=>{
 			$.getJSON($.ctx()+'/cast/reply/'+x.board_id+'/'+x.msg_seq,d=>{
 				$.each(d.list,(i,j)=>{
 					sein.service.re_read(j);	
 				})
 			})
-						
 		},
 		re_write : x=>{
 			$('#reply_empty').empty();
@@ -316,7 +358,12 @@ sein.service ={
 							$('<span/>').addClass('bar').html('|'),
 							$('<a/>').attr({href:'#'}).addClass('link2').html('삭제')	
 							.click(e=>{
-								alert('댓글삭제 액션');
+								if(confirm('삭제하시겠습니까?')==true){
+								$.getJSON($.ctx()+'/cast/reDelete/'+x.board_id+'/'+x.board_depth+'/'+x.msg_seq);
+								var offset = $('#re_comment'+x.msg_seq).offset();
+								$('html').animate({scrollTop : offset.top},400)				
+								$('#re_comment'+x.msg_seq).remove();
+								}
 							})
 						)
 					)
@@ -330,5 +377,39 @@ sein.service ={
 		},
 		copyURL : x=>{
 			alert('copyURL 액션');
+		},
+		write : x=>{
+			$('#content').empty();
+			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#content'));
+			$('<div/>').addClass('con_inner').attr({style:'padding-top:30px'}).appendTo($('#topContent'));
+			$('<div/>').addClass('con_detail bord_b').appendTo($('.con_inner'));
+			$('<div/>').addClass('inner_bg').appendTo($('.con_detail'));
+			$('<h1/>').html('CAST').appendTo('.inner_bg');
+			$('<textarea/>').attr({id:'msg_title',rows:'1',cols:'107',placeholder:'제목을 입력해주세요.'})
+			.appendTo($('.inner_bg'));
+			$('<textarea/>').attr({id:'msg_content',rows:'15',cols:'107',placeholder:'내용을 입력해주세요.'})
+			.appendTo($('.inner_bg'));
+			$('<textarea/>').attr({id:'tag',rows:'1',cols:'107',placeholder:'태그를 입력해주세요.'})
+			.appendTo($('.inner_bg'));
+			$('<div/>').attr({style:'text-align:right'})
+			.append($('<button/>').addClass('btn btn-danger').attr({style:'margin-right:5px'}).html('글쓰기')
+					.click(e=>{
+						$.ajax({
+							url:$.ctx()+'/cast/write/',
+							method:'post',
+							contentType:'application/json',
+							data:JSON.stringify({board_id:'cast',msg_title:$('#msg_title').val(),msg_content:$('#msg_content').val(),tag:$('#tag').val()}),
+							success:d=>{
+								sein.board.cast();
+							},
+							error:(m1,m2,m3)=>{alert(m3)}
+						})
+					}),
+					$('<button/>').addClass('btn btn-danger').html('취소'))
+					.click(e=>{
+						sein.board.cast();
+					})
+			.appendTo($('.inner_bg'));
+			
 		}
 }
