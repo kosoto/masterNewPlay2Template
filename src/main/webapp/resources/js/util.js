@@ -5,6 +5,7 @@ $.prototype.nullChecker=x=>{
 	for (i in x){
 		if(x[i]===''){
 			flag = true;
+			
 		}
 	}
 	return flag;
