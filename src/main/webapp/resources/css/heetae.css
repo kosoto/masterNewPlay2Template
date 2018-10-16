@@ -100,7 +100,7 @@ li {
 .heetae_check_map{
 	display: block;
 	width: 380px;
-	height: 300px;
+	height: 500px;
 	margin-top: 64px;
 	margin-left: -10px;
 	background-color: blue;
@@ -202,6 +202,13 @@ li {
     color: #ff777a;
 }
 
+.heetae_section1{
+	width: 60%;
+}
+.heetae_section2{
+	width: 60%;
+}
+
 .heetae_content_controller{
 	position: relative;
 	width: 100%;
@@ -222,7 +229,6 @@ li {
 	display: block;
 	width: 50%;
 	height: 220px;
-    float: left;
 }
 
 
@@ -250,7 +256,6 @@ li {
 
 .heetae_info_score{
 	margin-top: 20px;
-	width: 50%;
 	height: 19px;
 }
 
@@ -281,6 +286,7 @@ li {
 	margin-top:-10px;
 	margin-left: 5px;
 	font-size: 14px;
+	font-style: normal;
 	vertical-align: middle
 }
 
@@ -293,6 +299,7 @@ li {
     margin-bottom: 5px;
     background-color: #FF2D60;
     color: white;
+    font-style: normal;
     font-size: 13px;
     display: inline-block;
     padding: 4px 8px;
@@ -320,28 +327,38 @@ li {
 }
 
 .heetae_content_theme{
+	width:800px;
+	height:104px;
+	padding-left:0px;
+	margin-top: 55px;
+	margin-left: -20px;
 	display: block;
 }
 
-.heetae_theme_item{
+.heetae_content_theme li{
     width: 60px;
     min-height: 84px;
     margin-left: 20px;
     margin-bottom: 20px;
     text-align: center;
-}
-
-.heetae_theme_item li{
-	float: left;
+    float: left;
 	display: inline-block;
-    
 }
 
-.heetae_theme_item span{
+.heetae_content_theme img{
+    width: 60px;
+}
+
+
+.heetae_content_theme span{
 	font-size: 13px;
     display: block;
     margin-top: 5px;
     text-align: center;
+}
+
+.heetae_tab_head{
+	height: 54px;
 }
 
 

@@ -178,10 +178,13 @@ heetae.main =(()=>{
 		.appendTo('.heetae_content_controller')
 		
 		
+		$('<section/>')
+		.addClass('heetae_section1')
+		.appendTo('.heetae_content_form')
 		
 		$('<div/>')
 		.addClass('heetae_content_info')
-		.appendTo('.heetae_content_form')
+		.appendTo('.heetae_section1')
 		
 		
 		$('<p/>')
@@ -242,28 +245,29 @@ heetae.main =(()=>{
 		.addClass('heetae_info_tip') //할인 팁
 		.appendTo('.heetae_content_info')
 		$('<li/>')
-		.text('팁(구현x)')
+		.text('팁표시(구현x)')
 		.appendTo('.heetae_info_tip')
 		
 		$('<div>')
 		.addClass('heetae_content_theme_controller')
-		.appendTo('.heetae_content_form')
+		.appendTo('.heetae_section1')
 		
 		$('<ul/>')
 		.addClass('heetae_content_theme')
 		.appendTo('.heetae_content_theme_controller')
 		
-		var theme = ['주차가능','vod','커플PC']
+		var theme = ['주차가능','VOD','커플PC']
 		$.each(theme,(i,j)=>{
 			$('<li/>')
-			.addClass('heetae_theme_item')
+			.addClass('heetae_theme_item'+i)
 			.appendTo('.heetae_content_theme')
+			
 			
 			let img = '';
 			
 			if(j==='주차가능'){
 				img='//yaimg.yanolja.com/files/2016/0531/2016053116003268e408ba-4e47-47b8-abc0-d193316c483b.png'
-			}else if(j==='vod'){
+			}else if(j==='VOD'){
 				img='//yaimg.yanolja.com/files/2016/0531/20160531160644a30c0aa6-1d57-48e2-ad85-c97600e109ff.png'
 			}else if(j==='커플PC'){
 				img='//yaimg.yanolja.com/files/2016/0531/20160531160802f4fe6a0d-1bfe-49b1-a547-c5a6bfa214f2.png'
@@ -271,17 +275,37 @@ heetae.main =(()=>{
 			
 			$('<img/>')
 			.attr('src',img)
-			.appendTo('.heetae_theme_item')
-			
+			.appendTo('.heetae_theme_item'+i)
 			
 			$('<span/>')
 			.text(j)
-			.appendTo('heetae_theme_item')
-			
-			
+			.appendTo('.heetae_theme_item'+i)
 		})
 		
 		
+		$('<section>')
+		.addClass('heetae_section2')
+		.appendTo('.heetae_content_form')
+		
+		$('<div>')
+		.html('<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">'
+				+'  <li class="nav-item">'
+				+'    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>'
+				+'  </li>'
+				+'  <li class="nav-item">'
+				+'    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>'
+				+'  </li>'
+				+'  <li class="nav-item">'
+				+'    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>'
+				+'  </li>'
+				+'</ul>'
+				+'<div class="tab-content" id="pills-tabContent">'
+				+'  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>'
+				+'  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>'
+				+'  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>'
+				+'</div>')
+		.addClass('heetae_tab_head')
+		.appendTo('.heetae_section2')
 		
 		
 		
