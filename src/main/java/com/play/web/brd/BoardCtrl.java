@@ -59,7 +59,7 @@ public class BoardCtrl {
 		return map;
 	}
 	@GetMapping("/cast/read/{seq}")
-	public @ResponseBody Board read(@PathVariable int seq){
+	public Board read(@PathVariable int seq){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
 		brd.setMsg_seq(seq);
 		brdMap.readInc(brd);
@@ -67,8 +67,8 @@ public class BoardCtrl {
 	}
 	
 	@GetMapping("/cast/reply/{board_id}/{seq}")
-	public @ResponseBody Map<String,Object> replyRead(@PathVariable String board_id, @PathVariable int seq){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
+	public Map<String,Object> replyRead(@PathVariable String board_id, @PathVariable int seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyRead()");
 		brd = new Board();
 		brd.setBoard_depth(seq);
 		brd.setBoard_id(board_id);
@@ -78,6 +78,39 @@ public class BoardCtrl {
 		return map;
 	}
 	
+	@PostMapping("/cast/reWrite/")
+	public @ResponseBody void reWrite(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyWrite()");
+		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		brdMap.reWrite(cast);;
+	}
+	
+	@GetMapping("/cast/reDelete/{board_id}/{board_depth}/{msg_seq}")
+	public void reDelete(@PathVariable int board_depth, @PathVariable String board_id, @PathVariable int msg_seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyDelete()");
+		brd.setBoard_depth(board_depth);
+		brd.setBoard_id(board_id);
+		brd.setMsg_seq(msg_seq);
+		brdMap.reDelete(brd);;
+	}
+	
+	@PostMapping("/cast/write/")
+	public @ResponseBody void write(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","write()");
+		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		cast.setMember_id("A1");
+		cast.setMember_id("cast_1.jpg");
+		brdMap.write(cast);;
+	}
+	
+	@GetMapping("/cast/delete/{board_id}/{msg_seq}")
+	public void delete(@PathVariable String board_id, @PathVariable int msg_seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyDelete()");
+		brd.setBoard_id(board_id);
+		brd.setMsg_seq(msg_seq);
+		brdMap.delete(brd);;
+	}
+	/*
 	@GetMapping("/boards/{id}/{pageNo}")
 	public @ResponseBody Map<String,Object> myList(@PathVariable String id, @PathVariable int pageNo){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","Mylist");
@@ -156,5 +189,5 @@ public class BoardCtrl {
     	Util.log.accept("size: " + file.getSize());
     	Util.log.accept("contentType: " + file.getContentType());
 		return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.CREATED);
-    }
+    }*/
 }

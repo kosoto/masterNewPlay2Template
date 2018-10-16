@@ -189,7 +189,7 @@ app.router = {
 		/*header 끝*/
 		
 		/*content 시작*/
-		$('<content/>').attr({id:'content'}).appendTo('#wrapper');
+		$('<div/>').attr({id:'content'}).appendTo('#wrapper');
 			$('<div/>').attr({id:'mainContent'}).appendTo('#content');
 				$('<div/>').attr({id:'myLocationAddressImage'}).appendTo('#mainContent');
 				$('<img/>').attr({src:$.img()+"/icon/myLocationIcon.JPG"}).appendTo('#myLocationAddressImage');
