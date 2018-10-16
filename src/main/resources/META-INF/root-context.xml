@@ -19,14 +19,14 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	<mvc:annotation-driven />
 	<tx:annotation-driven/>
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+<!-- 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<bean id="loginInterceptor" class="com.play.web.interceptors.LoginInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/member/login"/>
 			<ref bean="loginInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 	
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
  		<property name="viewResolvers">

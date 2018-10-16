@@ -1,9 +1,20 @@
 @charset "UTF-8";
-<!Doctype html>
+
+.mypageTableDiv{
+	padding:2%;
+}
+
+.mypageTable{
+	background:#ff5f81;
+	vertical-align:middle;
+	color: white;
+	margin:auto;
+	text-align: center;
+}
+
 
 #mainContent{
 	left:25%;
-	min-height: calc(100vh - 20px);
 	padding-bottom: 5%;
 }
 
@@ -85,8 +96,8 @@
 }
 
 #mainBanner{
-position: absolute; top:20; left: 0;
-width: 100%;
+	position: absolute; top:20; left: 0;
+	width: 100%;
 }
 
 #logo_btn{

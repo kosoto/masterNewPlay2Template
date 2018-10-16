@@ -17,7 +17,7 @@ sanghoon.main =(()=>{
 		$('#board').remove();
 		$('<a/>').attr({id:'basic_btn', href:'#'}).html('기본정보')
 		.addClass('ya_cusor')
-		.appendTo($('#nav_right')).click(e=>{
+		.appendTo($('.nav_right')).click(e=>{
 			e.preventDefault();
 			sanghoon.service.basic();
 		});
@@ -26,7 +26,7 @@ sanghoon.main =(()=>{
 		$('#amdin').remove();
 		$('<a/>').attr({id:'sales_btn', href:'#'}).html('매출정보')
 		.addClass('ya_cusor')
-		.appendTo($('#nav_right')).click(e=>{
+		.appendTo($('.nav_right')).click(e=>{
 			e.preventDefault();
 			sanghoon.service.sales();
 		});
@@ -34,7 +34,7 @@ sanghoon.main =(()=>{
 		$('#add_btn').remove();
 		$('<a/>').attr({id:'accom_btn', href:'#'}).html('숙소정보')
 		.addClass('ya_cusor')
-		.appendTo($('#nav_right')).click(e=>{
+		.appendTo($('.nav_right')).click(e=>{
 			e.preventDefault();
 			sanghoon.service.accom();
 		});
@@ -42,14 +42,14 @@ sanghoon.main =(()=>{
 		$('#login_btn').remove();
 		$('<a/>').attr({id:'custo', href:'#'}).html('고객정보')
 		.addClass('ya_cusor')
-		.appendTo($('#nav_right')).click(e=>{
+		.appendTo($('.nav_right')).click(e=>{
 			e.preventDefault();
 			sanghoon.service.custo();
 		});
 		
 		$('<a/>').attr({id:'top_accom_btn', href:'#'}).html('top 숙소')
 		.addClass('ya_cusor')
-		.appendTo($('#nav_right')).click(e=>{
+		.appendTo($('.nav_right')).click(e=>{
 			e.preventDefault();
 			sanghoon.service.top_accom();
 		});
