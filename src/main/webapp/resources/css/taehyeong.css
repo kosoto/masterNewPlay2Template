@@ -1,119 +1,61 @@
-#nav{
-	margin-bottom: 0px;
-	background-color: white;
+.date_selecter{
+    background-color: #F2F2F2;
+    width:100%;
+    height:55px;
+    margin-top: 0;
+    padding: 10px;
+    padding-left: 30px;
+    text-align: left;
 }
-#noljaBanner{
-	padding: 5px;
+.category{
+    text-align: left;
+    height: 49px;
+    border-bottom: 1px solid #DDDDDD;
+    padding-top: 15px; 
+    padding-left: 15px;
 }
-#main_panel{
-	width:100%;
-	padding: 0px;
-	position: relative;
+.category_font{
+    display: inline-block;
+    font-family: 'Hi Melody', cursive;
+    font-size: 20px;
+    margin-right: 50px;
+    cursor: pointer;
 }
-#main_panel_body{
-	padding: 0px;
-	position: relative;
+.list{
+    display: inline-block;
+    box-sizing:border-box;
+    width: 60%;
+    border: 1px solid red;
 }
-#sakula{
-	width:100%;
-	height:500px;
-	position: absolute;
+.map{
+    display: inline-block;
+    box-sizing:border-box;
+    width: 40%;
+    border:1px solid blue;
+    position: fixed;
 }
-#main_panel_write{
-	position: absolute;
-	color:white;
-	font-size: 60px;
-	padding-top: 70px;
-	padding-left: 200px;
-	width: 80%;
+.list_ul{
+    display: inline-block;
+    height: 48px;
+    padding-top: 16px; 
+    padding-left: 15px;
 }
-#main_panel_write1{
-	margin-bottom: -15px;
+.list_li{
+    margin-right: 50px;
+    display: inline-block;
+    cursor: pointer;
 }
-#sukbak{
-	text-align: center;
-	font-size: 20px;
-	color: black;
+.list_font{
+    display: inline-block;
+    font-family: 'Hi Melody', cursive;
+    font-size: 20px;
 }
-#option_Accommodation{
-	width: 300px;
-	height: auto;
-	border: 1px solid blue;
-	margin-bottom: 0px;
-	background-color: white;
+.icono-caretDown{
+    zoom:0.7; 
 }
-
-#option_Accommodation_button{
-	border: 1px solid blue;
+.checkbox{
+    display: inline-block;
 }
-#sukbak{
-	margin-bottom: 0px
-}
-#option_Button{
-	background-color: white;
-	width:100%;
-}
-
-#moon{
-	margin-right: 10px;
-}
-#motel{
-	color: black;
-	font-size: 40px;
-}
-#button_list{
-	width:300px;
-	background-color: white;
-	border: 4px solid red;
-}
-#input_date_div{
-	background-color: #F2F2F2;
-	width: 100%;
-	height: 55px;
-	padding-top: 8px;
-	padding-right: 30px;
-	padding-left: 30px;
-}
-#icono-calendar{
-	color:black;
-}
-.category_area{
-	height:49px;
-	border-bottom:1px solid #DDDDDD;
-}
-.category_ul{
-	margin-left: -50px;
-}
-.category_li{
-	padding-top:13px;
-	min-width: 110px;
-	display:inline-block;
-	width: 7.69231%;
-}
-.a_tag_font{
-	cursor:pointer;
-	font-family:Hi Melody,sans-serif;
-	text-align: center;
-	font-size: 20px;
-}
-#list{
-	padding-left:10px;
-	float:left;
-	width:60%;
-}
-#map{
-	position:relative;
-	float:left;
-	width:40%;
-	height:730px;
-}
-.map_header{
-	position: absolute;
-	background-color:hsla(0,0%,100%,9);
-	width:100%;
-	height: 40px;
-	border: solid 1px red;
-}
-#input_date_div{
-	cursor: pointer;
+#font_{
+    margin-left: 150px;
 }

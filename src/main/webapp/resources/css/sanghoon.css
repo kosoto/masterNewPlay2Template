@@ -3,19 +3,22 @@
 #page-wrapper{
 	padding: 30px;
 	width:100%;
-	height:800px;
+	//height:800px;
+	position: absolute;
 }
-
+/* 숙소정보 css */
 #page-wrapper .left_wrapper{
 	width:50%;
-	height:100%;
+	height:555px;
 	float: left;
+	position:relative;
 }
 
 #page-wrapper .right_wrapper{
 	width:50%;
-	height:100%;
+	height:555px;
 	float: right;
+	position:relative;
 }
 
 #page-wrapper .left_wrapper #price_reservation{
@@ -23,6 +26,7 @@
 	width: 100%;
 	left: 50px;
 }
+
 
 #page-wrapper .left_wrapper #accom_reservation{
 	position: relative;
@@ -33,8 +37,8 @@
 
 #page-wrapper .left_wrapper #local_box{
 	position: relative;
-	width:100px;
-	left: 180px;
+	width:80px;
+	left: 185px;
 	border: 2px solid black;
 }
 
@@ -47,5 +51,92 @@
 	width: 100%;
 	right: 50px;
 }
+/* ------------------------------------------------------- */
+/* 매출정보 css */
+.sales_th{
+	text-align: center;
+	width: 5%;
+}
+.sales_table{
+	position: relative;
+	top: 50px;
+}
 
+/* 고객정보 css */
+.custo_div_1{
+	display: inline-blaock;
+	width:100%;
+	height:310px;
+}
+.custo_div_2{
+	width:100%;
+	height:400px;
+}
+#age_reservation{
+	float: left;
+	width:50%;
+	position: relative;
+	left:60px;
+}
+#age_accom{
+	float: right;
+	width:50%;
+	position: relative;
+	right: 100px;
+}
+#reser_count{
+	position: relative;
+	top: 30px;
+}
 
+/* basic css */
+.basic_first{
+	
+	width: 100%;
+	height: 220px;
+}
+.basic_middle{
+	
+	width: 100%;
+	height: 250px;
+}
+.basic_last{
+	
+	width: 100%;
+	height: 250px;
+}
+#available{
+	display: inline-block;
+	width:300px;
+	height: 170px;
+}
+#booked{
+	display: inline-block;
+	width:300px;
+	height: 170px;
+}
+#have_accom_type{
+	display: inline-block;
+	width: 500px;
+	height: 170px;
+}
+#age_member{
+	display: inline-block;
+	width: 700px;
+}
+#member_gender{
+	display: inline-block;
+	width: 400px;
+}
+#top_local{
+	display: inline-block;
+	width: 400px;
+}
+#top_views{
+	display: inline-block;
+	width: 400px;
+}
+#top_average{
+	display: inline-block;
+	width: 400px;
+}

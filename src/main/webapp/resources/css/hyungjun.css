@@ -1,13 +1,25 @@
 @charset "UTF-8";
 
+.mypageTableDiv{
+	padding:2%;
+}
+
+.mypageTable{
+	background:#ff5f81;
+	vertical-align:middle;
+	color: white;
+	margin:auto;
+	text-align: center;
+}
+
+
 #mainContent{
 	left:25%;
-	min-height: calc(100vh - 20px);
-	
+	padding-bottom: 5%;
 }
 
 #mainheader{
-	
+	border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
 	min-height: calc(70vh - 10px);
 }
 
@@ -84,8 +96,8 @@
 }
 
 #mainBanner{
-position: absolute; top:20; left: 0;
-width: 100%;
+	position: absolute; top:20; left: 0;
+	width: 100%;
 }
 
 #logo_btn{
@@ -107,6 +119,7 @@ width: 100%;
     display: inline-block;
     text-align: center;
     font-size: 16px;
+    border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
 }
 
 #accom_addr {
@@ -116,6 +129,7 @@ width: 100%;
     color: #484848;
     display: inline-block;
     font-size: 16px;
+    border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
 }
 
 #checkinDate {
@@ -139,28 +153,32 @@ width: 100%;
 }
 
 #accomSelect {
-	height: 85px;
+    height: 85px;
     color: #222;
     font-size: 26px;
     text-align: center;
+    border: 0;
 }
 
 #accomAddr {
 	height: 85px;
     color: #222;
     font-size: 26px;
+    border: 0;
 }
 
 #checkin_date {
 	height: 85px;
     color: #222;
     font-size: 15px;
+    border: 0;
 }
 
 #checkout_date {
 	height: 85px;
     color: #222;
     font-size: 15px;
+    border: 0;
 }
 
 .ya_cusor {
@@ -180,7 +198,7 @@ width: 100%;
 	text-decoration: none;
 }
 
-#nav_left {
+.nav_left {
     color: #666666;
     font-size: 16px;
 	margin-left: 17px;
@@ -188,7 +206,7 @@ width: 100%;
 	float: left;
 }
 
-#nav_right {
+.nav_right {
 	color: #666666;
     font-size: 16px;
 	margin-right:55px;

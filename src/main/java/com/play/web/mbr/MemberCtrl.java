@@ -1,5 +1,7 @@
 package com.play.web.mbr;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -26,11 +28,13 @@ public class MemberCtrl {
 	@Autowired MemberMapper mbrMap;
 	@Autowired Util2 util2;
 	@Autowired HashMap<String,Object>map;
+	
 	@PostMapping("/join")
 	public @ResponseBody void join(@RequestBody Member param) {
 		logger.info("\n--------- MemberController {} !!-----","join()");
 		param.setAge(util2.ageAndGender(param).getAge());
 		param.setGender(util2.ageAndGender(param).getGender());
+		param.setJoindate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		mbrMap.post(param);
 	}
 	@RequestMapping("/search")
@@ -51,10 +55,14 @@ public class MemberCtrl {
 		mbrMap.delete(param);
 		return "redirect:/";
 	}
-	@GetMapping("/auth")
-	public @ResponseBody Map<String,Object> auth(){
-		System.out.println("auth 컨트롤러");
-		map.put("", "");
+	
+	@PostMapping("/auth")
+	public @ResponseBody Map<String,Object> auth(
+			@RequestBody Member pm){
+		logger.info("\n--------- MemberController {} !!-----","auth()");
+		map.clear();
+		map.put("mbr", mbrMap.get(pm));
+		logger.info("mbrMap.get(pm)" + mbrMap.get(pm));
 		return map;
 	}
 	@PostMapping("/login")
@@ -74,9 +82,9 @@ public class MemberCtrl {
 			pwValid = (mbr != null) ?"CORRECT":"WRONG";
 			mbr = (mbr != null)?mbr:new Member();
 		}
-		rm.put("ID",idValid);
-		rm.put("PW", pwValid);
-		rm.put("MBR", mbr);
+		rm.put("id_valid",idValid);
+		rm.put("pw_valid", pwValid);
+		rm.put("mbr", mbr);
 		return rm;
 	}
 }
