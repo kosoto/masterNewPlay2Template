@@ -132,7 +132,7 @@ sanghoon.service = {
 			$('#content').empty();
 			$('<div/>').attr({id:'page-wrapper'}).appendTo('#content');
 			$('<div/>').addClass('sales_graph').appendTo('#page-wrapper');
-			$('<img/>').attr({src:$.img()+'/admin_test/sales_graph.PNG'}).appendTo('.sales_graph');
+			$('<img/>').attr({src:$.img()+'/admin_test/sales_graph.PNG', style:'display:block; margin-left: auto; margin-right: auto'}).appendTo('.sales_graph');
 			$('<div/>').addClass('sales_table').appendTo('#page-wrapper');
 			let revenue = ['수익','1100','2200','3300','4400','5500','6600','7700','8800','9900','11000','12100','13200'];
 			let hotel = ['호텔','1000','2000','3000','4000','5000','6000','7000','8000','9000','10000','11000','12000'];
@@ -174,12 +174,48 @@ sanghoon.service = {
 					});
 					
 					$('<div/>').attr({id:'price_reservation'}).appendTo('.left_wrapper');
-						$('<img/>').attr({src:$.img()+'/admin_test/price_reservation.PNG', style:'width:500px'}).appendTo('#price_reservation');
+						$('<img/>').attr({src:$.img()+'/admin_test/price_reservation.PNG', style:'width:500px; display:block; margin-left:auto; margin-right:auto'}).appendTo('#price_reservation');
 					$('<div/>').attr({id:'accom_reservation'}).appendTo('.left_wrapper');
-							$('<img/>').attr({src:$.img()+'/admin_test/accom_reservation.PNG', style:'width:500px'}).appendTo('#accom_reservation');
+							$('<img/>').attr({src:$.img()+'/admin_test/accom_reservation.PNG', style:'width:500px; display:block; margin-left:auto; margin-right:auto'}).appendTo('#accom_reservation');
 				$('<div/>').addClass('right_wrapper').appendTo('#page-wrapper');
 					$('<div/>').attr({id:'location'}).appendTo('.right_wrapper');
-							$('<img/>').attr({src:$.img()+'/admin_test/location.PNG', style:'width:500px'}).appendTo('#location');
+					var mapContainer = document.getElementById('location'), // 지도를 표시할 div 
+				    mapOption = {
+				        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				        level: 3 // 지도의 확대 레벨
+				    };  
+
+					// 지도를 생성합니다    
+					var map = new daum.maps.Map(mapContainer, mapOption); 
+
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new daum.maps.services.Geocoder();
+
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+
+						// 정상적으로 검색이 완료됐으면 
+						if (status === daum.maps.services.Status.OK) {
+
+							var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+							// 결과값으로 받은 위치를 마커로 표시합니다
+							var marker = new daum.maps.Marker({
+								map: map,
+								position: coords
+							});
+
+							// 인포윈도우로 장소에 대한 설명을 표시합니다
+							var infowindow = new daum.maps.InfoWindow({
+								content: '<div style="width:150px;text-align:center;padding:6px 0;">제주호텔</div>'
+							});
+							infowindow.open(map, marker);
+
+							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							map.setCenter(coords);
+						} 
+					});
+							//$('<img/>').attr({src:$.img()+'/admin_test/location.PNG', style:'width:500px; display:block; margin-left: auto; margin-right: auto'}).appendTo('#location');
 			
 		},
 		custo : x=>{
@@ -189,12 +225,12 @@ sanghoon.service = {
 			$('<div/>').addClass('custo_div_1').appendTo('#page-wrapper');
 			
 			$('<div/>').attr({id:'age_reservation'}).appendTo('.custo_div_1');
-			$('<img/>').attr({src:$.img()+'/admin_test/age_reservation.PNG', style:'width:400px; height:303px'}).appendTo('#age_reservation');
+			$('<img/>').attr({src:$.img()+'/admin_test/age_reservation.PNG', style:'width:400px; height:303px; display:block;margin-left:auto;margin-right:auto'}).appendTo('#age_reservation');
 			$('<div/>').attr({id:'age_accom'}).appendTo('.custo_div_1');
-			$('<img/>').attr({src:$.img()+'/admin_test/accom_compare.PNG'}).appendTo('#age_accom');
+			$('<img/>').attr({src:$.img()+'/admin_test/accom_compare.PNG', style:'display:block;margin-left:auto;margin-right:auto'}).appendTo('#age_accom');
 			$('<div/>').addClass('custo_div_2').appendTo('#page-wrapper');
 			$('<div/>').attr({id:'reser_count'}).appendTo('.custo_div_2');
-			$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'width:1050px'}).appendTo('#reser_count');
+			$('<img/>').attr({src:$.img()+'/admin_test/reservation_count.PNG', style:'width:1050px; display:block; margin-left:auto;margin-right:auto'}).appendTo('#reser_count');
 			/*$('<div/>').attr({id:'page-wrapper', style:"padding:30px" }).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-5').appendTo('.row');
@@ -211,7 +247,7 @@ sanghoon.service = {
 			$('#content').empty();
 			$('<div/>').attr({id:'page-wrapper'}).appendTo($('#content'));
 			$('<div/>').addClass('accom_list').appendTo('#page-wrapper');
-			$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG', style:'width:60%'}).appendTo('.accom_list');
+			$('<img/>').attr({src:$.img()+'/admin_test/accom_list.PNG', style:'width:60%;display:block;margin-left:auto;margin-right:auto'}).appendTo('.accom_list');
 			/*$('<div/>').attr({id:'page-wrapper', style:"padding:30px"}).appendTo($('#content'));
 			$('<div/>').addClass('row').appendTo('#page-wrapper');
 				$('<div/>').addClass('col-lg-12').appendTo('.row');
