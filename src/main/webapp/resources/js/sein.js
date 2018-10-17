@@ -4,12 +4,14 @@ var sein = sein || {};
 sein.board ={
 	cast : x=>{
 		$('#header').empty();
-		$('#content').empty().attr({style:'background-color: #BDBDBD;'});
+		$('#content').empty();
+		$('<div/>').attr({id:'sein_content',style:'background-color: #BDBDBD'}).appendTo($('#content'));
+		
 		/*배너 슬라이드*/
-		sein.service.banner();
+		sein.service.banner($('#sein_content'));
 		
 		/*컨텐츠 리스트 전체*/
-		$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#content'));
+		$('<div/>').attr({id:'cardlist_rap'}).appendTo($('#sein_content'));
 		
 		/*글쓰기 버튼*/
 		$('<div/>').addClass('bt_rap').append(
@@ -19,20 +21,19 @@ sein.board ={
 			sein.service.write();
 		});
 		
-		var page;
-		var pageMax;
+		$('<div>').addClass('grid card_type').appendTo($('#cardlist_rap'));
+		
+		var page=1;
 		$('<div/>').attr({id:'isotopeGallery'}).addClass('card_type clear isotope').appendTo($('#cardlist_rap'));
 		$.ajax({
 			url:$.ctx()+'/cast/',
 			method:'post',
 			contentType:'application/json',
-			data:JSON.stringify({board_id:'cast',pageNumber:'1'}),
+			data:JSON.stringify({board_id:'cast',pageNumber:page+""}),
 			success:d=>{
 				$.each(d.list,(i,j)=>{
 					sein.service.list(j);
 				})
-				page=d.page.pageNumber;
-				pageMax=d.page.pageCount;
 			},
 			error:(m1,m2,m3)=>{
 				alert(m3);
@@ -56,10 +57,10 @@ sein.board ={
 						success:d=>{
 							setTimeout(()=>{
 								$.each(d.list,(i,j)=>{
-									 sein.service.list(j);
+									sein.service.list(j);
 								})
 							},100)
-							if(d.page.pageCount===page){
+							if(d.page.pageSize===page){
 								$(window).off("scroll");
 							}
 						},
@@ -70,11 +71,12 @@ sein.board ={
 				}
 			})
 		})
+		
 	}
 }
 sein.service ={
 		banner : x=>{
-			$('<div/>').addClass('banner_rap').attr({id:'div_banner'}).appendTo($('#content'));
+			$('<div/>').addClass('banner_rap').attr({id:'div_banner'}).appendTo($('#sein_content'));
 			$('<div/>').attr({id:'carousel','data-ride':'carousel'}).addClass('carousel slide').appendTo($('#div_banner'));
 			$('<ol/>').addClass('carousel-indicators').appendTo($('#carousel'));
 			$('<div/>').addClass('carousel-inner').appendTo($('#carousel'));
@@ -96,49 +98,60 @@ sein.service ={
 			$('.carousel').carousel();
 		},
 		list : x=>{
-				$('<div/>').attr({id:'card_inner'+x.msg_seq}).addClass('card_inner isotope-item bord_all').appendTo($('#isotopeGallery'));
-				$('<div/>').attr({id:'card_top'+x.msg_seq}).addClass('card_top').appendTo($('#card_inner'+x.msg_seq));
-				$('<a/>').attr({href:'#'}).append($('<img/>').attr({src:$.img()+'/cast/'+x.msg_photo,style:'position: static; width: 100%; height: 100%;'})).appendTo($('#card_top'+x.msg_seq))
-				.click(e=>{
-					$.getJSON($.ctx()+'/cast/read/'+x.msg_seq,d=>{
-						sein.service.detail(d);	
-					})
-				});
-				$('<div/>').addClass('card_bottom').attr({id:'card_bottom'+x.msg_seq}).appendTo($('#card_inner'+x.msg_seq));
-				$('<div/>').addClass('user_pic').attr({id:'user_pic'+x.msg_seq}).appendTo($('#card_bottom'+x.msg_seq));
-				$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png'}).appendTo($('#user_pic'+x.msg_seq));
-				$('<div/>').addClass('user_info').attr({id:'user_info'+x.msg_seq}).appendTo('#card_bottom'+x.msg_seq);
-				$('<a/>').attr({href:'#'}).append($('<strong>'+x.msg_title+'</strong>')).appendTo($('#user_info'+x.msg_seq));
-				$('<a/>').attr({href:'#'}).append($('<span>'+x.member_id+'</span>')).appendTo($('#user_info'+x.msg_seq));
-				$('<div/>').addClass('user_cont').attr({id:'user_cont'+x.msg_seq}).appendTo($('#card_bottom'+x.msg_seq));
-				$('<a/>').attr({href:'#'}).append($('<span>'+x.tag+'</span>')).appendTo($('#user_cont'+x.msg_seq));
-				$('<div/>').addClass('count').append(
+			$('<div/>').addClass('grid-item card_inner').append(
+				$('<div/>').addClass('card_top').append(
+					$('<a/>').attr({href:'#'}).append(
+						$('<img/>').attr({src:$.img()+'/cast/'+x.msg_photo})
+						.click(e=>{
+							$.getJSON($.ctx()+'/cast/read/'+x.msg_seq,d=>{
+								sein.service.detail(j);	
+							})
+						})
+					)
+				),
+				$('<div/>').addClass('card_bottom').append(
+					$('<div/>').addClass('user_pic').append(
+						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.jpg'})				
+					),
+					$('<div/>').addClass('user_info').append(
+						$('<a/>').attr({href:'#'}).append($('<strong>'+x.msg_title+'</strong>'))
+						.click(e=>{
+							$.getJSON($.ctx()+'/cast/read/'+x.msg_seq,d=>{
+								sein.service.detail(x);	
+							})
+						}),
+						$('<a/>').attr({href:'#'}).append($('<span>'+x.member_id+'</span>'))
+					),
+					$('<div/>').addClass('user_cont').append(
+						$('<a/>').attr({href:'#'}).append($('<span>'+x.tag+'</span>'))			
+					),
+					$('<div/>').addClass('count').append(
 						$('<span/>').addClass('ico_like'),
 						$('<b/>').html(x.like_count),
 						$('<span/>').addClass('ico_read'),
 						$('<b/>').html(x.msg_count)
-						).appendTo($('#card_bottom'+x.msg_seq));
-			
-				$('.isotope_item').isotope({
-					itemSelector:'.isotope_item',
-					layoutMode: 'fitRows'
-				});
-				
+					)
+				)
+			).appendTo($('.grid'));
+			$('.grid').isotope('destroy');
+			var $grid = $('.grid').isotope({itemSelector:'.grid-item'})
+			$grid.imagesLoaded().progress(()=>{$grid.isotope('layout');});
 		},
 		side_menu : x=>{
 			$('<div/>').attr({id:'side_menu'}).addClass('side_menu').appendTo($('.con_detail'));
 			$('<ul/>').addClass('sein_ul').append(
-					$('<li/>').attr({name:'btnlike'}).append(
-							$('<a/>').attr({href:"#none"}).append(
-									$('<span/>').addClass('bl_like'))),
-					$('<li/>').attr({name:'btnCommnet',style:'display: none'}).append(
-							$('<a/>').attr({href:'#none',style:'display: none'}).addClass('reply').append(
-									$('<span/>').attr({style:'display: none'}).addClass('bl_reply reply'))),
-					$('<li/>').attr({name:'btnBookmark'}).append(
-							$('<a/>').attr({href:"#none"}).append(
-									$('<span/>').addClass('bl_bookmark'))),
 					$('<li/>').append(
-							$('<a/>').append(
+							$('<a/>').attr({href:"#none"}).append(
+									$('<span/>').addClass('bl_like'))).click(e=>{
+										alert('좋아요 클릭');
+									}),
+					$('<li/>').append(
+							$('<a/>').attr({href:"#none"}).append(
+									$('<span/>').addClass('bl_bookmark'))).click(e=>{
+										alert('북마크 클릭');
+									}),
+					$('<li/>').append(
+							$('<a/>').attr({href:"#none"}).append(
 								$('<span/>').addClass('bl_facebook'))).click(e=>{
 									sein.service.sendFacebook();}),
 					$('<li/>').append(
@@ -151,8 +164,8 @@ sein.service ={
 		detail : x=>{
 			$(window).off("scroll"); /*무한스크롤 비활성화*/
 			$('#wrapper').scroll(()=>{e.preventDefault()});
-			$('#content').empty();
-			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#content'));
+			$('#sein_content').empty();
+			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#sein_content'));
 			$('<div/>').addClass('con_inner').attr({style:'padding-top:30px'}).appendTo($('#topContent'));
 			$('<div/>').addClass('con_detail bord_b').appendTo($('.con_inner'));
 			
@@ -162,11 +175,15 @@ sein.service ={
 			$('<div/>').addClass('inner_bg').appendTo($('.con_detail'));
 			$('<div/>').addClass('detail_user').appendTo($('.inner_bg'));
 			$('<div/>').addClass('user_pic').appendTo($('.inner_bg'));
-			$('<a/>').attr({href:'#',name:'jsonProfileImg'})
-			.append($('<img src="'+$.img()+'/profile/'+x.member_id+'.png"'+' alt="" style="position: static; width: 100%; height: 100%;">'))
-			.appendTo($('.user_pic'));
-			$('<a href="/caster/30008731" class="user_name" name="jsonCasterLink"><span name="jsonNickName">펜셔니스타</span></a>')
-			.appendTo($('.detail_user'));
+			$('<a/>').attr({href:'#'})
+			.append($('<img src="'+$.img()+'/profile/'+x.member_id+'.jpg"'+' alt="" style="position: static; width: 100%; height: 100%;">'))
+			.appendTo($('.user_pic')).click(e=>{
+				alert('프로필이미지 클릭');
+			});
+			$('<a/>').attr({href:'#'}).addClass('user_name').append($('<span/>').html(x.member_id))
+			.appendTo($('.detail_user')).click(e=>{
+				alert('닉네임 클릭');
+			});
 			$('<div/>').attr({style:'float:right'}).append(
 				$('<a/>').addClass('btn btn-danger').attr({style:'margin-right:10px'}).html('수정')
 				.click(e=>{
@@ -184,15 +201,15 @@ sein.service ={
 			
 			$('<div/>').addClass('detail_title').appendTo($('.inner_bg'));
 			$('<h3/>').addClass('sc_out').appendTo($('.detail_title'));
-			$('<p id="jsonTitle">'+x.msg_title+'</p>').appendTo($('.detail_title'));
+			$('<p/>').attr({id:'jsonTitle'}).html(x.msg_title).appendTo($('.detail_title'));
 			$('<div/>').addClass('count').appendTo($('.detail_title'));
 			$('<span/>').addClass('day').attr({id:'jsonRegisterDate'}).html(x.msg_date).appendTo($('.count'));
 			$('<span/>').addClass('ico_like').appendTo($('.count'));
-			$('<b/>').attr({name:'jsonLikeCount'}).html(x.like_count).appendTo($('.count'));
+			$('<b/>').html(x.like_count).appendTo($('.count'));
 			$('<span/>').addClass('ico_read').appendTo($('.count'));
-			$('<b/>').attr({name:'readCount'}).html(x.msg_count).appendTo($('.count'));
+			$('<b/>').html(x.msg_count).appendTo($('.count'));
 			$('<a/>').attr({href:'#'}).addClass('reply').append(
-					$('<span/>').html('댓글'),$('<b/>').attr({name:'jsonCommnetCount'}))
+					$('<span/>').html('댓글'),$('<b/>'))
 					.appendTo($('.detail_title')).click(e=>{
 						var offset = $('.bt_rap').offset();
 						$('html').animate({scrollTop : offset.top},400)							
@@ -205,7 +222,7 @@ sein.service ={
 			
 			$('<h3>'+x.msg_content+'</h3>').appendTo($('.detail_area'));
 			$('<div/>').attr({style:'text-align:center',align:'center'}).append(
-					$('<img/>').attr({name:'target_contents_images',src:'http://yaimg.yanolja.com/v5/2018/10/04/13/1280/5bb59e3f8f9110.72529942.png'}))
+					$('<img/>').attr({src:$.img()+'/cast/'+x.msg_photo}))
 			.appendTo($('.detail_area'));
 			
 			/*----- bottom 시작 -----*/
@@ -213,17 +230,20 @@ sein.service ={
 			$('<div/>').addClass('bt_detail').appendTo($('.bt_rap'));
 			$('<ul/>').append(
 				$('<li/>').append(
-					$('<button/>').attr({type:'button', name:'btnlike'}).append(
+					$('<button/>').attr({type:'button'}).append(
 						$('<span/>').addClass('ico_detaillike')),
 					$('<span>').addClass('bt_txt').html('좋아요'),
-					$('<b/>').attr({name:'jsonLikeCount'}).html(x.like_count)
-				),
+					$('<b/>').html(x.like_count)
+				).click(e=>{
+					alert('좋아요 클릭');
+				}),
 				$('<li/>').append(
-					$('<button/>').attr({type:'button', name:'btnBookmark'}).append(
+					$('<button/>').attr({type:'button'}).append(
 							$('<span/>').addClass('ico_detailbook')),
-							$('<span>').addClass('bt_txt').html('북마크'),
-							$('<b/>').attr({name:'jsonBookCount'})
-				),
+							$('<span>').addClass('bt_txt').html('북마크')
+				).click(e=>{
+					alert('북마크 클릭');
+				}),
 				$('<li/>').append(
 						$('<button/>').attr({type:'button'}).append(
 								$('<span/>').addClass('ico_detailface')),
@@ -244,18 +264,18 @@ sein.service ={
 			$('<div/>').addClass('inner_box').appendTo($('#inner_bg_caster'));
 			$('<div/>').addClass('user_cast').appendTo($('.inner_box'));
 			$('<div/>').addClass('user_pic').appendTo($('.user_cast'));
-			$('<a/>').attr({href:'#',name:'jsonProfileImg'}).append(
-					$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position:static;width:100%;height:100%'})
+			$('<a/>').attr({href:'#'}).append(
+					$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.jpg',style:'position:static;width:100%;height:100%'})
 			).appendTo($('.user_pic'));
 			$('<div/>').addClass('user_txt').appendTo($('.user_cast'));
-			$('<a/>').attr({href:'#',name:'jsonCasterLink'}).addClass('user_name')
+			$('<a/>').attr({href:'#'}).addClass('user_name')
 			.append(
-					$('<strong/>').attr({name:'jsonNickName'}).html(x.member_id)
+					$('<strong/>').html(x.member_id)
 			).appendTo($('.user_txt'));
-			$('<p/>').attr({name:'oneLineIntro'}).html('캐스터 소개글').appendTo($('.user_txt'));
+			$('<p/>').html('캐스터 소개글').appendTo($('.user_txt'));
 			$('<div/>').addClass('count').append(
 					$('<span/>').html('구독'),
-					$('<b/>').attr({name:'jsonSubscriberCounter'}).html(x.subscription_count)
+					$('<b/>').html(x.subscription_count)
 			).appendTo($('.user_txt'));
 			
 			/*bt_read on, bt_read off 로 구독중 조절해야하니 변수 처리 요망*/
@@ -270,7 +290,7 @@ sein.service ={
 			$('<div/>').attr({id:'inner_bg_reply'}).addClass('inner_bg').appendTo($('.con_detail'));
 			$('<div/>').addClass('reply_area').appendTo($('#inner_bg_reply'));
 			$('<div/>').addClass('re_txt')
-			.append($('<span/>').html('댓글'),$('<b>').attr({name:'jsonCommentCount'}).html(x.reply_count))
+			.append($('<span/>').html('댓글'),$('<b>').html(x.reply_count))
 			.appendTo($('.reply_area'));
 			
 			$('<div/>').addClass('re_inner').appendTo($('#inner_bg_reply'));
@@ -309,7 +329,7 @@ sein.service ={
 		re_write : x=>{
 			$('#reply_empty').empty();
 			$('<div/>').addClass('re_write add').attr({id:'re_write_add',style:'height:98px'}).append(
-				$('<textarea/>').attr({name:'recommentText',placeholder:'대댓글을 입력해주세요.'}),
+				$('<textarea/>').attr({id:'msg_title',placeholder:'대댓글을 입력해주세요.'}),
 				$('<div/>').addClass('bt_rap')
 				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('대댓글쓰기')))
 				.click(e=>{
@@ -320,11 +340,20 @@ sein.service ={
 		re_modify : x=>{
 			$('#reply_empty').empty();
 			$('<div/>').addClass('re_write modify').attr({id:'re_write_add',style:'height:98px'}).append(
-				$('<textarea/>').attr({name:'recommentText',placeholder:'수정할 기존 댓글보여주기'}),
+				$('<textarea/>').attr({id:'mod_con',placeholder:x.msg_content}),
 				$('<div/>').addClass('bt_rap')
 				.append($('<button/>').attr({type:'submit'}).addClass('btn_saveComment').append($('<b/>').html('수정하기')))
 				.click(e=>{
-					alert('댓글 수정하기 액션');
+					$.ajax({
+						url:$.ctx()+'/cast/reModify/',
+						method:'post',
+						contentType:'application/jason',
+						data:JSON.stringify({msg_content:$('#mod_con').val()}),
+						success:d=>{
+							sein.service.re_read(x);
+						},
+						error:(m1,m2,m3)=>{alert(m3);}
+					})
 				})
 			).appendTo($('#reply_empty'));
 		},
@@ -333,7 +362,7 @@ sein.service ={
 			$('<div/>').addClass('inner').append(
 				$('<div/>').addClass('user_pic').append(
 					$('<a/>').append(
-						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.png',style:'position: static; width: 100%; height: 100%;'})
+						$('<img/>').attr({src:$.img()+'/profile/'+x.member_id+'.jpg',style:'position: static; width: 100%; height: 100%;'})
 					)
 				),
 				$('<div/>').addClass('user_text').append(
@@ -379,8 +408,8 @@ sein.service ={
 			alert('copyURL 액션');
 		},
 		write : x=>{
-			$('#content').empty();
-			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#content'));
+			$('#sein_content').empty();
+			$('<div/>').addClass('contents').attr({id:'topContent'}).appendTo($('#sein_content'));
 			$('<div/>').addClass('con_inner').attr({style:'padding-top:30px'}).appendTo($('#topContent'));
 			$('<div/>').addClass('con_detail bord_b').appendTo($('.con_inner'));
 			$('<div/>').addClass('inner_bg').appendTo($('.con_detail'));

@@ -48,6 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	VALUES (#{msg_content}, #{msg_seq}, #{board_id}, #{member_id}, #{msg_date})
   </insert>
   
+  <update id="reModify">
+  	UPDATE BOARD SET MSG_CONTENT=#{msg_content}
+  	WHERE BOARD_DEPTH LIKE #{board_depth}
+  	AND BOARD_ID LIKE #{board_id}
+  	AND MSG_SEQ LIKE #{msg_seq}
+  </update>
+  
   <delete id="reDelete">
   	DELETE FROM BOARD 
   	WHERE BOARD_DEPTH LIKE #{board_depth}

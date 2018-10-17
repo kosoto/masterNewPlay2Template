@@ -18,7 +18,8 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93cb0c9bef70e9c3919f68e5b7bc8d15&libraries=services,clusterer,drawing"></script><!-- 태형 -->
         <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css"><!-- 태형 -->
         <link href="https://fonts.googleapis.com/css?family=Do+Hyeon%7CGothic+A1:400,600,700,800,900%7CHi+Melody%7CNanum+Pen+Script%7CNoto+Sans+KR&amp;subset=korean" rel="stylesheet"><!-- 태형 -->
-	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 	<script src="${context}/resources/js/app.js"></script>
 </head>

@@ -310,7 +310,7 @@ heetae.main =(()=>{
 			
 			var count=0;
 			
-			for(var i = 0; i<count; i++){
+			for(var i = 0; i<5; i++){
 				var review_temp = {'id':'review_'+i
 					,'score':4.5
 					,'append':'.heetae_tab_review'
