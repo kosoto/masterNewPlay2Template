@@ -9,7 +9,6 @@ import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.play.web.cmm.Util2;
+import com.play.web.img.Image;
 
 @RestController
 @RequestMapping("/member")
@@ -87,4 +87,14 @@ public class MemberCtrl {
 		rm.put("mbr", mbr);
 		return rm;
 	}
+	
+	@PostMapping("/fileUpload")
+	public @ResponseBody Map<String,Object> login(
+			@RequestBody Image img) {
+		logger.info("\n--------- MemberController {} !!-----","fileUpload()");
+		logger.info("img " + img);
+		Map<String,Object> rm =  new HashMap<>();
+		rm.put("img", img);
+		return rm;
+	 }
 }

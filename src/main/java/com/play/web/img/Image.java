@@ -10,4 +10,5 @@ public class Image {
 	private String imgName;
 	private String extension;
 	private String userid;
+	private String formData;
 }

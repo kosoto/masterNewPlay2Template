@@ -1,106 +1,151 @@
 @charset "UTF-8";
-
-.mypageTableDiv{
-	padding:2%;
+.info_lists {
+    position: relative;
+    padding: 30px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
 }
 
-.mypageTable{
-	background:#ff5f81;
-	vertical-align:middle;
+
+.modal-body {
+	margin: auto;
+	padding: 5%;
+}
+
+.radi_button {
+	margin-top: 25px;
+	width: 100%;
+	background: #fc7093;
+	display: block;
+	padding: 10px 0;
+	font-size: 13px;
+	color: #fefefe;
+	font-weight: 600;
+	height: 50px;
+	font-size: 16px;
+}
+
+.nav-tabsHead {
+	padding-top:15px; 
+	padding-left:130px;
+	padding-right: 10px;
+	font-size: 18px;
+	color: #444;
+}
+
+#modalTitle {
+	text-align: left;
+}
+
+.mypageTableDiv {
+	padding: 2%;
+}
+
+.mypageTable {
+	background: #ff5f81;
+	vertical-align: middle;
 	color: white;
-	margin:auto;
+	margin: auto;
 	text-align: center;
 }
 
-
-#mainContent{
-	left:25%;
+#mainContent {
+	left: 25%;
 	padding-bottom: 5%;
 }
 
-#mainheader{
-	border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
+#mainheader {
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px;
 	min-height: calc(70vh - 10px);
 }
 
-.loginBox{
-    padding-top: 100px;
-    min-height: 500px;
+.loginBox {
+	padding-top: 100px;
+	min-height: 500px;
 }
 
-.joinBox{
-    padding-bottom: 50px;
+.joinBox {
+	padding-bottom: 50px;
 }
 
-.loginHead{
-    margin-bottom: 40px;
-    color: #444;
-    font-size: 34px;
-    text-align: center;
+.loginHead {
+	margin-bottom: 40px;
+	color: #444;
+	font-size: 34px;
+	text-align: center;
 }
 
-.inputData{
-   display : block;
-   margin:auto;
-   width: 450px;
-   height: 26px;
-   border: 1px solid #ccc;
-   padding: 20px;
-}
-.hjButton{
-   --webkit--background: linear-gradient(top,#ff4143,#ff1764);
-   background: linear-gradient(top,#ff4143,#ff1764);
-   background: #ff4143;
-   background: -webkit-gradient(linear,left top,right bottom,color-stop(0,#ff4143),color-stop(100%,#ff1764));
-   bottom: 0;
-   left: 0;
-   margin:auto;
-   width: 450px;
-   height: 60px;
-   margin-top: 30px;
-   padding: 20px;
-   text-align: center;
-   font-size: 18px;
-   color: #fff;
-   text-decoration: none;
-   cursor: pointer;
+.inputData {
+	display: block;
+	margin: auto;
+	width: 450px;
+	height: 26px;
+	border: 1px solid #ccc;
+	padding: 25px;
+	margin-bottom: 15px;
 }
 
-.footer_container{
-    background-color: #252425;
-    font-size: 13px;
-    position: relative;
-    width: 100%;
-    height:20%;
-    float: left;
-   	padding-top: 30px;
-   	padding-left: 450px;
-    color: #fff;
-    text-align: left;
-    font-family: 'NanumSquare';
+.hjButton { -
+	-webkit--background: linear-gradient(top, #ff4143, #ff1764);
+	background: linear-gradient(top, #ff4143, #ff1764);
+	background: #ff4143;
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0, #ff4143),
+		color-stop(100%, #ff1764));
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	width: 450px;
+	height: 60px;
+	margin-top: 30px;
+	padding: 20px;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
 }
 
+.footer_container {
+	background-color: #252425;
+	font-size: 13px;
+	position: relative;
+	width: 100%;
+	height: 20%;
+	float: left;
+	padding-top: 30px;
+	padding-left: 450px;
+	color: #fff;
+	text-align: left;
+	font-family: 'NanumSquare';
+}
 
-
-#mainNav{
+#mainNav {
 	padding-left: 20px;
 }
 
-#myLocationAddress{
+#myLocationAddress {
 	font-size: 18px;
 	margin-bottom: 15%;
-} 
-#myLocationAddressImage{
+}
+
+#myLocationAddressImage {
 	margin-left: 35%;
 	float: left;
 }
 
-#mainBanner{
-	position: absolute; top:20; left: 0;
+#mainBanner {
+	position: absolute;
+	top: 20;
+	left: 0;
 	width: 100%;
 }
 
-#logo_btn{
+#logo_btn {
 	float: left;
 }
 
@@ -108,28 +153,37 @@
 	padding-top: 10px;
 	background-color: white;
 	text-align: center;
-	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "NanumBarunGothic", sans-serif !important;
+	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic",
+		"NanumBarunGothic", sans-serif !important;
 }
 
 #accom_type {
 	width: 300px;
 	height: 120px;
 	float: left;
-    color: #484848;
-    display: inline-block;
-    text-align: center;
-    font-size: 16px;
-    border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
+	color: #484848;
+	display: inline-block;
+	text-align: center;
+	font-size: 16px;
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px;
 }
 
 #accom_addr {
 	width: 300px;
 	height: 120px;
 	float: left;
-    color: #484848;
-    display: inline-block;
-    font-size: 16px;
-    border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;
+	color: #484848;
+	display: inline-block;
+	font-size: 16px;
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px;
 }
 
 #checkinDate {
@@ -137,8 +191,8 @@
 	height: 120px;
 	float: left;
 	color: #484848;
-    display: inline-block;
-    text-align: center;
+	display: inline-block;
+	text-align: center;
 	font-size: 16px;
 }
 
@@ -147,38 +201,38 @@
 	height: 120px;
 	float: left;
 	color: #484848;
-    display: inline-block;
-    text-align: center;
+	display: inline-block;
+	text-align: center;
 	font-size: 16px;
 }
 
 #accomSelect {
-    height: 85px;
-    color: #222;
-    font-size: 26px;
-    text-align: center;
-    border: 0;
+	height: 85px;
+	color: #222;
+	font-size: 26px;
+	text-align: center;
+	border: 0;
 }
 
 #accomAddr {
 	height: 85px;
-    color: #222;
-    font-size: 26px;
-    border: 0;
+	color: #222;
+	font-size: 26px;
+	border: 0;
 }
 
 #checkin_date {
 	height: 85px;
-    color: #222;
-    font-size: 15px;
-    border: 0;
+	color: #222;
+	font-size: 15px;
+	border: 0;
 }
 
 #checkout_date {
 	height: 85px;
-    color: #222;
-    font-size: 15px;
-    border: 0;
+	color: #222;
+	font-size: 15px;
+	border: 0;
 }
 
 .ya_cusor {
@@ -199,8 +253,8 @@
 }
 
 .nav_left {
-    color: #666666;
-    font-size: 16px;
+	color: #666666;
+	font-size: 16px;
 	margin-left: 17px;
 	margin-top: 10px;
 	float: left;
@@ -208,8 +262,8 @@
 
 .nav_right {
 	color: #666666;
-    font-size: 16px;
-	margin-right:55px;
+	font-size: 16px;
+	margin-right: 55px;
 	margin-top: 10px;
 	float: right;
 }
@@ -238,7 +292,7 @@
 }
 
 .btn-search-stay {
-    color: #fff;
+	color: #fff;
 	font-size: 24px;
 	position: absolute;
 	top: 0;
@@ -247,5 +301,6 @@
 	text-rendering: auto;
 	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #ff493d),
 		color-stop(100%, #ff1069));
-	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "NanumBarunGothic", sans-serif !important;
+	font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic",
+		"NanumBarunGothic", sans-serif !important;
 }
