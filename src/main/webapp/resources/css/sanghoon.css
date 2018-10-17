@@ -25,6 +25,7 @@
 	position: relative;
 	width: 100%;
 	left: 50px;
+	margin: auto;
 }
 
 
@@ -33,6 +34,7 @@
 	width: 100%;
 	top: 40px;
 	left: 50px;
+	margin: auto;
 }
 
 #page-wrapper .left_wrapper #local_box{
@@ -45,14 +47,20 @@
 #page-wrapper .left_wrapper #local_box #local_sel{
 	width:100%;
 	font-size:20px;
+	margin
 }
 #page-wrapper .right_wrapper #location{
 	position: relative;
-	width: 100%;
+	width: 80%;
+	height: 95%; /* 지도 api 테스트 css */
 	right: 50px;
+	margin: auto;
 }
 /* ------------------------------------------------------- */
 /* 매출정보 css */
+.sales_graph{
+	margin: auto;
+}
 .sales_th{
 	text-align: center;
 	width: 5%;
@@ -91,19 +99,22 @@
 
 /* basic css */
 .basic_first{
-	
+	position: relative;
 	width: 100%;
 	height: 220px;
+	left: 15%;
 }
 .basic_middle{
-	
+	position: relative;
 	width: 100%;
 	height: 250px;
+	left: 15%;
 }
 .basic_last{
-	
+	position: relative;
 	width: 100%;
 	height: 250px;
+	left: 15%;
 }
 #available{
 	display: inline-block;
