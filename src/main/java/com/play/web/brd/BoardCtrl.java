@@ -66,6 +66,15 @@ public class BoardCtrl {
 		return brdMap.read(brd);
 	}
 	
+
+	
+	@PostMapping("/cast/reWrite/")
+	public @ResponseBody void reWrite(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyWrite()");
+		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		brdMap.reWrite(cast);;
+	}
+	
 	@GetMapping("/cast/reply/{board_id}/{seq}")
 	public Map<String,Object> replyRead(@PathVariable String board_id, @PathVariable int seq){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyRead()");
@@ -78,11 +87,10 @@ public class BoardCtrl {
 		return map;
 	}
 	
-	@PostMapping("/cast/reWrite/")
-	public @ResponseBody void reWrite(@RequestBody Board cast){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyWrite()");
-		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		brdMap.reWrite(cast);;
+	@PostMapping("/cast/reModify/")
+	public @ResponseBody void reModify(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyModify()");
+		brdMap.reModify(cast);;
 	}
 	
 	@GetMapping("/cast/reDelete/{board_id}/{board_depth}/{msg_seq}")

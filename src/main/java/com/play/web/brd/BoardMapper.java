@@ -17,6 +17,7 @@ public interface BoardMapper {
   public List<Board> reply(Board vo);
   public void reWrite(Board vo);
   public void reDelete(Board vo);
+  public void reModify(Board vo);
   public void readInc(Board vo);
   public void update(Board vo);
   public void delete(Board vo);
