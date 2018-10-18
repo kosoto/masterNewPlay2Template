@@ -31,6 +31,7 @@ app.permision = (()=>{
 				$('<div/>').addClass('inputBox').appendTo('.loginBox');
 					$('<input/>').attr({type:'text', id:'member_id', placeholder:'아이디'}).addClass('inputData').appendTo('.inputBox');
 					$('<input/>').attr({type:'text', id:'password', placeholder:'비밀번호'}).addClass('inputData').appendTo('.inputBox');
+					$('<div/>').attr({id:'loginAlert'}).addClass('validAlert').appendTo('.inputBox');
 					$('<div/>').addClass('hjButton').text('로그인').attr({id:'loginButton'}).appendTo('.inputBox')
 					.click(e=>{
 						$.ajax({
@@ -41,9 +42,13 @@ app.permision = (()=>{
 						success:d=>{
 							let validate ="";
 							if(d.id_valid==='WRONG'){
+								$('#loginAlert').empty();
 								validate ="아이디가 없습니다.";
+								$('<div/>').text(validate).appendTo('#loginAlert');
 							}else if(d.pw_valid==='WRONG'){
+								$('#loginAlert').empty();
 								validate ="비밀번호가 틀렸습니다.";	
+								$('<div/>').text(validate).appendTo('#loginAlert');
 							}else{
 								$.cookie("loginID", d.mbr.member_id);
 									e.preventDefault();
@@ -51,7 +56,7 @@ app.permision = (()=>{
 									$('.nav_right').empty();
 									$('#content').empty();
 									$('<a/>').attr({href:'#', id:'reservationList'}).html('예약내역').addClass('ya_cusor').appendTo('.nav_right');
-									$('<a/>').attr({href:'#', id:'mypage'}).html(d.mbr.member_id + '님의 마이페이지').addClass('ya_cusor').appendTo('.nav_right').click(e=>{
+									$('<a/>').attr({href:'#', id:'mypage'}).html(d.mbr.nickname + '님의 마이페이지').addClass('ya_cusor').appendTo('.nav_right').click(e=>{
 										/*e.preventDefault();*/
 										$.ajax({
 											url:$.ctx()+'/member/auth',
@@ -65,7 +70,6 @@ app.permision = (()=>{
 											},
 											error:(m1,m2,m3)=>{alert(m3);}
 										});
-										
 									});
 									$('#reservationList').click(e=>{
 											e.preventDefault();
@@ -120,68 +124,39 @@ app.permision = (()=>{
 	var mypage =d=>{
 		$('#header').empty();
 		$('#content').empty();
+		$('#content').attr({style:'background: #f5f5f5'});
 		$('<div/>').addClass('mypageTableDiv').appendTo('#content');
 		$('<div/>').addClass('mypageBottomNav').appendTo('#content');
-			$('<ul/>').addClass('nav nav-tabs').attr({id:'nav-tabs'}).appendTo('.mypageBottomNav');
-				$('<li/>').addClass('nav-item').attr({id:'nav-item1'}).appendTo('#nav-tabs');
+			app.service.myBenefit(d);
 					$('<a/>').addClass('nav-link active').attr({href:'#',id:'myBenefit'}).html('나의혜택').appendTo('#nav-item1').click(e=>{
-						
+						app.service.myBenefit(d);
 					});
 				$('<li/>').addClass('nav-item').attr({id:'nav-item2'}).appendTo('#nav-tabs');
 					$('<a/>').addClass('nav-link active').attr({href:'#',id:'modifyDelete'}).html('개인정보수정/탈퇴').appendTo('#nav-item2').click(e=>{
-						$('<div/>').html('개인정보 수정').addClass('nav-tabsHead').attr({id:'nav-tabsHead1'}).appendTo('#content');
-							$('<ul/>').addClass('info_lists').attr({style:'padding-left:130px'}).appendTo('#nav-tabsHead1');
-								$('<li/>').appendTo('.info_lists').attr({id:'modifyNickname'}).html('<b>닉네임</b>');
-									$('<span/>').html(d.mbr.nickname).attr({style:"margin-left: 200px; font-weight normal;"}).appendTo('#modifyNickname')
-									$('<button/>').addClass('btn btn-light').attr({'data-target':"#layerpop",'data-toggle':"modal"}).text('변경').appendTo('#modifyNickname').click(e=>{
-										$('#modalTitle').empty();
-										$('.modal-body').empty();
-										$('<h4/>').html('닉네임 변경하기').appendTo('#modalTitle');
-										$('<div class="modal fade" id="layerpop">'
-												+'  <div class="modal-dialog">'
-												+'    <div class="modal-content">'
-												+'      <div class="modal-header">'
-												+'        <h4 class="modal-title" id="modalTitle">닉네임 변경하기</h4>'
-												+'        <button type="button" class="close" data-dismiss="modal">×</button>'
-												+'      </div>'
-												+'      <div class="modal-body">'
-												+'      </div>'
-												+'      <div class="modal-footer">'
-												+'        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>'
-												+'      </div>'
-												+'    </div>'
-												+'  </div>'
-												+'</div>').appendTo('#content');
-										$('<div/>').html('현재 닉네임').attr({style:'padding-bottom:15px; font-weight: bold'}).appendTo('.modal-body');
-										$('<div/>').html(d.mbr.nickname).attr({style:'padding-bottom:15px'}).appendTo('.modal-body');
-										$('<div/>').html('변경 닉네임').attr({style:'padding-bottom:15px;font-weight: bold'}).appendTo('.modal-body');
-										$('<input/>').attr({type:'text', id:'changeNickname', placeholder:'변경하려는 닉네임을 입력해주세요'}).addClass('inputData').appendTo('.modal-body');
-										$('<button/>').addClass('radi_button btn_save').attr({id:'update_password'}).text('수정완료').appendTo('.modal-body').click(e=>{
-											alert('수정완료 클릭');
+						$('.nav-tabsHeadMain').remove();
+						$('.nav-tabsHead').remove();
+					$('<div/>').addClass('nav-tabsHeadMain').attr({id:'nav-tabsHeadMain1'}).appendTo('#content');
+							$('<div/>').addClass('nav-tabsHead').html('개인정보 수정').attr({id:'nav-tabsHead1'}).appendTo('#nav-tabsHeadMain1');
+								$('<ul/>').addClass('info_lists').attr({style:'padding-left:130px'}).appendTo('#nav-tabsHead1');
+									$('<li/>').appendTo('.info_lists').attr({id:'modifyNickname'}).html('<b>닉네임</b>');
+										$('<span/>').html(d.mbr.nickname).attr({style:"margin-left: 200px; font-weight normal;"}).appendTo('#modifyNickname')
+										$('<button/>').addClass('btn btn-light').attr({'data-target':"#layerpop",'data-toggle':"modal"}).text('변경').appendTo('#modifyNickname').click(e=>{
+											app.service.myModal();
+											$('<h4/>').html('닉네임 변경하기').appendTo('#modalTitle');
+											$('<div/>').html('현재 닉네임').attr({style:'padding-bottom:15px; font-weight: bold'}).appendTo('.modal-body');
+											$('<div/>').html(d.mbr.nickname).attr({style:'padding-bottom:15px'}).appendTo('.modal-body');
+											$('<div/>').html('변경 닉네임').attr({style:'padding-bottom:15px;font-weight: bold'}).appendTo('.modal-body');
+											$('<input/>').attr({type:'text', id:'changeNickname', placeholder:'변경하려는 닉네임을 입력해주세요'}).addClass('inputData').appendTo('.modal-body');
+											$('<button/>').addClass('radi_button btn_save').attr({id:'update_password'}).text('수정완료').appendTo('.modal-body').click(e=>{
+												alert('수정완료 클릭');
+											});
 										});
-									});
 									
 								$('<li/>').appendTo('.info_lists').attr({id:'modifyPhone'}).html('<b>휴대폰번호</b>');
 									$('<span/>').html(d.mbr.phone).attr({style:"margin-left: 170px; font-weight normal;"}).appendTo('#modifyPhone')
 									$('<button/>').addClass('btn btn-light').attr({'data-target':"#layerpop",'data-toggle':"modal"}).text('변경').appendTo('#modifyPhone').click(e=>{
-										$('#modalTitle').empty();
-										$('.modal-body').empty();
+										app.service.myModal();
 										$('<h4/>').html('휴대폰 번호 변경하기').appendTo('#modalTitle');
-										$('<div class="modal fade" id="layerpop">'
-												+'  <div class="modal-dialog">'
-												+'    <div class="modal-content">'
-												+'      <div class="modal-header">'
-												+'        <h4 class="modal-title" id="modalTitle">휴대폰 번호 변경하기</h4>'
-												+'        <button type="button" class="close" data-dismiss="modal">×</button>'
-												+'      </div>'
-												+'      <div class="modal-body">'
-												+'      </div>'
-												+'      <div class="modal-footer">'
-												+'        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>'
-												+'      </div>'
-												+'    </div>'
-												+'  </div>'
-												+'</div>').appendTo('#content');
 										$('<div/>').html('현재 휴대폰번호').attr({style:'padding-bottom:15px; font-weight: bold'}).appendTo('.modal-body');
 										$('<div/>').html(d.mbr.phone).attr({style:'padding-bottom:15px'}).appendTo('.modal-body');
 										$('<div/>').html('변경 휴대폰번호').attr({style:'padding-bottom:15px;font-weight: bold'}).appendTo('.modal-body');
@@ -193,24 +168,8 @@ app.permision = (()=>{
 									
 								$('<li/>').appendTo('.info_lists').attr({id:'modifyPassword'}).html('<b>비밀번호</b>');
 									$('<button/>').addClass('btn btn-light').attr({'data-target':"#layerpop",'data-toggle':"modal"}).text('변경').appendTo('#modifyPassword').click(e=>{
-										$('#modalTitle').empty();
-										$('.modal-body').empty();
+										app.service.myModal();
 										$('<h4/>').html('비밀번호 변경하기').appendTo('#modalTitle');
-										$('<div class="modal fade" id="layerpop">'
-												+'  <div class="modal-dialog">'
-												+'    <div class="modal-content">'
-												+'      <div class="modal-header">'
-												+'        <h4 class="modal-title" id="modalTitle">비밀번호 변경하기</h4>'
-												+'        <button type="button" class="close" data-dismiss="modal">×</button>'
-												+'      </div>'
-												+'      <div class="modal-body">'
-												+'      </div>'
-												+'      <div class="modal-footer">'
-												+'        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>'
-												+'      </div>'
-												+'    </div>'
-												+'  </div>'
-												+'</div>').appendTo('#content');
 										$('<input/>').attr({type:'text', id:'currentPassword', placeholder:'현재 비밀번호를 입력하세요.'}).addClass('inputData').appendTo('.modal-body');
 										$('<input/>').attr({type:'text', id:'changePassword', placeholder:'변경하려는 비밀번호를 입력하세요.'}).addClass('inputData').appendTo('.modal-body');
 										$('<input/>').attr({type:'text', id:'changePassword', placeholder:'변경하려는 비밀번호를 한번 더 입력하세요.'}).addClass('inputData').appendTo('.modal-body');
@@ -219,19 +178,44 @@ app.permision = (()=>{
 										});
 									});	
 									
-						$('<div/>').html('간편로그인 연결 계정').addClass('nav-tabsHead').attr({id:'nav-tabsHead2'}).appendTo('#content');
+					$('<div/>').addClass('nav-tabsHeadMain').attr({id:'nav-tabsHeadMain2'}).appendTo('#content');		
+						$('<div/>').addClass('nav-tabsHead').html('간편로그인 연결 계정').attr({id:'nav-tabsHead2'}).appendTo('#nav-tabsHeadMain2');
 							$('<li/>').addClass('info_lists').attr({style:'padding-left:130px',id:'modifyExternalService'}).appendTo('#nav-tabsHead2');
-						
-						$('<div/>').html('회원탈퇴').addClass('nav-tabsHead').attr({id:'nav-tabsHead3'}).appendTo('#content');	
+					
+					$('<div/>').addClass('nav-tabsHeadMain').attr({id:'nav-tabsHeadMain3'}).appendTo('#content');							
+						$('<div/>').addClass('nav-tabsHead').html('회원탈퇴').attr({id:'nav-tabsHead3', style:'padding-bottom:50px'}).appendTo('#nav-tabsHeadMain3');	
 							$('<li/>').addClass('info_lists').attr({style:'padding-left:130px',id:'memberWithdrawal'}).appendTo('#nav-tabsHead3');
 								$('<div/>').html('탈퇴를 하시려면 안내 및 동의를 받아야합니다. 정말 탈퇴하시겠습니까?').appendTo('#memberWithdrawal');
-								$('<button/>').addClass('btn btn-light').text('탈퇴하기').appendTo('#memberWithdrawal')
-								.click(e=>{
-									alert('탈퇴하기 클릭');
+								$('<button/>').addClass('btn btn-light').attr({'data-target':"#layerpop",'data-toggle':"modal"}).text('탈퇴하기').appendTo('#memberWithdrawal').click(e=>{
+									app.service.myModal();
+									$('<h4/>').html('회원 탈퇴하기').appendTo('#modalTitle');
+									$('<div/>').html('탈퇴진행을 위해 비밀번호를 한 번 더 입력해주세요.').attr({style:'padding-bottom:15px;font-weight: bold'}).appendTo('.modal-body');
+									$('<input/>').attr({type:'text', id:'withdrawlPassword', placeholder:'비밀번호를 입력하세요.'}).addClass('inputData').appendTo('.modal-body');
+									$('<button/>').addClass('radi_button btn_save').attr({id:'withdrawal_password'}).text('확인').appendTo('.modal-body').click(e=>{
+										if($('#withdrawlPassword').val()==d.mbr.password){
+											$.ajax({
+												url:$.ctx()+'/member/delete',
+												method:'post',
+												contentType:'application/json',
+												data:JSON.stringify({
+													member_id:$.cookie("loginID"),
+													password:$('#withdrawlPassword').val()
+												}),
+												success:d=>{
+													$('#deleteAlert').remove();
+													$('<div/>').html('탈퇴가 처리되었습니다. 이용해주셔서 감사드립니다.').addClass('validAlert').attr({id:'deleteAlert',style:'padding-bottom:15px;'}).appendTo('.modal-body');
+												},
+												error:(m1,m2,m3)=>{alert(m3);}
+											});
+										}else{
+											$('#deleteAlert').remove();
+											$('<div/>').html('비밀번호가 틀렸습니다. 다시 확인해주세요.').addClass('validAlert').attr({id:'deleteAlert',style:'padding-bottom:15px;font-weight: bold'}).appendTo('.modal-body');
+										}
+									});
 								});
 					});
 				
-			$('<table width="840px" height="400px"/>').addClass('mypageTable').appendTo('.mypageTableDiv');
+			$('<table width="1000px" height="450px"/>').addClass('mypageTable').appendTo('.mypageTableDiv');
 				$('<tr/>').attr({id:'tr1'}).appendTo('.mypageTable');
 					$('<td  width="40%"/>').attr({rowspan:"3"}).html('사진 대신 일단 쿠키 : ' + $.cookie("loginID")).appendTo('#tr1');
 					$('<td  width="30%"/>').html('○ 성별').appendTo('#tr1');
@@ -253,26 +237,8 @@ app.permision = (()=>{
 					$('<td/>').html('○ 우편번호').appendTo('#tr5');
 					$('<td/>').html(d.mbr.zipcode).appendTo('#tr5');
 					$('<button/>').addClass('btn btn-primary').attr({'data-target':"#layerpop",'data-toggle':"modal", id:'modal1'}).appendTo('#photoChangeBtn').html('사진변경').click(e=>{
-						$('.modal-body').empty();
-						$('#modalTitle').empty();
-						$('<h4/>').html('사진 변경하기').appendTo('#modalTitle');
-						$('<div class="modal fade" id="layerpop" >'
-								+'  <div class="modal-dialog">'
-								+'    <div class="modal-content">'
-								+'      <div class="modal-header">'
-								+'        <button type="button" class="close" data-dismiss="modal">×</button>'
-								+'        <!-- header title -->'
-								+'        <h4 class="modal-title" id="modalTitle">사진 변경하기</h4>'
-								+'      </div>'
-								+'      <div class="modal-body">'
-								+'      </div>'
-								+'      <div class="modal-footer">'
-								+'        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>'
-								+'      </div>'
-								+'    </div>'
-								+'  </div>'
-								+'</div>')
-								.appendTo('#content');
+							app.service.myModal();
+							$('<h4/>').html('사진 변경하기').appendTo('#modalTitle');
 								$('<form/>').attr({name:"uploadForm", id:"uploadForm", enctype:"multipart/form-data", method:"post"}).appendTo('.modal-body');
 									$('<table width="100%" height="150px" border="1px"/>').addClass('table').appendTo('#uploadForm');
 										$('<tbody>').attr({id:'fileTableTbody'}).appendTo('.table');
@@ -554,6 +520,37 @@ app.service = {
 				$('.carousel').carousel();
 				/*banner 시작*/		
 			/*content 끝*/	
+		},
+		myBenefit : d=>{
+			$('<ul/>').addClass('nav nav-tabs').attr({id:'nav-tabs'}).appendTo('.mypageBottomNav');
+			$('<li/>').addClass('nav-item').attr({id:'nav-item1'}).appendTo('#nav-tabs');
+				$('.nav-tabsHeadMain').remove();
+				$('.nav-tabsHead').remove();
+				$('<div/>').addClass('nav-tabsHeadMain').attr({id:'nav-tabsHeadMain2'}).appendTo('#content');
+				$('<div/>').addClass('nav-tabsHead').html('<b>포인트</b>').attr({id:'nav-tabsHead2',style:'padding-bottom:50px;'}).appendTo('#nav-tabsHeadMain2');
+					$('<ul/>').addClass('info_lists1').attr({id:'info_lists1',style:'padding-left:130px'}).appendTo('#nav-tabsHead2');
+						$('<li/>').appendTo('#info_lists1').attr({id:'pointHead'}).html('<b>예약포인트</b>');
+					$('<ul/>').addClass('info_lists').attr({id:'info_lists2',style:'padding-left:130px;margin-bottom: unset;padding-top: 15px;padding-bottom: 15px;'}).appendTo('#nav-tabsHead2');	
+						$('<li/>').appendTo('#info_lists2').html(d.mbr.point);
+		},
+		myModal : d=>{
+			$('#modalTitle').empty();
+			$('.modal-body').empty();
+			$('<div class="modal fade" id="layerpop">'
+					+'  <div class="modal-dialog">'
+					+'    <div class="modal-content">'
+					+'      <div class="modal-header">'
+					+'        <h4 class="modal-title" id="modalTitle"></h4>'
+					+'        <button type="button" class="close" data-dismiss="modal">×</button>'
+					+'      </div>'
+					+'      <div class="modal-body">'
+					+'      </div>'
+					+'      <div class="modal-footer">'
+					+'        	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>'
+					+'      </div>'
+					+'    </div>'
+					+'  </div>'
+					+'</div>').appendTo('#content');
 		}
 }
 
@@ -581,7 +578,6 @@ app.router = {
 		$('<div/>').attr({id:'mainNav'}).appendTo($('#wrapper'));
 			$('<nav/>').attr({id:'nav'}).appendTo($('#mainNav'));
 				$('<a/>').addClass('yanoljaMainLogo').attr({id:'logo_btn'}).appendTo('#nav');
-					$('<img/>').attr({src:$.img()+"/icon/yanoljaMainLogo.JPG", id:'#logoImage'}).appendTo('#logo_btn')
 				$('<div/>').addClass('nav_left').appendTo('#nav');
 					$('<a/>').attr({href:'#', id:'mylocation'}).html('내주변(김태형)').appendTo('.nav_left');
 					$('<a/>').attr({href:'#', id:'hotelSearch'}).html('숙소검색(한희태)').appendTo('.nav_left');
