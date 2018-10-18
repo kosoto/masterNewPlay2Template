@@ -4,6 +4,16 @@ li {
 	list-style: none;
 }
 
+em{
+	font-style: normal;
+}
+
+.heetae_test222{
+	width: 130px;
+	height:37px;
+	opacity: 0;
+}
+
 .heetae_nav{
 	height: 63px;
 }
@@ -227,6 +237,7 @@ li {
 	padding-top: 38px;
 	padding-left: 30px;
 	padding-right: 30px;
+	padding: 38px 30px 60px 30px
 }
 
 .heetae_section_form{
@@ -275,7 +286,7 @@ li {
 	
 }
 
-.heetae_score_detail i{
+.heetae_score_info i{
 	display : inline-block;
 	width: 16px;
     height: 16px;
@@ -298,7 +309,6 @@ li {
 	margin-top:-10px;
 	margin-left: 5px;
 	font-size: 14px;
-	font-style: normal;
 	vertical-align: middle
 }
 
@@ -437,7 +447,6 @@ li {
 }
 
 .heetae_tab_info_title em{
-	font-style: normal;
 	font-size: 28px;
     color: #333;
 }
@@ -482,7 +491,6 @@ li {
     font-weight: 600;
     letter-spacing: -1px;
     vertical-align: middle;
-    font-style: normal;
     margin-bottom: 10px;
 }
 
@@ -570,13 +578,56 @@ li {
     min-height: 140px;
 }
 
+.heetae_review_info_imgform{
+	display: block;
+    padding: 30px 10px;
+    padding-left: 240px;
+    min-height: 140px;
+}
+
+.heetae_review_item img{
+	position: absolute;
+    left: 10px;
+    top: 30px;
+    width: 210px;
+    height: 140px;
+    overflow: hidden;
+    width: 210px;
+    height: 140px;
+}
+
 .heetae_review_info_title{
 	margin-bottom: 20px;
 	display: block;
 }
 
-.review_info_title_content{
-    font-size: 15px;
+.heetae_review_info_title strong{
+	color: #333;
+	display: inline-block;
+    margin-right: 100px;
+    vertical-align: top;
+}
+
+.heetae_review_info_title_tag{
+	display: inline-block;
+    vertical-align: top;
+}
+
+.heetae_review_info_title_tag i{
+	color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    padding: 1px 4px 2px;
+    margin-right: 5px;
+    background-color: #ff2d60;
+    font-style: normal;
+}
+
+.heetae_review_info_title_tag em{
+}
+
+.review_info_content{
+    font-size: 14px;
     color: #666666;	
 }
 
@@ -619,7 +670,6 @@ li {
    font-size: 16px;
    color: #333;
    font-weight: 600;
-   font-style: normal;
    display: inline-block;
 }
 
@@ -670,7 +720,6 @@ li {
 
 .heetae_cupon_item_title em{
 	color: #ff2d60;
-	font-style: normal;
 	font-size: 19px;
 	font-weight: 600;
 	letter-spacing: -.5px;
