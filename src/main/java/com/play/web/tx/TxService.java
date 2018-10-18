@@ -21,7 +21,7 @@ public class TxService {
 	@Transactional
 	public Map<?,?> write(Map<?,?> p){
 		map.clear();
-		brdMapper.create((Board) p.get("brd"));
+		/*brdMapper.create((Board) p.get("brd"));*/
 		poMapper.update(p);
 		map.clear();
 		map.put("brd", brdMapper);

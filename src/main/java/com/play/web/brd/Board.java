@@ -27,4 +27,12 @@ public class Board {
 	private String tag;
 	private Integer like_count;
 	private Integer reply_count;
+	
+	
+	
+	private Integer accom_seq;
+	private String room_name;
+	private String room_no;
+	private int room_price;
+	
 }
