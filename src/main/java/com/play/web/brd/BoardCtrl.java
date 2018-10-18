@@ -1,10 +1,5 @@
 package com.play.web.brd;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,16 +8,12 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.play.web.cmm.Util;
 import com.play.web.cmm.Util2;
@@ -40,6 +31,16 @@ public class BoardCtrl {
 	@Autowired Map<String,Object> map;
 	@Resource(name="uploadPath")
 	private String uploadPath;
+	
+
+	@PostMapping("/cast/write/")
+	public @ResponseBody void write(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","write()");
+		cast.setMember_id("A3");
+		cast.setMsg_photo("cast_3.jpg");
+		brdMap.write(cast);;
+	}
+	
 	@PostMapping("/cast/")
 	public @ResponseBody Map<String,Object> list(@RequestBody Map<String,Object>cast){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","list");
@@ -58,6 +59,7 @@ public class BoardCtrl {
 		map.put("page", page);
 		return map;
 	}
+	
 	@GetMapping("/cast/read/{seq}")
 	public Board read(@PathVariable int seq){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","read()");
@@ -66,12 +68,24 @@ public class BoardCtrl {
 		return brdMap.read(brd);
 	}
 	
-
+	@PostMapping("/cast/modify/")
+	public @ResponseBody void modify(@RequestBody Board cast){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","modify()");
+		Util.log.accept(cast+"");
+		brdMap.modify(cast);;
+	}
 	
+	@GetMapping("/cast/delete/{board_id}/{msg_seq}")
+	public void delete(@PathVariable String board_id, @PathVariable int msg_seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyDelete()");
+		brd.setBoard_id(board_id);
+		brd.setMsg_seq(msg_seq);
+		brdMap.delete(brd);;
+	}
+
 	@PostMapping("/cast/reWrite/")
 	public @ResponseBody void reWrite(@RequestBody Board cast){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyWrite()");
-		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		brdMap.reWrite(cast);;
 	}
 	
@@ -93,6 +107,7 @@ public class BoardCtrl {
 		brdMap.reModify(cast);;
 	}
 	
+	
 	@GetMapping("/cast/reDelete/{board_id}/{board_depth}/{msg_seq}")
 	public void reDelete(@PathVariable int board_depth, @PathVariable String board_id, @PathVariable int msg_seq){
 		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyDelete()");
@@ -102,20 +117,37 @@ public class BoardCtrl {
 		brdMap.reDelete(brd);;
 	}
 	
-	@PostMapping("/cast/write/")
-	public @ResponseBody void write(@RequestBody Board cast){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","write()");
-		cast.setMsg_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		cast.setMember_id("A1");
-		cast.setMsg_photo("cast_1.jpg");
-		brdMap.write(cast);;
+	@GetMapping("/cast/likeInc/{msg_seq}")
+	public void likeInc(@PathVariable int msg_seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","likeInc()");
+		brdMap.likeInc(msg_seq);
 	}
 	
-	@GetMapping("/cast/delete/{board_id}/{msg_seq}")
-	public void delete(@PathVariable String board_id, @PathVariable int msg_seq){
-		logger.info("\n BoardCtrl :::::::::: {} !!-----","replyDelete()");
-		brd.setBoard_id(board_id);
-		brd.setMsg_seq(msg_seq);
-		brdMap.delete(brd);;
+	@GetMapping("/cast/likeDes/{msg_seq}")
+	public void likeDes(@PathVariable int msg_seq){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","likeDes()");
+		brdMap.likeDes(msg_seq);
 	}
+	
+	
+	@GetMapping("/room/")
+	public void room(){
+		logger.info("\n BoardCtrl :::::::::: {} !!-----","room()");
+		String[] room_no = {"101","102","103","104","105"
+								,"201","202","203","204","205"
+								,"301","302","303","304","305"};
+		String[] room_name =  {"스탠다드 트윈","스탠다드 더블","트리플","패밀리","패밀리 트윈"
+				,"디럭스A","디럭스B","프리미엄A","프리미엄B","로열프리미엄"
+				,"슈페리어","슈페리어 트윈","슈페리어 트리플","VIP","VVIP"};
+		for(int i=1;i<=519;i++) {
+			for(int j=0;j<15;j++) {
+				brd.setAccom_seq(i);
+				brd.setRoom_name(room_name[j]);
+				brd.setRoom_no(room_no[j]);
+				brd.setRoom_price((int)Math.round(Math.random()*150+30)*1000);
+				brdMap.room(brd);
+			}
+		}
+	}
+	
 }
