@@ -179,7 +179,7 @@ sanghoon.service = {
 							$('<img/>').attr({src:$.img()+'/admin_test/accom_reservation.PNG', style:'width:500px; display:block; margin-left:auto; margin-right:auto'}).appendTo('#accom_reservation');
 				$('<div/>').addClass('right_wrapper').appendTo('#page-wrapper');
 					$('<div/>').attr({id:'location'}).appendTo('.right_wrapper');
-					var mapContainer = document.getElementById('location'), // 지도를 표시할 div 
+					var mapContainer = document.getElementById('location'), // 지도를 표시할 div를 만들어놓음 
 				    mapOption = {
 				        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 				        level: 3 // 지도의 확대 레벨
