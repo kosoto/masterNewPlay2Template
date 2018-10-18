@@ -1,7 +1,5 @@
 package com.play.web.mbr;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -34,7 +32,6 @@ public class MemberCtrl {
 		logger.info("\n--------- MemberController {} !!-----","join()");
 		param.setAge(util2.ageAndGender(param).getAge());
 		param.setGender(util2.ageAndGender(param).getGender());
-		param.setJoindate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		mbrMap.post(param);
 	}
 	@RequestMapping("/search")
@@ -86,6 +83,25 @@ public class MemberCtrl {
 		rm.put("pw_valid", pwValid);
 		rm.put("mbr", mbr);
 		return rm;
+	}
+	@PostMapping("/delete")
+	public @ResponseBody Map<String,Object> delete(
+			@RequestBody Member pm) {
+		logger.info("\n--------- MemberController {} !!-----","delete()");
+		map.clear();
+		logger.info("Member pm : "+ pm);
+		logger.info("getMember_id() : "+ pm.getMember_id());
+		logger.info("getPassword() : "+ pm.getPassword());
+		String deleteMsg = "비밀번호오류";
+		logger.info("mbrMap.count(pm) : " + mbrMap.count(pm));
+		if(mbrMap.count(pm)!=0) {
+			mbrMap.delete(pm);
+			deleteMsg="탈퇴완료";
+		};
+		logger.info("deleteMsg  " + deleteMsg);
+		map.put("deleteMsg", deleteMsg);
+		map.put("mbr", mbr);
+		return map;
 	}
 	
 	@PostMapping("/fileUpload")

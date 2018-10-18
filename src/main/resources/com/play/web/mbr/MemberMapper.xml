@@ -18,8 +18,8 @@
   
   <insert id="post" >
     INSERT INTO member
-    (MEMBER_ID, NAME, PASSWORD, BIRTHDATE, JOINDATE, GENDER, AGE, PHONE, CUSTOMER_GRADE, NICKNAME, ADDRESS, ZIPCODE)
-    VALUES (#{member_id}, #{name}, #{password}, #{birthdate}, #{joindate}, #{gender}, #{age}, #{phone}, #{customer_grade}, #{nickname}, #{address}, #{zipcode})
+    (MEMBER_ID, NAME, PASSWORD, BIRTHDATE, GENDER, AGE, PHONE, CUSTOMER_GRADE, NICKNAME, ADDRESS, ZIPCODE)
+    VALUES (#{member_id}, #{name}, #{password}, #{birthdate}, #{gender}, #{age}, #{phone}, #{customer_grade}, #{nickname}, #{address}, #{zipcode})
   </insert>
   
   <select id="list" resultType="com.play.web.mbr.Member">
